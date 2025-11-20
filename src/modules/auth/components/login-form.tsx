@@ -35,7 +35,7 @@ export function LoginForm() {
     if (result.success) {
       toast.success(result.message || 'Login realizado com sucesso!');
     } else {
-      toast.error(result.message || 'Erro ao fazer login. Tente novamente.');
+      toast.error(result.message || 'Erro ao fazer login. Tente novamente mais tarde.');
     }
   };
 
