@@ -4,15 +4,18 @@ import * as React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { loginSchema, type LoginFormData } from "../schemas/login-schema"
+import { loginSchema, type LoginFormData } from "../schemas/login-schema";
+import { useLogin } from "../hooks/useLogin";
 
 export function LoginForm() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [rememberMe, setRememberMe] = React.useState(false);
+  const { login, isLoading } = useLogin();
 
   const {
     register,
@@ -25,9 +28,14 @@ export function LoginForm() {
     },
   });
 
-  const onSubmit = (data: LoginFormData) => {
-    console.log("Login data:", data);
-    // Handle login logic here
+  const onSubmit = async (data: LoginFormData) => {
+    const result = await login(data);
+    
+    if (result.success) {
+      toast.success(result.message || 'Login realizado com sucesso!');
+    } else {
+      toast.error(result.message || 'Erro ao fazer login. Tente novamente.');
+    }
   };
 
   return (
@@ -44,7 +52,8 @@ export function LoginForm() {
           <div className="relative">
             <Input
               id="username"
-              placeholder="Usuário*"
+              type="email"
+              placeholder="E-mail*"
               className="bg-[#0f1623] border-gray-800 text-white placeholder:text-gray-500 h-14 rounded-lg"
               {...register("username")}
             />
@@ -53,7 +62,7 @@ export function LoginForm() {
             <p className="text-sm text-red-500">{errors.username.message}</p>
           )}
           <p className="text-xs text-gray-500">
-            Insira o seu e-mail, CPF ou passaporte.
+            Insira o seu e-mail.
           </p>
         </div>
 
@@ -109,9 +118,10 @@ export function LoginForm() {
 
         <Button
           type="submit"
-          className="w-full h-12 cursor-pointer bg-blue-600 hover:bg-blue-700 text-white text-base font-medium rounded-lg transition-all"
+          disabled={isLoading}
+          className="w-full h-12 cursor-pointer bg-blue-600 hover:bg-blue-700 text-white text-base font-medium rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Entrar
+          {isLoading ? 'Entrando...' : 'Entrar'}
         </Button>
       </form>
     </div>
