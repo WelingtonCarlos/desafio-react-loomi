@@ -1,9 +1,12 @@
 // Cliente HTTP simples com fetch
-const API_BASE = "https://loomi.s3.us-east-1.amazonaws.com/mock-api-json/v2";
+import { env } from '@/lib/config/env';
 
 export const api = {
   get: async (url: string) => {
-    const response = await fetch(`${API_BASE}${url}`);
+    const response = await fetch(`${env.API_BASE_URL}${url}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
     return response.json();
   },
 };
