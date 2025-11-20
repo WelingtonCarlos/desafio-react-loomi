@@ -1,9 +1,9 @@
 // Hook customizado para login
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { authService, type LoginRequest } from '../services/auth-service';
 import { useAuth } from '@/lib/stores/auth-store';
 import { cookies } from '@/lib/utils/cookies';
+import { useRouter } from 'next/navigation';
 
 export function useLogin() {
   const [isLoading, setIsLoading] = useState(false);
@@ -24,9 +24,6 @@ export function useLogin() {
         
         // Atualiza store do Zustand
         setAuthUser(response.user);
-
-        // Redireciona para dashboard
-        router.push('/dashboard');
 
         return { success: true, message: 'Login realizado com sucesso!' };
       } else {

@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
@@ -16,6 +17,9 @@ export function LoginForm() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [rememberMe, setRememberMe] = React.useState(false);
   const { login, isLoading } = useLogin();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirectTo") || "/dashboard";
 
   const {
     register,
@@ -29,10 +33,11 @@ export function LoginForm() {
   });
 
   const onSubmit = async (data: LoginFormData) => {
-    const result = await login(data);
+    const result = await login({ ...data, rememberMe });
     
     if (result.success) {
       toast.success(result.message || 'Login realizado com sucesso!');
+      router.push(redirectTo);
     } else {
       toast.error(result.message || 'Erro ao fazer login. Tente novamente.');
     }
