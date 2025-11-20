@@ -12,6 +12,8 @@ Dashboard administrativo desenvolvido com Next.js 16, TypeScript e Tailwind CSS,
 - **Funcionalidade "Lembrar de mim"** com duração configurável (7 ou 30 dias)
 - **Validações robustas** com Zod + React Hook Form
 - **Design responsivo** e moderno
+- **Proxy (middleware)** protegendo rotas privadas com base no cookie `auth-token`
+- **Redirecionamento inteligente**: após login o usuário volta para a rota solicitada (`redirectTo`)
 
 ### 🛠️ Stack Técnica
 - **Next.js 16** (App Router)
@@ -68,7 +70,7 @@ Acesse: `http://localhost:3000/login`
 3. Digite qualquer senha (máx. 12 caracteres)
 4. Marque "Lembrar de mim" (opcional)
 5. Clique em "Entrar"
-6. Redirecionamento automático para `/dashboard`
+6. Após o sucesso, você volta para a rota que tentou acessar (ex.: `/dashboard`, `/tickets`, etc.)
 
 **Armazenamento:**
 - 🍪 Token salvo em **cookies** (`auth-token`)
@@ -97,12 +99,15 @@ auth/
 - **Stores**: Zustand para estado global
 - **Utils**: Cookies, formatadores, etc
 - **Providers**: Theme provider + Query provider
+- **Services tipados**: `getDashboardData()` e `getMapData()` (dados prontos para UI)
 
 ## 📡 Endpoints Disponíveis
 
 | Endpoint | Descrição |
 |----------|-----------|
 | `/login.json` | Autenticação |
+| `/dash.json` | Dados do dashboard (KPIs, segmentos, clientes) |
+| `/map.json` | Dados geográficos para o mapa 360 |
 
 ## 📝 Próximos Passos
 
