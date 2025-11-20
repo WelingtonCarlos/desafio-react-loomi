@@ -1,51 +1,14 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "../globals.css";
-import { QueryProvider } from "@/lib/query/query-provider";
-import { ThemeProvider } from "@/lib/providers/theme-provider";
-import { Toaster } from "@/components/ui/sonner";
 import { Sidebar } from "@/modules/navigation/components/sidebar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
-  title: "Desafio React Loomi",
-  description: "Dashboard administrativo",
-};
-
-export default function RootLayout({
+export default function AuthenticatedLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Sidebar />
-          <QueryProvider>
-            <main className="ml-20">
-              {children}
-            </main>
-          </QueryProvider>
-          <Toaster />
-        </ThemeProvider>
-      </body>
-    </html>
+    <div className="flex min-h-screen">
+      <Sidebar />
+      <main className="ml-20 flex-1">{children}</main>
+    </div>
   );
 }
