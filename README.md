@@ -14,7 +14,12 @@ Dashboard administrativo desenvolvido com Next.js 16, TypeScript e Tailwind CSS,
 - **Design responsivo** e moderno
 - **Proxy (middleware)** protegendo rotas privadas com base no cookie `auth-token`
 - **Redirecionamento inteligente**: após login o usuário volta para a rota solicitada (`redirectTo`)
-- **Dashboard dinâmico**: gráficos e cards consumindo `/dash.json` com cache e skeletons de carregamento
+- **Dashboard dinâmico**: gráficos, cards e mapa (clientes por região) consumindo `/dash.json` com cache e skeletons de carregamento
+
+### 📊 Lista de Clientes Ativos
+- Filtro textual único para nome ou e-mail com atualização instantânea
+- Combinação de filtros por status, tipo de seguro e localização
+- Tabela com ordenação por coluna usando TanStack Table e feedback quando não há resultados
 
 ### 🛠️ Stack Técnica
 - **Next.js 16** (App Router)
@@ -100,7 +105,7 @@ auth/
 - **Stores**: Zustand para estado global
 - **Utils**: Cookies, formatadores, etc
 - **Providers**: Theme provider + Query provider
-- **Services e hooks**: `getDashboardData()`/`getMapData()` e `useDashboardData()`/`useMapData()` com cache via TanStack Query
+- **Services e hooks**: `getDashboardData()`/`getMapData()` e `useDashboardData()`/`useMapData()` com cache via TanStack Query (mapa construído com [react-map-gl](https://github.com/visgl/react-map-gl#readme))
 
 ## 📡 Endpoints Disponíveis
 
@@ -117,4 +122,4 @@ auth/
 - [ ] Desenvolver gestão de tickets
 - [ ] Adicionar simulador de planos
 - [ ] Implementar customer 360
-- [ ] Adicionar guards de rotas protegidas
+- [x] Adicionar guards de rotas protegidas
