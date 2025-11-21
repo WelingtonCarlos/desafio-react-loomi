@@ -29,7 +29,7 @@ export function useDashboardData() {
   });
 }
 
-export function useMapData() {
+export function useDashboardMapData() {
   return useQuery({
     queryKey: MAP_QUERY_KEY,
     queryFn: async () => {

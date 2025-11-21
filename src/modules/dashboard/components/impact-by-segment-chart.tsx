@@ -14,12 +14,12 @@ export function ImpactBySegmentChart() {
   const { options, labels, series } = useIBSChart(dashboardResponse);
 
   return (
-    <div className="flex-1 h-full bg-linear-to-br from-[#36446b98] via-[#36446b98 ]/60 to-[#36446b98 ]/10 rounded-3xl p-6 border border-gray-800/50 shadow-xl">
+    <div className="flex-1 h-[470px] bg-linear-to-br from-[#36446b98] via-[#36446b98 ]/60 to-[#36446b98 ]/10 rounded-3xl p-6 border border-gray-800/50 shadow-xl">
       <h3 className="text-lg font-medium text-white mb-6">
         Mapa de impacto por segmento
       </h3>
 
-      <div className="flex-1 flex flex-col items-center justify-center min-h-[300px]">
+      <div className="flex-1 flex flex-col items-center justify-center min-h-[280px]">
         <div className="w-full max-w-[280px] mx-auto relative">
           {isLoading ? (
             <div className="h-full w-full animate-pulse rounded-2xl bg-white/5" />
@@ -28,7 +28,7 @@ export function ImpactBySegmentChart() {
               options={options}
               series={series}
               type="donut"
-              height={280}
+              height={141}
             />
           )}
         </div>
@@ -51,7 +51,7 @@ export function ImpactBySegmentChart() {
       </div>
 
       <div className="mt-8 flex justify-center">
-        <Button className="bg-[#1d77ff] hover:bg-[#1d77ff]/90 text-white rounded-full px-8 py-6 h-auto text-sm font-medium shadow-[0_0_20px_rgba(29,119,255,0.3)]">
+        <Button className="bg-[#1d77ff] hover:bg-[#1d77ff]/90 text-white rounded-full px-8 py-3 h-auto text-sm font-medium shadow-[0_0_20px_rgba(29,119,255,0.3)]">
           Analisar segmentos
         </Button>
       </div>
