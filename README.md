@@ -14,6 +14,7 @@ Dashboard administrativo desenvolvido com Next.js 16, TypeScript e Tailwind CSS,
 - **Design responsivo** e moderno
 - **Proxy (middleware)** protegendo rotas privadas com base no cookie `auth-token`
 - **Redirecionamento inteligente**: após login o usuário volta para a rota solicitada (`redirectTo`)
+- **Dashboard dinâmico**: gráficos e cards consumindo `/dash.json` com cache e skeletons de carregamento
 
 ### 🛠️ Stack Técnica
 - **Next.js 16** (App Router)
@@ -99,14 +100,14 @@ auth/
 - **Stores**: Zustand para estado global
 - **Utils**: Cookies, formatadores, etc
 - **Providers**: Theme provider + Query provider
-- **Services tipados**: `getDashboardData()` e `getMapData()` (dados prontos para UI)
+- **Services e hooks**: `getDashboardData()`/`getMapData()` e `useDashboardData()`/`useMapData()` com cache via TanStack Query
 
 ## 📡 Endpoints Disponíveis
 
 | Endpoint | Descrição |
 |----------|-----------|
 | `/login.json` | Autenticação |
-| `/dash.json` | Dados do dashboard (KPIs, segmentos, clientes) |
+| `/dash.json` | KPIs, séries históricas e clientes ativos |
 | `/map.json` | Dados geográficos para o mapa 360 |
 
 ## 📝 Próximos Passos
