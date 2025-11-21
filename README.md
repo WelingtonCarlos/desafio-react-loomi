@@ -14,12 +14,23 @@ Dashboard administrativo desenvolvido com Next.js 16, TypeScript e Tailwind CSS,
 - **Design responsivo** e moderno
 - **Proxy (middleware)** protegendo rotas privadas com base no cookie `auth-token`
 - **Redirecionamento inteligente**: após login o usuário volta para a rota solicitada (`redirectTo`)
-- **Dashboard dinâmico**: gráficos, cards e mapa (clientes por região) consumindo `/dash.json` com cache e skeletons de carregamento
+
+
+### KPI Dashboard
+- **Hooks**: `useDashboardData`, `useDashboardMapData` e `useInvalidateDashboardQueries` para buscar, manter cache e invalidar KPIs e mapa.
+- **Services**: `getDashboardData()` e `getMapData()` encapsulam chamadas aos endpoints `/dash.json` e `/map.json`.
+- **Types**: `DashboardData`, `ActiveClients`, `ActiveClientItem`, `ActiveClientFilters`, além dos tipos auxiliares das séries de KPI.
+- **Dashboard dinâmico**: gráficos, cards, mapa (clientes por região) e tabela de clientes ativos consumindo `/dash.json` e `/map.json` com cache e skeletons de carregamento
 
 ### 📊 Lista de Clientes Ativos
 - Filtro textual único para nome ou e-mail com atualização instantânea
 - Combinação de filtros por status, tipo de seguro e localização
 - Tabela com ordenação por coluna usando TanStack Table e feedback quando não há resultados
+
+### Tickets
+- **Hooks**: `useTicketsData` e `useInvalidateTicketsQueries` gerenciam o cache de tickets via TanStack Query com delay simulado e invalidation centralizada.
+- **Services**: `getTicketsData()` encapsula a chamada ao endpoint `/tickets.json` usando o `api` compartilhado.
+- **Types**: `TicketsResponse`, `TicketItem`, `TicketsResume`, `TicketPriority` e `TicketStatus` garantem tipagem da listagem, filtros e resumo.
 
 ### 🛠️ Stack Técnica
 - **Next.js 16** (App Router)
@@ -36,6 +47,14 @@ Dashboard administrativo desenvolvido com Next.js 16, TypeScript e Tailwind CSS,
 ```
 src/
 ├── app/              # Rotas do Next.js
+│   ├── login/
+│   ├── (authenticated)/
+│   │   ├── dashboard/
+│   │   ├── tickets/
+│   │   ├── plans/
+│   │   ├── chats/
+│   │   └── view-360/
+│   └── globals.css
 ├── modules/          # Módulos de negócio
 │   ├── auth/
 │   ├── dashboard/
@@ -44,9 +63,10 @@ src/
 │   └── customer360/
 └── lib/              # Configurações básicas
     ├── api/
-    ├── hooks/
+    ├── config/
+    ├── providers/
     ├── query/
-    └── stores/
+    ├── utils/
 ```
 
 ## 🚀 Como Executar
@@ -118,7 +138,7 @@ auth/
 ## 📝 Próximos Passos
 
 - [x] Implementar página de login ✅
-- [ ] Criar dashboard
+- [x] Criar dashboard
 - [ ] Desenvolver gestão de tickets
 - [ ] Adicionar simulador de planos
 - [ ] Implementar customer 360
