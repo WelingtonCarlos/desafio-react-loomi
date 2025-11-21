@@ -107,13 +107,13 @@ auth/
 | Endpoint | Descrição |
 |----------|-----------|
 | `/login.json` | Autenticação |
-| `/dash.json` | KPIs, séries históricas e clientes ativos |
+| `/dash.json` | KPIs, Mapa de Impacto, Gráficos de Métricas e Clientes Ativos |
 | `/map.json` | Dados geográficos para o mapa 360 |
 
 ## 📝 Próximos Passos
 
 - [x] Implementar página de login ✅
-- [ ] Criar dashboard com KPIs
+- [ ] Criar dashboard
 - [ ] Desenvolver gestão de tickets
 - [ ] Adicionar simulador de planos
 - [ ] Implementar customer 360
