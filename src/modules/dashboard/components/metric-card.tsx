@@ -19,7 +19,7 @@ export function MetricCard({
   hasArrow,
 }: MetricCardProps) {
   return (
-    <div className="bg-[#0f1623] rounded-3xl p-6 border border-gray-800/50 shadow-xl flex flex-col justify-between h-full relative overflow-hidden group">
+    <div className="bg-linear-to-br from-[#36446b98] via-[#36446b98 ]/60 to-[#36446b98 ]/10 rounded-3xl p-6 border border-gray-800/50 shadow-xl flex flex-col justify-between h-full relative overflow-hidden group">
       {/* Background glow effect */}
       <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full blur-3xl -mr-12 -mt-12 transition-opacity opacity-0 group-hover:opacity-100" />
 
