@@ -1,11 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useDashboardData } from "../hooks/useDashboardData";
+import { columns } from "./columns";
 import { Filters } from "./filters";
 import { DataTable } from "./table";
-import { columns } from "./columns";
-import type { ActiveClients } from "../types/dashboard.types";
-import { useDashboardData } from "../hooks/useDashboardData";
 
 
 
@@ -23,8 +22,7 @@ export function ActiveClientsTable() {
   const filtered = useMemo(() => {
     return activeClientsData?.filter((c) => {
       const matchesSearch =
-        c.name.toLowerCase().includes(search.toLowerCase()) ||
-        c.email.toLowerCase().includes(search.toLowerCase());
+        c.name.toLowerCase().includes(search.toLowerCase())
 
       const matchesStatus = status === "Todos" || c.status === status;
       const matchesType =

@@ -16,6 +16,11 @@ Dashboard administrativo desenvolvido com Next.js 16, TypeScript e Tailwind CSS,
 - **Redirecionamento inteligente**: após login o usuário volta para a rota solicitada (`redirectTo`)
 - **Dashboard dinâmico**: gráficos, cards e mapa (clientes por região) consumindo `/dash.json` com cache e skeletons de carregamento
 
+### 📊 Lista de Clientes Ativos
+- Filtro textual único para nome ou e-mail com atualização instantânea
+- Combinação de filtros por status, tipo de seguro e localização
+- Tabela com ordenação por coluna usando TanStack Table e feedback quando não há resultados
+
 ### 🛠️ Stack Técnica
 - **Next.js 16** (App Router)
 - **TypeScript** para type safety
