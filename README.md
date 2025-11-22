@@ -41,6 +41,13 @@ Dashboard administrativo desenvolvido com Next.js 16, TypeScript e Tailwind CSS,
 - Mantive useTicketsData e os componentes inalterados: após chamar createTicket/updateTicket, basta invalidar/com revalidar a query (ex.: useInvalidateTicketsQueries) para refletir os dados persistidos.
 - Assim, novas criações/edições permanecem mesmo após recarregar a página; para limpar basta remover a chave de storage (há resetTicketsClone caso queira limpar).
 
+### Gestão de Planos
+- **Planos**: Tela de gestão de planos onde você consegue criar um plano personalizado ou apenas selecionar um plano padrão. Mostra beneícios inclusos e Indicadores de cada plano.
+- **Hooks**: `usePlansData` e `useInvalidatePlansQueries` gerenciam o cache de dados dos planos via TanStack Query com delay simulado e invalidation centralizada.
+- **Services**: `getPlansData()` encapsula a chamada ao endpoint `/plans.json` usando o `api` compartilhado.
+- **Types**: `PlansResponse`, `PlanIndicator` e `PlansData` garantem tipagem dos benefícios inclusos e indicadores de cada plano (conversão, ROI e valor).
+
+
 ### 🛠️ Stack Técnica
 - **Next.js 16** (App Router)
 - **TypeScript** para type safety
