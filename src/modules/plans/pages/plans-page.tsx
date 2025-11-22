@@ -1,13 +1,24 @@
 // Página do simulador de planos
 
+import { KpiSummary } from "@/modules/dashboard/components/kpi-summary";
+import { PageHeader } from "@/modules/navigation/components/page-header";
+import { CustomizedPlans } from "../components/customized-plans";
+import { IncludedBenefits } from "../components/included-benefits";
+import { PlansIndicators } from "../components/plans-indicators";
+
 export function PlansPage() {
   return (
-    <div className="p-8">
-      <header className="mb-8">
-        <h1 className="text-2xl font-medium text-white">Plans</h1>
-      </header>
-      <div className="grid place-items-center h-[60vh] border-2 border-dashed border-gray-800 rounded-2xl bg-[#0f1623]/50">
-        <p className="text-gray-500">Plans Content</p>
+    <div className="flex flex-col gap-8 m-auto">
+      <PageHeader title="Simulador de Planos" />
+      <div className="flex flex-row justify-center 2xl:flex-col gap-8 pb-8 pt-4 w-full m-auto">
+        <div className="min-h-[680px] 2xl:w-3/5">
+          <CustomizedPlans />
+        </div>
+
+        <div className="space-y-6 min-h-[680px]">
+          <IncludedBenefits />
+          <PlansIndicators />
+        </div>
       </div>
     </div>
   );
