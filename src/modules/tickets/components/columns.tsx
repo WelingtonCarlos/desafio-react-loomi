@@ -6,7 +6,10 @@ import { Eye, Pencil } from "lucide-react";
 
 import type { TicketItem } from "../types/tickets.types";
 
-export const columns: ColumnDef<TicketItem>[] = [
+type EditHandler = (ticket: TicketItem) => void;
+
+export function createTicketColumns(onEdit: EditHandler): ColumnDef<TicketItem>[] {
+  return [
   {
     accessorKey: "id",
     header: () => <span>ID</span>,
@@ -103,15 +106,19 @@ export const columns: ColumnDef<TicketItem>[] = [
   {
     id: "actions",
     header: "Ações",
-    cell: () => {
+    cell: ({ row }) => {
+      const ticket = row.original;
       return (
         <div className="flex items-center gap-4">
-          <button className="flex items-center gap-1 text-sky-400 hover:text-sky-300 text-xs">
+          <button
+            className="flex items-center cursor-pointer gap-1 text-sky-400 hover:text-sky-300 text-xs"
+            onClick={() => onEdit(ticket)}
+          >
             <Pencil size={14} />
             Editar
           </button>
 
-          <button className="flex items-center gap-1 text-slate-400 hover:text-slate-300 text-xs">
+          <button className="flex items-center cursor-pointer gap-1 text-slate-400 hover:text-slate-300 text-xs">
             <Eye size={14} />
             Ver
           </button>
@@ -120,3 +127,4 @@ export const columns: ColumnDef<TicketItem>[] = [
     },
   },
 ];
+}

@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/select";
 import type { TicketPriority, TicketStatus } from "../types/tickets.types";
 
+export const ALL_SELECT_OPTION_VALUE = "all" as const;
+
 interface SelectState {
   value: string;
   set: (value: string) => void;
@@ -50,12 +52,17 @@ export function Filters({ search, lists }: FiltersProps) {
         {/* Status */}
         <div className="flex flex-col gap-2">
           <span className="text-sm text-slate-100">Status</span>
-          <Select value={lists.status.value} onValueChange={lists.status.set}>
+          <Select
+            value={lists.status.value || ALL_SELECT_OPTION_VALUE}
+            onValueChange={lists.status.set}
+          >
             <SelectTrigger className="w-[160px] border-slate-700 bg-slate-900 text-slate-100">
               <SelectValue placeholder="Todos os status" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">Todos os status</SelectItem>
+              <SelectItem value={ALL_SELECT_OPTION_VALUE}>
+                Todos os status
+              </SelectItem>
               {lists.options.status.map((item) => (
                 <SelectItem key={item} value={item}>
                   {item}
@@ -69,14 +76,16 @@ export function Filters({ search, lists }: FiltersProps) {
         <div className="flex flex-col gap-2">
           <span className="text-sm text-slate-100">Prioridade</span>
           <Select
-            value={lists.priority.value}
+            value={lists.priority.value || ALL_SELECT_OPTION_VALUE}
             onValueChange={lists.priority.set}
           >
             <SelectTrigger className="w-[160px] border-slate-700 bg-slate-900 text-slate-100">
               <SelectValue placeholder="Todas as prioridades" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">Todas as prioridades</SelectItem>
+              <SelectItem value={ALL_SELECT_OPTION_VALUE}>
+                Todas as prioridades
+              </SelectItem>
               {lists.options.priorities.map((item) => (
                 <SelectItem key={item} value={item}>
                   {item}
@@ -90,14 +99,16 @@ export function Filters({ search, lists }: FiltersProps) {
         <div className="flex flex-col gap-2">
           <span className="text-sm text-slate-100">Responsável</span>
           <Select
-            value={lists.responsible.value}
+            value={lists.responsible.value || ALL_SELECT_OPTION_VALUE}
             onValueChange={lists.responsible.set}
           >
             <SelectTrigger className="w-[180px] border-slate-700 bg-slate-900 text-slate-100">
               <SelectValue placeholder="Todos os responsáveis" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">Todos os responsáveis</SelectItem>
+              <SelectItem value={ALL_SELECT_OPTION_VALUE}>
+                Todos os responsáveis
+              </SelectItem>
               {lists.options.responsible.map((item) => (
                 <SelectItem key={item} value={item}>
                   {item}
