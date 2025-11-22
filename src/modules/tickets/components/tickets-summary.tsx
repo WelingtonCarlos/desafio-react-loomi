@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useTicketsData } from "../hooks/useTicketsData";
 import { TicketsResponse } from "../types/tickets.types";
+import { SkeletonTicketsSummary } from "./skeletons-tickets";
 
 const ICON_SIZE = 32;
 
@@ -12,19 +13,13 @@ export function TicketsSummary() {
   const resume = ticketsResponse?.resumo;
 
   if (isLoadingTickets) {
-    return (
-      <div className="felx flex-row">
-        <div className="rounded-3xl h-[160px] bg-white/5 animate-pulse" />
-        <div className="rounded-3xl h-[160px] bg-white/5 animate-pulse" />
-        <div className="rounded-3xl h-[160px] bg-white/5 animate-pulse" />
-      </div>
-    );
+    return <SkeletonTicketsSummary />;
   }
 
   return (
-    <div className="flex flex-row w-full justify-between gap-6">
+    <div className="flex flex-row flex-wrap w-full justify-between gap-6">
       {/* Tickets Abertos */}
-      <div className="flex flex-col justify-between rounded-2xl border border-white/5 bg-[#161d30] p-6 shadow-sm w-80">
+      <div className="flex flex-col justify-between rounded-2xl border border-white/5 bg-[#161d30] p-6 shadow-sm w-72 flex-1 min-w-[250px]">
         <span className="text-sm font-normal text-white">
           Tickets Abertos
         </span>
@@ -42,7 +37,7 @@ export function TicketsSummary() {
       </div>
 
       {/* Em andamento */}
-      <div className="flex flex-col justify-between rounded-2xl border border-white/5 bg-[#161d30] p-6 shadow-sm w-80">
+      <div className="flex flex-col justify-between rounded-2xl border border-white/5 bg-[#161d30] p-6 shadow-sm w-72 flex-1 min-w-[250px]">
         <span className="text-sm font-normal text-white">Em andamento</span>
         <div className="mt-4 flex items-end justify-between">
           <span className="text-3xl font-bold text-white">
@@ -60,7 +55,7 @@ export function TicketsSummary() {
       </div>
 
       {/* Resolvidos hoje */}
-      <div className="flex flex-col justify-between rounded-2xl border border-white/5 bg-[#161d30] p-6 shadow-sm w-80">
+      <div className="flex flex-col justify-between rounded-2xl border border-white/5 bg-[#161d30] p-6 shadow-sm w-72 flex-1 min-w-[250px]">
         <span className="text-sm font-normal text-white">
           Resolvidos hoje
         </span>
@@ -80,7 +75,7 @@ export function TicketsSummary() {
       </div>
 
       {/* Tempo Médio */}
-      <div className="flex flex-col justify-between rounded-2xl border border-white/5 bg-[#161d30] p-6 shadow-sm w-80">
+      <div className="flex flex-col justify-between rounded-2xl border border-white/5 bg-[#161d30] p-6 shadow-sm w-72 flex-1 min-w-[250px]">
         <span className="text-sm font-normal text-white">Tempo Médio</span>
         <div className="mt-4 flex items-end justify-between">
           <span className="text-3xl font-bold text-white">

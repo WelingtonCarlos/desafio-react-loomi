@@ -1,0 +1,39 @@
+{
+  "header": {
+    "title": "Simulador de Planos"
+  },
+  "customizer": {
+    "title": "Planos personalizados",
+    "plans": {
+      "basic": "Básico",
+      "intermediate": "Intermediário",
+      "premium": "Premium"
+    },
+    "recommended": "Recomendado",
+    "vehicleValue": "Valor do veículo",
+    "age": "Idade do Cliente",
+    "ageSuffix": "anos",
+    "ranges": {
+      "vehicleMin": "R$ 10.000",
+      "vehicleMax": "R$ 500.000",
+      "ageMin": "18 anos",
+      "ageMax": "90 anos"
+    },
+    "coveragesTitle": "Coberturas Adicionais",
+    "coverages": {
+      "theft": "Cobertura contra roubo e furto",
+      "collision": "Danos por colisão",
+      "fire": "Cobertura contra incêndio",
+      "natural": "Fenômenos naturais (granizo, enchente)"
+    }
+  },
+  "includedBenefits": {
+    "title": "Benefícios Inclusos"
+  },
+  "indicators": {
+    "title": "Indicadores",
+    "conversion": "Conversão",
+    "roi": "ROI"
+  }
+}
+

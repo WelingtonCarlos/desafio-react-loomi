@@ -6,18 +6,28 @@ import { SuggestionCards } from "../components/suggestions-cards";
 
 export function View360Page() {
   return (
-    <div className="flex flex-col gap-8 m-auto">
+    <div className="m-auto flex flex-col gap-8">
       <PageHeader title="Visão 360º" />
 
-      <div className="flex flex-col lg:flex-row space-x-8 p-6 w-full">
-        <div className="w-[25%] xl:w-[25%] 2xl:w-[16.666%]">
+      <div className="m-auto flex w-max flex-col gap-6 p-6 lg:flex-row lg:gap-8">
+        <div className="w-full lg:w-[30%] 2xl:w-[26%]">
           <ClientInfoSidebar />
         </div>
 
-        <div className="space-y-6 max-w-[640px]">
-          <AISuggestions />
-          <SmartClassification />
-          <SuggestionCards />
+        <div className="flex w-full flex-1 flex-col gap-6">
+          <div className="flex flex-col gap-6 2xl:flex-row 2xl:items-start">
+            <div className="w-full 2xl:flex-1">
+              <AISuggestions />
+            </div>
+
+            <div className="w-full 2xl:w-[320px] 2xl:shrink-0">
+              <SuggestionCards />
+            </div>
+          </div>
+
+          <div className="w-full">
+            <SmartClassification />
+          </div>
         </div>
       </div>
     </div>

@@ -1,9 +1,11 @@
 "use client";
 
 import { usePlansData } from "../hooks/usePlansData";
+import { SkeletonPlansIndicators } from "./skeletons-plans";
 
 export function PlansIndicators() {
-  const { data: plansData } = usePlansData();
+  const { data: plansData, isLoading } = usePlansData();
+
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat("pt-BR", {
       style: "currency",
@@ -22,6 +24,8 @@ export function PlansIndicators() {
     if (roi >= 100) return "text-yellow-400";
     return "text-orange-400";
   };
+
+  if (isLoading) return <SkeletonPlansIndicators />;
 
   return (
     <div className="bg-linear-to-br from-[#28335098] via-[#28335098 ]/60 to-[#28335098 ]/10 border border-white/5 rounded-3xl p-8">

@@ -1,0 +1,63 @@
+{
+  "header": {
+    "title": "360º View"
+  },
+  "common": {
+    "perMonthSuffix": "/mo"
+  },
+  "clientSidebar": {
+    "loading": "Loading...",
+    "buttons": {
+      "call": "Call",
+      "email": "Send email",
+      "viewMore": "View more"
+    },
+    "sections": {
+      "products": "Products",
+      "profile": "Profile",
+      "phrases": "Captured phrases",
+      "appActions": "In-app actions"
+    },
+    "labels": {
+      "serviceDay": "Service on",
+      "pageTime": "Time on page"
+    }
+  },
+  "aiSuggestions": {
+    "title": "AI suggestion",
+    "loading": "Loading...",
+    "error": "Error loading AI suggestions",
+    "empty": "No suggestions available",
+    "tabs": {
+      "nbo": "NBO",
+      "nba": "NBA",
+      "nbx": "NBX"
+    },
+    "offerLabel": "Recommended offer",
+    "valueLabel": "Recommended value",
+    "conversionLabel": "Conversion probability",
+    "reasonWhy": "Reason Why",
+    "cta": "Simulate AI conversation"
+  },
+  "suggestionCards": {
+    "loading": "Loading...",
+    "priceLabel": "For only:",
+    "priceSuffix": "/mo",
+    "life": {
+      "title": "Individual life insurance",
+      "description": "Comprehensive financial protection covering death and critical illnesses"
+    },
+    "home": {
+      "title": "Home insurance upgrade",
+      "description": "Complete plan with electrical damage protection and 24/7 assistance"
+    }
+  },
+  "smartClassification": {
+    "title": "Smart classification",
+    "lifeTimeValue": "Lifetime value",
+    "churnProbability": "Churn probability",
+    "expansionScore": "Expansion score",
+    "retentionScore": "Retention score"
+  }
+}
+

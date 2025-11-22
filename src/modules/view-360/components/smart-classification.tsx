@@ -5,142 +5,133 @@ import type React from "react";
 import { Progress } from "@/components/ui/progress";
 import { Diamond } from "lucide-react";
 import { useView360Data } from "../hooks/useView360Data";
+import Image from "next/image";
+import { SkeletonSmartClassification } from "./skeleton-view-360";
 
 export function SmartClassification() {
   const { data: view360Data, isLoading: isLoadingView360Data } =
     useView360Data();
   const smartClassification = view360Data?.smartClassification;
 
-  if (isLoadingView360Data) {
-    return <div>Carregando...</div>;
+  if (isLoadingView360Data) { return <SkeletonSmartClassification />;
   }
 
-  const getScoreColor = (level: string) => {
-    switch (level.toLowerCase()) {
-      case "alto":
-        return "bg-green-500";
-      case "médio":
-        return "bg-yellow-500";
-      case "baixo":
-        return "bg-red-500";
-      default:
-        return "bg-gray-500";
-    }
-  };
+  if (!smartClassification) return null;
 
   const getScoreBadgeColor = (level: string) => {
     switch (level.toLowerCase()) {
       case "alto":
-        return "bg-green-500/20 text-green-500 border-green-500/30";
+        return "bg-green-500/15 text-green-400 border-green-500/40";
       case "médio":
-        return "bg-yellow-500/20 text-yellow-500 border-yellow-500/30";
+        return "bg-yellow-500/15 text-yellow-400 border-yellow-500/40";
       case "baixo":
-        return "bg-red-500/20 text-red-500 border-red-500/30";
+        return "bg-red-500/15 text-red-400 border-red-500/40";
       default:
-        return "bg-gray-500/20 text-gray-500 border-gray-500/30";
+        return "bg-slate-500/15 text-slate-300 border-slate-500/40";
     }
   };
 
+  const expansionColor =
+    smartClassification.expansionScore.level.toLowerCase() === "alto"
+      ? "#22c55e"
+      : smartClassification.expansionScore.level.toLowerCase() === "médio"
+      ? "#eab308"
+      : "#ef4444";
+
+  const retentionColor =
+    smartClassification.retetionScore?.level?.toLowerCase() === "alto"
+      ? "#22c55e"
+      : smartClassification.retetionScore?.level?.toLowerCase() === "médio"
+      ? "#eab308"
+      : "#ef4444";
+
   return (
-    <div className="bg-linear-to-br from-[#28335098] via-[#28335098 ]/60 to-[#28335098 ]/10 border border-white/5 rounded-2xl p-6">
-      <h2 className="text-lg font-medium text-white mb-6">
+    <div className="rounded-2xl border border-white/5 bg-linear-to-br from-[#28335098] via-[#28335098]/60 to-[#28335098]/10 p-6">
+      <h2 className="mb-4 text-base font-semibold text-slate-50">
         Classificação inteligente
       </h2>
 
-      <div className="flex flex-col lg:flex-row items-center gap-6 mb-6">
-        {/* Gauge visualization */}
-        <div className="relative w-48 h-48 shrink-0">
-          <div className="absolute inset-0 rounded-full bg-linear-to-br from-blue-500/20 to-purple-500/20 border-8 border-[#0f1623]" />
-          <div className="absolute inset-4 rounded-full bg-[#0f1623] flex flex-col items-center justify-center">
-            <Diamond className="w-10 h-10 text-blue-500 mb-2" />
-            <p className="text-2xl font-bold text-white">
-              {smartClassification?.segment}
+      <div className="flex flex-col gap-6 lg:flex-row ">
+        <div className="flex w-full h-56 flex-col items-center justify-between rounded-2xl border border-slate-800 bg-[#212639] px-8 py-4 lg:max-w-sm">
+          {/* Gauge “semicírculo” + ícone */}
+          <div className="flex flex-col items-center gap-4">
+            <div className="relative h-10 w-h-10 overflow-hidden rounded-full">
+              <Image
+                src="/diamond.png"
+                alt="Diamond"
+                width={80}
+                height={80}
+                className="w-full h-full object-contain"
+                priority
+              />
+            </div>
+
+            <p className="text-lg font-semibold text-slate-50">
+              {smartClassification.segment}
             </p>
           </div>
-        </div>
 
-        <div className="flex-1 w-full space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* Métricas embaixo */}
+          <div className="mt-6 grid w-full grid-cols-2 gap-4 text-left">
             <div>
-              <p className="text-sm text-gray-400 mb-1">Life time value</p>
-              <p className="text-2xl font-semibold text-white">
-                R${" "}
-                {smartClassification?.lifeTimeValue.toLocaleString("pt-BR", {
+              <p className="text-xs text-slate-400">Life time value</p>
+              <p className="mt-1 text-lg font-semibold text-slate-50">
+                R{" "}
+                {smartClassification.lifeTimeValue.toLocaleString("pt-BR", {
                   minimumFractionDigits: 2,
                 })}
               </p>
             </div>
             <div>
-              <p className="text-sm text-gray-400 mb-1">
-                Probabilidade de churn
-              </p>
-              <p className="text-2xl font-semibold text-green-500">
-                {smartClassification?.churnProbability}%
+              <p className="text-xs text-slate-400">Probabilidade de churn</p>
+              <p className="mt-1 text-lg font-semibold text-emerald-400">
+                {smartClassification.churnProbability}%
               </p>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="space-y-4">
-        {/* Expansion Score */}
-        <div>
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-sm text-gray-300">Score de expansão</p>
-            <span
-              className={`px-2 py-1 text-xs rounded-full border ${getScoreBadgeColor(
-                smartClassification?.expansionScore?.level || ""
-              )}`}
-            >
-              {smartClassification?.expansionScore.level}
-            </span>
+        <div className="flex flex-1 flex-col gap-6">
+          {/* Score de expansão */}
+          <div className="rounded-2xl h-24 border border-slate-800 bg-[#212639] px-6 py-4">
+            <div className="mb-3 flex items-center justify-between">
+              <p className="text-sm text-slate-200">Score de expansão</p>
+              <span
+                className={`rounded-full border px-3 py-1 text-xs font-medium ${getScoreBadgeColor(
+                  smartClassification.expansionScore.level
+                )}`}
+              >
+                {smartClassification.expansionScore.level}
+              </span>
+            </div>
+            <Progress
+              value={smartClassification.expansionScore.value}
+              className="h-2 bg-[#0f1623]"
+              style={
+                {
+                  "--progress-indicator-color": expansionColor,
+                } as React.CSSProperties
+              }
+            />
           </div>
-          <Progress
-            value={smartClassification?.expansionScore.value}
-            className="h-2 bg-[#0f1623]"
-            style={
-              {
-                "--progress-indicator-color":
-                  smartClassification?.expansionScore.level.toLowerCase() ===
-                  "alto"
-                    ? "#22c55e"
-                    : smartClassification?.expansionScore.level.toLowerCase() ===
-                      "médio"
-                    ? "#eab308"
-                    : "#ef4444",
-              } as React.CSSProperties
-            }
-          />
-        </div>
 
-        {/* Retention Score */}
-        <div>
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-sm text-gray-300">Score de retenção</p>
-            <span
-              className={`px-2 py-1 text-xs rounded-full border ${getScoreBadgeColor(
-                smartClassification?.retetionScore?.level || ""
-              )}`}
-            >
-              {smartClassification?.retetionScore?.level || ""}
-            </span>
+          {/* Score de retenção */}
+          <div className="rounded-2xl h-24 border border-slate-800 bg-[#212639] px-6 py-4">
+            <div className="mb-3 flex items-center justify-between">
+              <p className="text-sm text-slate-200">Score de retenção</p>
+              <span
+                className={`rounded-full border px-3 py-1 text-xs font-medium ${getScoreBadgeColor(
+                  smartClassification.retetionScore?.level || ""
+                )}`}
+              >
+                {smartClassification.retetionScore?.level || ""}
+              </span>
+            </div>
+            <Progress
+              value={smartClassification.retetionScore?.value || 0}
+              className="h-2 bg-[#0f1623]"
+            />
           </div>
-          <Progress
-            value={smartClassification?.retetionScore?.value || 0}
-            className="h-2 bg-[#0f1623]"
-            style={
-              {
-                "--progress-indicator-color":
-                  smartClassification?.retetionScore?.level?.toLowerCase() ===
-                  "alto"
-                    ? "#22c55e"
-                    : smartClassification?.retetionScore?.level?.toLowerCase() ===
-                      "médio"
-                    ? "#eab308"
-                    : "#ef4444",
-              } as React.CSSProperties
-            }
-          />
         </div>
       </div>
     </div>

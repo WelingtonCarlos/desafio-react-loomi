@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useView360Data } from "../hooks/useView360Data";
+import { SkeletonSuggestionsCards } from "./skeleton-view-360";
 
 export function SuggestionCards() {
   const { data: view360Data, isLoading: isLoadingView360Data } =
@@ -10,12 +11,10 @@ export function SuggestionCards() {
   const secureLifeValue = view360Data?.sugestionsIA.NBO.value;
   const secureLifeOffer = view360Data?.sugestionsIA.NBO.offer;
 
-  if (isLoadingView360Data) {
-    return <div>Carregando...</div>;
-  }
+  if (isLoadingView360Data) return <SkeletonSuggestionsCards />;
 
   return (
-    <div className="space-y-4 flex flex-row 2xl:flex-col gap-4">
+    <div className="space-y-6 justify-between 2xl:justify-start flex flex-row 2xl:flex-col">
       {/* CARD 1 — Seguro de vida individual (bg azul, botão branco) */}
       <div className="h-64 w-[312px]  rounded-2xl p-6 text-white bg-linear-to-br from-[#52B3FF] via-[#3B8CFF] to-[#2A6DFF] shadow-[0_8px_20px_-4px_rgba(0,0,0,0.35)] flex flex-col justify-between">
         <div>

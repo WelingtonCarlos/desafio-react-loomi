@@ -3,6 +3,7 @@
 import { Phone, Mail, Eye, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useView360Data } from "../hooks/useView360Data";
+import { SkeletonClientInfoSidebar } from "./skeleton-view-360";
 
 export function ClientInfoSidebar() {
   const { data: view360Data, isLoading: isLoadingView360Data } =
@@ -23,9 +24,7 @@ export function ClientInfoSidebar() {
       .slice(0, 2);
   };
 
-  if (isLoadingView360Data) {
-    return <div>Carregando...</div>;
-  }
+  if (isLoadingView360Data) return <SkeletonClientInfoSidebar />;
 
   return (
     <div className="bg-linear-to-br from-[#28335098] via-[#28335098 ]/60 to-[#28335098 ]/10 border border-white/5 rounded-2xl p-6 space-y-6">

@@ -11,6 +11,7 @@ import type {
   TicketStatus,
   TicketsResponse,
 } from "../types/tickets.types";
+import { SkeletonTicketsTable } from "./skeletons-tickets";
 
 interface TicketsTableProps {
   onEditTicket: (ticket: TicketItem) => void;
@@ -47,8 +48,7 @@ export function TicketsTable({ onEditTicket }: TicketsTableProps) {
         ticket.client.toLowerCase().includes(query) ||
         ticket.subject.toLowerCase().includes(query);
 
-      const matchesStatus =
-        !status || (ticket.status as string) === status;
+      const matchesStatus = !status || (ticket.status as string) === status;
 
       const matchesPriority =
         !priority || (ticket.priority as string) === priority;
@@ -57,10 +57,7 @@ export function TicketsTable({ onEditTicket }: TicketsTableProps) {
         !responsible || ticket.responsible === responsible;
 
       return (
-        matchesSearch &&
-        matchesStatus &&
-        matchesPriority &&
-        matchesResponsible
+        matchesSearch && matchesStatus && matchesPriority && matchesResponsible
       );
     });
   }, [ticketsData, search, status, priority, responsible]);
@@ -69,6 +66,8 @@ export function TicketsTable({ onEditTicket }: TicketsTableProps) {
     () => createTicketColumns(onEditTicket),
     [onEditTicket]
   );
+
+  if (isLoading) return <SkeletonTicketsTable />;
 
   return (
     <div className="h-full w-full rounded-3xl bg-linear-to-br from-[#28335098] via-[#28335098]/60 to-[#28335098]/10 px-6 py-10">
@@ -86,11 +85,7 @@ export function TicketsTable({ onEditTicket }: TicketsTableProps) {
         }}
       />
 
-      {isLoading ? (
-        <div className="h-full w-full animate-pulse rounded-2xl bg-white/5" />
-      ) : (
-        <DataTable columns={tableColumns} data={filteredTickets} />
-      )}
+      <DataTable columns={tableColumns} data={filteredTickets} />
     </div>
   );
 }

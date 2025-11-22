@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2 } from "lucide-react";
 import { useView360Data } from "../hooks/useView360Data";
+import { SkeletonAISuggestions } from "./skeleton-view-360";
 
 const tabs = [
   { key: "NBO" as const, label: "NBO" },
@@ -18,13 +19,7 @@ export function AISuggestions() {
   const sugestionsIA = view360Data?.sugestionsIA;
   const currentSuggestion = sugestionsIA?.[activeTab];
 
-  if (isLoading) {
-    return (
-      <div className="bg-[#151a23] border border-white/5 rounded-2xl p-6">
-        <div className="text-gray-400">Carregando...</div>
-      </div>
-    );
-  }
+  if (isLoading) return <SkeletonAISuggestions />;
 
   if (error) {
     return (
@@ -43,7 +38,7 @@ export function AISuggestions() {
   }
 
   return (
-    <div className="bg-linear-to-br from-[#28335098] via-[#28335098 ]/60 to-[#28335098 ]/10 border border-white/5 rounded-2xl p-6">
+    <div className="w-full h-[536px] bg-linear-to-br from-[#28335098] via-[#28335098 ]/60 to-[#28335098 ]/10 border border-white/5 rounded-2xl p-6">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-lg font-medium text-white">Sugestão da IA</h2>
         <div className="flex bg-[#23283b] rounded-full px-3 py-2 w-56 justify-between">
@@ -65,7 +60,7 @@ export function AISuggestions() {
         </div>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 p-6 rounded-2xl bg-linear-to-br from-[#23283b] via-[#23283b] to-[#303545]">
         <div>
           <h3 className="text-sm text-gray-400 mb-2">Oferta recomendada</h3>
           <p className="text-white font-medium">{currentSuggestion.offer}</p>
@@ -87,6 +82,8 @@ export function AISuggestions() {
             </p>
           </div>
         </div>
+
+        <hr />
 
         <div>
           <h4 className="text-sm font-medium text-white mb-3">Reason Why</h4>
