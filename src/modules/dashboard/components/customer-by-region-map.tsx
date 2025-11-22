@@ -17,10 +17,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 // import { mapLocations } from "../data/mock-data"
-import {
-  useDashboardData,
-  useDashboardMapData,
-} from "../hooks/useDashboardData";
+import { useDashboardMapData } from "../hooks/useDashboardData";
+import { useTranslation } from "react-i18next";
 
 // Map style for dark theme (CartoDB Dark Matter)
 const MAP_STYLE =
@@ -46,6 +44,7 @@ const getIcon = (iconName: string) => {
 
 export function CustomerByRegionMap() {
   const { data: mapData, isLoading } = useDashboardMapData();
+  const { t } = useTranslation("dashboard");
   const INITIAL_VIEW_STATE = {
     latitude: mapData?.data?.center[1],
     longitude: mapData?.data?.center[0],
@@ -59,29 +58,29 @@ export function CustomerByRegionMap() {
       {/* Header Overlay */}
       <div className="p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <h2 className="text-xl font-semibold text-white drop-shadow-md">
-          Mapa de clientes por região
+          {t("map.title")}
         </h2>
         <div className="flex gap-3 pointer-events-auto">
           <Select defaultValue="all-loc">
             <SelectTrigger className="w-[140px] bg-[#0b0f17] border-white/10 text-gray-300 h-9 rounded-full text-xs">
-              <SelectValue placeholder="Todos os locais" />
+              <SelectValue placeholder={t("map.locationsPlaceholder")} />
             </SelectTrigger>
             <SelectContent className="bg-[#0b0f17] border-white/10 text-gray-300">
-              <SelectItem value="all-loc">Todos os locais</SelectItem>
-              <SelectItem value="recife">Recife</SelectItem>
-              <SelectItem value="olinda">Olinda</SelectItem>
+              <SelectItem value="all-loc">{t("map.locations.all")}</SelectItem>
+              <SelectItem value="recife">{t("map.locations.recife")}</SelectItem>
+              <SelectItem value="olinda">{t("map.locations.olinda")}</SelectItem>
             </SelectContent>
           </Select>
 
           <Select defaultValue="all-types">
             <SelectTrigger className="w-[140px] bg-[#0b0f17] border-white/10 text-gray-300 h-9 rounded-full text-xs">
-              <SelectValue placeholder="Todos os tipos" />
+              <SelectValue placeholder={t("map.typesPlaceholder")} />
             </SelectTrigger>
             <SelectContent className="bg-[#0b0f17] border-white/10 text-gray-300">
-              <SelectItem value="all-types">Todos os tipos</SelectItem>
-              <SelectItem value="tourism">Turismo</SelectItem>
-              <SelectItem value="health">Saúde</SelectItem>
-              <SelectItem value="education">Educação</SelectItem>
+              <SelectItem value="all-types">{t("map.types.all")}</SelectItem>
+              <SelectItem value="tourism">{t("map.types.tourism")}</SelectItem>
+              <SelectItem value="health">{t("map.types.health")}</SelectItem>
+              <SelectItem value="education">{t("map.types.education")}</SelectItem>
             </SelectContent>
           </Select>
         </div>

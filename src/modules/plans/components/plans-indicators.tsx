@@ -1,9 +1,11 @@
 "use client";
 
+import { useTranslation } from "react-i18next";
 import { usePlansData } from "../hooks/usePlansData";
 import { SkeletonPlansIndicators } from "./skeletons-plans";
 
 export function PlansIndicators() {
+  const { t } = useTranslation(["plans", "common"])
   const { data: plansData, isLoading } = usePlansData();
 
   const formatCurrency = (value: number) => {
@@ -29,7 +31,7 @@ export function PlansIndicators() {
 
   return (
     <div className="bg-linear-to-br from-[#28335098] via-[#28335098 ]/60 to-[#28335098 ]/10 border border-white/5 rounded-3xl p-8">
-      <h2 className="text-xl font-semibold text-white mb-6">Indicadores</h2>
+      <h2 className="text-xl font-semibold text-white mb-6">{t("plans:indicators.title")}</h2>
 
       <div className="space-y-4">
         {plansData?.plansIndicators.map((indicator) => (

@@ -3,7 +3,7 @@
     "title": "360º View"
   },
   "common": {
-    "perMonthSuffix": "/mo"
+    "perMonthSuffix": "/month"
   },
   "clientSidebar": {
     "loading": "Loading...",

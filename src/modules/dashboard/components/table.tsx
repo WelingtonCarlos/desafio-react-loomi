@@ -10,6 +10,7 @@ import {
 } from "@tanstack/react-table";
 
 import type { ActiveClientItem } from "../types/dashboard.types";
+import { useTranslation } from "react-i18next";
 
 interface DataTableProps {
   columns: any;
@@ -17,8 +18,10 @@ interface DataTableProps {
 }
 
 export function DataTable({ columns, data }: DataTableProps) {
-  const [sorting, setSorting] = useState<SortingState>([]);
+  const { t } = useTranslation(["dashboard", "common"]);
 
+  const [sorting, setSorting] = useState<SortingState>([]);
+  
   const table = useReactTable({
     data,
     columns,
@@ -69,7 +72,7 @@ export function DataTable({ columns, data }: DataTableProps) {
                 colSpan={columns.length}
                 className="py-6 text-center text-slate-500"
               >
-                Nenhum cliente encontrado.
+                {t("dashboard:table.empty")}
               </td>
             </tr>
           )}

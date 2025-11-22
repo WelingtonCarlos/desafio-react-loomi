@@ -7,8 +7,10 @@ import { Diamond } from "lucide-react";
 import { useView360Data } from "../hooks/useView360Data";
 import Image from "next/image";
 import { SkeletonSmartClassification } from "./skeleton-view-360";
+import { useTranslation } from "react-i18next";
 
 export function SmartClassification() {
+  const { t } = useTranslation("view360")
   const { data: view360Data, isLoading: isLoadingView360Data } =
     useView360Data();
   const smartClassification = view360Data?.smartClassification;
@@ -48,7 +50,7 @@ export function SmartClassification() {
   return (
     <div className="rounded-2xl border border-white/5 bg-linear-to-br from-[#28335098] via-[#28335098]/60 to-[#28335098]/10 p-6">
       <h2 className="mb-4 text-base font-semibold text-slate-50">
-        Classificação inteligente
+        {t("smartClassification.title")}
       </h2>
 
       <div className="flex flex-col gap-6 lg:flex-row ">
@@ -74,7 +76,7 @@ export function SmartClassification() {
           {/* Métricas embaixo */}
           <div className="mt-6 grid w-full grid-cols-2 gap-4 text-left">
             <div>
-              <p className="text-xs text-slate-400">Life time value</p>
+              <p className="text-xs text-slate-400">{t("smartClassification.lifeTimeValue")}</p>
               <p className="mt-1 text-lg font-semibold text-slate-50">
                 R{" "}
                 {smartClassification.lifeTimeValue.toLocaleString("pt-BR", {
@@ -83,7 +85,7 @@ export function SmartClassification() {
               </p>
             </div>
             <div>
-              <p className="text-xs text-slate-400">Probabilidade de churn</p>
+              <p className="text-xs text-slate-400">{t("smartClassification.churnProbability")}</p>
               <p className="mt-1 text-lg font-semibold text-emerald-400">
                 {smartClassification.churnProbability}%
               </p>
@@ -95,7 +97,7 @@ export function SmartClassification() {
           {/* Score de expansão */}
           <div className="rounded-2xl h-24 border border-slate-800 bg-[#212639] px-6 py-4">
             <div className="mb-3 flex items-center justify-between">
-              <p className="text-sm text-slate-200">Score de expansão</p>
+              <p className="text-sm text-slate-200">{t("smartClassification.expansionScore")}</p>
               <span
                 className={`rounded-full border px-3 py-1 text-xs font-medium ${getScoreBadgeColor(
                   smartClassification.expansionScore.level
@@ -118,7 +120,7 @@ export function SmartClassification() {
           {/* Score de retenção */}
           <div className="rounded-2xl h-24 border border-slate-800 bg-[#212639] px-6 py-4">
             <div className="mb-3 flex items-center justify-between">
-              <p className="text-sm text-slate-200">Score de retenção</p>
+              <p className="text-sm text-slate-200">{t("smartClassification.retentionScore")}</p>
               <span
                 className={`rounded-full border px-3 py-1 text-xs font-medium ${getScoreBadgeColor(
                   smartClassification.retetionScore?.level || ""

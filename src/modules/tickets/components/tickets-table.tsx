@@ -12,32 +12,31 @@ import type {
   TicketsResponse,
 } from "../types/tickets.types";
 import { SkeletonTicketsTable } from "./skeletons-tickets";
+import { useTranslation } from "react-i18next";
 
 interface TicketsTableProps {
   onEditTicket: (ticket: TicketItem) => void;
 }
 
 export function TicketsTable({ onEditTicket }: TicketsTableProps) {
+  const { t } = useTranslation("tickets")
+
   const { data, isLoading } = useTicketsData<TicketsResponse>();
 
-  // Dados brutos da API
   const ticketsData: TicketItem[] = data?.tickets ?? [];
   const statusOptions: TicketStatus[] = data?.status ?? [];
   const priorityOptions: TicketPriority[] = data?.priorities ?? [];
 
-  // Responsáveis distintos a partir dos tickets
   const responsibleOptions = useMemo(
     () => Array.from(new Set(ticketsData.map((t) => t.responsible))),
     [ticketsData]
   );
 
-  // Estados dos filtros
   const [search, setSearch] = useState("");
-  const [status, setStatus] = useState<string>(""); // "" = todos
+  const [status, setStatus] = useState<string>("");
   const [priority, setPriority] = useState<string>("");
   const [responsible, setResponsible] = useState<string>("");
 
-  // Filtro em memória
   const filteredTickets = useMemo(() => {
     return ticketsData.filter((ticket) => {
       const query = search.toLowerCase().trim();
@@ -63,8 +62,8 @@ export function TicketsTable({ onEditTicket }: TicketsTableProps) {
   }, [ticketsData, search, status, priority, responsible]);
 
   const tableColumns = useMemo(
-    () => createTicketColumns(onEditTicket),
-    [onEditTicket]
+    () => createTicketColumns(onEditTicket, t),
+    [onEditTicket, t]
   );
 
   if (isLoading) return <SkeletonTicketsTable />;

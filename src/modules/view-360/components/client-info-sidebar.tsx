@@ -4,8 +4,10 @@ import { Phone, Mail, Eye, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useView360Data } from "../hooks/useView360Data";
 import { SkeletonClientInfoSidebar } from "./skeleton-view-360";
+import { useTranslation } from "react-i18next";
 
 export function ClientInfoSidebar() {
+  const { t } = useTranslation("view360")
   const { data: view360Data, isLoading: isLoadingView360Data } =
     useView360Data();
 
@@ -44,7 +46,7 @@ export function ClientInfoSidebar() {
             className="flex-1 text-gray-400 hover:text-white"
           >
             <Phone className="w-4 h-4 mr-1" />
-            Telefonar
+            {t("clientSidebar.buttons.call")}
           </Button>
           <Button
             variant="ghost"
@@ -52,7 +54,7 @@ export function ClientInfoSidebar() {
             className="flex-1 text-gray-400 hover:text-white"
           >
             <Mail className="w-4 h-4 mr-1" />
-            Enviar e-mail
+            {t("clientSidebar.buttons.email")}
           </Button>
           <Button
             variant="ghost"
@@ -60,7 +62,7 @@ export function ClientInfoSidebar() {
             className="flex-1 text-gray-400 hover:text-white"
           >
             <Eye className="w-4 h-4 mr-1" />
-            Ver mais
+            {t("clientSidebar.buttons.viewMore")}
           </Button>
         </div>
       </div>
@@ -68,7 +70,7 @@ export function ClientInfoSidebar() {
       {/* Products Section */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm font-medium text-white">Produtos</h3>
+          <h3 className="text-sm font-medium text-white">{t("clientSidebar.sections.products")}</h3>
           <Button
             variant="ghost"
             size="sm"
@@ -103,7 +105,7 @@ export function ClientInfoSidebar() {
 
       {/* Profile Tags */}
       <div>
-        <h3 className="text-sm font-medium text-white mb-3">Perfil</h3>
+        <h3 className="text-sm font-medium text-white mb-3">{t("clientSidebar.sections.profile")}</h3>
         <div className="flex flex-wrap gap-2">
           {profile?.map((tag, index) => (
             <span
@@ -118,7 +120,7 @@ export function ClientInfoSidebar() {
 
       {/* Captured Phrases */}
       <div>
-        <h3 className="text-sm font-medium text-white mb-3">Frases captadas</h3>
+        <h3 className="text-sm font-medium text-white mb-3">{t("clientSidebar.sections.phrases")}</h3>
         <div className="space-y-3">
           {capturedPhrases?.map((item, index) => (
             <div
@@ -129,7 +131,7 @@ export function ClientInfoSidebar() {
                 "{item.phrase}"
               </p>
               <p className="text-xs text-gray-500">
-                Atendimento do dia{" "}
+                {t("clientSidebar.labels.serviceDay")}{" "}
                 {new Date(item.serviceDate).toLocaleDateString("pt-BR")}
               </p>
             </div>
@@ -139,7 +141,7 @@ export function ClientInfoSidebar() {
 
       {/* App Actions */}
       <div>
-        <h3 className="text-sm font-medium text-white mb-3">Ações no app</h3>
+        <h3 className="text-sm font-medium text-white mb-3">{t("clientSidebar.sections.appActions")}</h3>
         <div className="space-y-3">
           {appActions?.map((action, index) => (
             <div key={index}>
@@ -147,7 +149,7 @@ export function ClientInfoSidebar() {
               <p className="text-sm text-gray-300">{action.action}</p>
               {action.pageTime && (
                 <p className="text-xs text-gray-500">
-                  Tempo na página {action.pageTime}
+                  {t("clientSidebar.labels.pageTime")} {action.pageTime}
                 </p>
               )}
             </div>

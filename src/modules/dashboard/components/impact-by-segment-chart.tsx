@@ -2,21 +2,22 @@
 
 import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
-import type { ApexOptions } from "apexcharts";
 import { useDashboardData } from "../hooks/useDashboardData";
 import { useIBSChart } from "../hooks/useIBSChart";
+import { useTranslation } from "react-i18next";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 export function ImpactBySegmentChart() {
   const { data: dashboardResponse, isLoading } = useDashboardData();
+  const { t } = useTranslation("dashboard");
 
   const { options, labels, series } = useIBSChart(dashboardResponse);
 
   return (
     <div className="flex-1 h-[470px] bg-linear-to-br from-[#36446b98] via-[#36446b98 ]/60 to-[#36446b98 ]/10 rounded-3xl p-6 border border-gray-800/50 shadow-xl">
       <h3 className="text-lg font-medium text-white mb-6">
-        Mapa de impacto por segmento
+        {t("impact.title")}
       </h3>
 
       <div className="flex-1 flex flex-col items-center justify-center min-h-[280px]">
@@ -52,7 +53,7 @@ export function ImpactBySegmentChart() {
 
       <div className="mt-8 flex justify-center">
         <Button className="bg-[#1d77ff] hover:bg-[#1d77ff]/90 text-white rounded-full px-8 py-3 h-auto text-sm font-medium shadow-[0_0_20px_rgba(29,119,255,0.3)]">
-          Analisar segmentos
+          {t("impact.cta")}
         </Button>
       </div>
     </div>

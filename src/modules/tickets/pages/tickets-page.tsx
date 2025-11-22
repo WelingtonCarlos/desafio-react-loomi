@@ -8,8 +8,11 @@ import { Plus } from "lucide-react";
 import { useState } from "react";
 import { NewTicketModal } from "../components/ticket-modal";
 import type { TicketItem } from "../types/tickets.types";
+import { useTranslation } from "react-i18next";
 
 export function TicketsPage() {
+
+  const { t } = useTranslation(["tickets", "common"])
   const [isNewTicketOpen, setIsNewTicketOpen] = useState(false);
   const [editingTicket, setEditingTicket] = useState<TicketItem | null>(null);
 
@@ -33,14 +36,14 @@ export function TicketsPage() {
   return (
     <div className="flex flex-col gap-10 m-auto">
       <PageHeader
-        title="Gestão de Tickets"
+        title={t("tickets:header.title")}
         action={
           <Button
             className="bg-[#1E86FF] hover:bg-[#1E86FF]/90 text-white rounded-full cursor-pointer px-6 shadow-[0_0_20px_rgba(30,134,255,0.3)]"
             onClick={handleCreateClick}
           >
             <Plus className="w-4 h-4 mr-2" />
-            Novo Ticket
+            {t("tickets:header.new")}
           </Button>
         }
       />
