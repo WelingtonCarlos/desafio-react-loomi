@@ -1,12 +1,14 @@
-"use client"
+"use client";
 
 import { usePlansData } from "../hooks/usePlansData";
 
 export function IncludedBenefits() {
   const { data: plansData } = usePlansData();
   return (
-    <div className="bg-[#151a23] border border-white/5 rounded-3xl p-8">
-      <h2 className="text-xl font-semibold text-white mb-6">Benefícios Inclusos</h2>
+    <div className="bg-linear-to-br from-[#28335098] via-[#28335098 ]/60 to-[#28335098 ]/10 border border-white/5 rounded-3xl p-8">
+      <h2 className="text-xl font-semibold text-white mb-6">
+        Benefícios Inclusos
+      </h2>
 
       <div className="flex flex-wrap gap-3">
         {plansData?.includedBenefits.map((benefit, index) => (
@@ -20,5 +22,5 @@ export function IncludedBenefits() {
         ))}
       </div>
     </div>
-  )
+  );
 }
