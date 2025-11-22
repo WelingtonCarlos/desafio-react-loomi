@@ -4,6 +4,13 @@ Dashboard administrativo desenvolvido com Next.js 16, TypeScript e Tailwind CSS,
 
 ## ✨ Funcionalidades Implementadas
 
+### 🌐 Internacionalização (i18n)
+- **Arquivos de idioma** em `public/locales/{pt-BR,en}` organizados por namespace (`common`, `auth`, `dashboard`, `tickets`, `plans`, `view360`, etc.).
+- **Integração react-i18next** centralizada em `src/lib/i18n.ts` com `LanguageDetector` (persistindo a escolha em `localStorage`/cookies) e tipagem dos namespaces.
+- **Provider global** (`src/lib/providers/i18n-provider.tsx`) envolve o App para disponibilizar `useTranslation` em qualquer componente.
+- **Seletor de idioma** no header do login (`HeaderActions`) usando `i18n.changeLanguage`, refletindo o idioma atual e respeitando o detector.
+- **Módulos migrados**: Login, Dashboard, Tickets (em andamento), Planos e Visão 360 estão sendo traduzidos iterativamente com `t('namespace.chave')`.
+
 ### 🔐 Sistema de Autenticação
 - **Formulário de Login** com validação de e-mail e senha
 - **Integração com API** mock via endpoint `/login.json`
