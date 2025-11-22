@@ -16,12 +16,12 @@ const queryOptions = {
     simulatedDelay: 1000,
 } as const;
 
-export function useTicketsData() {
-    return useQuery({
+export function useTicketsData<T>() {
+    return useQuery<T>({
         queryKey: TICKETS_QUERY_KEY,
         queryFn: async () => {
             await new Promise((resolve) => setTimeout(resolve, queryOptions.simulatedDelay));
-            return getTicketsData();
+            return getTicketsData() as T;
         },
         ...queryOptions,
     });

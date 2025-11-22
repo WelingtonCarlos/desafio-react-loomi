@@ -31,6 +31,15 @@ Dashboard administrativo desenvolvido com Next.js 16, TypeScript e Tailwind CSS,
 - **Hooks**: `useTicketsData` e `useInvalidateTicketsQueries` gerenciam o cache de tickets via TanStack Query com delay simulado e invalidation centralizada.
 - **Services**: `getTicketsData()` encapsula a chamada ao endpoint `/tickets.json` usando o `api` compartilhado.
 - **Types**: `TicketsResponse`, `TicketItem`, `TicketsResume`, `TicketPriority` e `TicketStatus` garantem tipagem da listagem, filtros e resumo.
+- **Criação e Edição**: Implementada a funcionalidade de criação e edição dos Tickets com persistência de dados.
+
+### Persistência de Dados em Tickets
+- Implementei uma camada de persistência em localStorage para manter um clone da resposta do GET e suportar operações simuladas de criação/edição:
+- Adicionei src/modules/tickets/services/tickets-storage.ts, responsável por garantir o clone (ensureTicketsClone), ler/gravar (getTicketsClone, setTicketsClone) e atualizar (updateTicketsClone) os dados persistidos. O clone é inicializado na primeira vez que o GET roda e permanece disponível após refresh.
+- Atualizei getTicketsData em tickets-service.ts para sempre retornar esse clone persistido ao invés da resposta crua da API.
+- Criei as funções createTicket e updateTicket, que operam sobre o clone usando updateTicketsClone, recalculam o resumo (contagem por status) e persistem o resultado. IDs são gerados via crypto.randomUUID (com fallback).
+- Mantive useTicketsData e os componentes inalterados: após chamar createTicket/updateTicket, basta invalidar/com revalidar a query (ex.: useInvalidateTicketsQueries) para refletir os dados persistidos.
+- Assim, novas criações/edições permanecem mesmo após recarregar a página; para limpar basta remover a chave de storage (há resetTicketsClone caso queira limpar).
 
 ### 🛠️ Stack Técnica
 - **Next.js 16** (App Router)

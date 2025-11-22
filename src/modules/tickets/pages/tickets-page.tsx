@@ -1,14 +1,62 @@
-// Página principal de tickets
+"use client";
+
+import { PageHeader } from "@/modules/navigation/components/page-header";
+import { TicketsTable } from "../components/tickets-table";
+import { TicketsSummary } from "../components/tickets-summary";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import { useState } from "react";
+import { NewTicketModal } from "../components/ticket-modal";
+import type { TicketItem } from "../types/tickets.types";
 
 export function TicketsPage() {
+  const [isNewTicketOpen, setIsNewTicketOpen] = useState(false);
+  const [editingTicket, setEditingTicket] = useState<TicketItem | null>(null);
+
+  const handleCreateClick = () => {
+    setEditingTicket(null);
+    setIsNewTicketOpen(true);
+  };
+
+  const handleEditTicket = (ticket: TicketItem) => {
+    setEditingTicket(ticket);
+    setIsNewTicketOpen(true);
+  };
+
+  const handleModalOpenChange = (open: boolean) => {
+    if (!open) {
+      setEditingTicket(null);
+    }
+    setIsNewTicketOpen(open);
+  };
+
   return (
-    <div className="p-8">
-      <header className="mb-8">
-        <h1 className="text-2xl font-medium text-white">Tickets</h1>
-      </header>
-      <div className="grid place-items-center h-[60vh] border-2 border-dashed border-gray-800 rounded-2xl bg-[#0f1623]/50">
-        <p className="text-gray-500">Tickets Content</p>
+    <div className="flex flex-col gap-10 m-auto">
+      <PageHeader
+        title="Gestão de Tickets"
+        action={
+          <Button
+            className="bg-[#1E86FF] hover:bg-[#1E86FF]/90 text-white rounded-full cursor-pointer px-6 shadow-[0_0_20px_rgba(30,134,255,0.3)]"
+            onClick={handleCreateClick}
+          >
+            <Plus className="w-4 h-4 mr-2" />
+            Novo Ticket
+          </Button>
+        }
+      />
+      <div className="flex flex-col 2xl:flex-row gap-8 w-full max-w-3xl xl:max-w-4xl 2xl:max-w-7xl m-auto">
+        <TicketsSummary />
       </div>
+
+      <div className="flex flex-col 2xl:flex-row gap-8 w-full max-w-3xl xl:max-w-4xl 2xl:max-w-7xl m-auto">
+        <TicketsTable onEditTicket={handleEditTicket} />
+      </div>
+
+      <NewTicketModal
+        open={isNewTicketOpen}
+        onOpenChange={handleModalOpenChange}
+        ticket={editingTicket}
+      />
     </div>
   );
 }
