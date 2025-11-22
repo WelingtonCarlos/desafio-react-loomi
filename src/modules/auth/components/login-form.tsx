@@ -21,6 +21,7 @@ export function LoginForm() {
   const searchParams = useSearchParams();
   const redirectTo = searchParams.get("redirectTo") || "/dashboard";
 
+  
   const {
     register,
     handleSubmit,
@@ -39,7 +40,7 @@ export function LoginForm() {
       toast.success(result.message || 'Login realizado com sucesso!');
       router.push(redirectTo);
     } else {
-      toast.error(result.message || 'Erro ao fazer login. Tente novamente.');
+      toast.error(result.message || 'Erro ao fazer login. Tente novamente mais tarde.');
     }
   };
 

@@ -12,6 +12,41 @@ Dashboard administrativo desenvolvido com Next.js 16, TypeScript e Tailwind CSS,
 - **Funcionalidade "Lembrar de mim"** com duração configurável (7 ou 30 dias)
 - **Validações robustas** com Zod + React Hook Form
 - **Design responsivo** e moderno
+- **Proxy (middleware)** protegendo rotas privadas com base no cookie `auth-token`
+- **Redirecionamento inteligente**: após login o usuário volta para a rota solicitada (`redirectTo`)
+
+
+### KPI Dashboard
+- **Hooks**: `useDashboardData`, `useDashboardMapData` e `useInvalidateDashboardQueries` para buscar, manter cache e invalidar KPIs e mapa.
+- **Services**: `getDashboardData()` e `getMapData()` encapsulam chamadas aos endpoints `/dash.json` e `/map.json`.
+- **Types**: `DashboardData`, `ActiveClients`, `ActiveClientItem`, `ActiveClientFilters`, além dos tipos auxiliares das séries de KPI.
+- **Dashboard dinâmico**: gráficos, cards, mapa (clientes por região) e tabela de clientes ativos consumindo `/dash.json` e `/map.json` com cache e skeletons de carregamento
+
+### 📊 Lista de Clientes Ativos
+- Filtro textual único para nome ou e-mail com atualização instantânea
+- Combinação de filtros por status, tipo de seguro e localização
+- Tabela com ordenação por coluna usando TanStack Table e feedback quando não há resultados
+
+### Tickets
+- **Hooks**: `useTicketsData` e `useInvalidateTicketsQueries` gerenciam o cache de tickets via TanStack Query com delay simulado e invalidation centralizada.
+- **Services**: `getTicketsData()` encapsula a chamada ao endpoint `/tickets.json` usando o `api` compartilhado.
+- **Types**: `TicketsResponse`, `TicketItem`, `TicketsResume`, `TicketPriority` e `TicketStatus` garantem tipagem da listagem, filtros e resumo.
+- **Criação e Edição**: Implementada a funcionalidade de criação e edição dos Tickets com persistência de dados.
+
+### Persistência de Dados em Tickets
+- Implementei uma camada de persistência em localStorage para manter um clone da resposta do GET e suportar operações simuladas de criação/edição:
+- Adicionei src/modules/tickets/services/tickets-storage.ts, responsável por garantir o clone (ensureTicketsClone), ler/gravar (getTicketsClone, setTicketsClone) e atualizar (updateTicketsClone) os dados persistidos. O clone é inicializado na primeira vez que o GET roda e permanece disponível após refresh.
+- Atualizei getTicketsData em tickets-service.ts para sempre retornar esse clone persistido ao invés da resposta crua da API.
+- Criei as funções createTicket e updateTicket, que operam sobre o clone usando updateTicketsClone, recalculam o resumo (contagem por status) e persistem o resultado. IDs são gerados via crypto.randomUUID (com fallback).
+- Mantive useTicketsData e os componentes inalterados: após chamar createTicket/updateTicket, basta invalidar/com revalidar a query (ex.: useInvalidateTicketsQueries) para refletir os dados persistidos.
+- Assim, novas criações/edições permanecem mesmo após recarregar a página; para limpar basta remover a chave de storage (há resetTicketsClone caso queira limpar).
+
+### Gestão de Planos
+- **Planos**: Tela de gestão de planos onde você consegue criar um plano personalizado ou apenas selecionar um plano padrão. Mostra beneícios inclusos e Indicadores de cada plano.
+- **Hooks**: `usePlansData` e `useInvalidatePlansQueries` gerenciam o cache de dados dos planos via TanStack Query com delay simulado e invalidation centralizada.
+- **Services**: `getPlansData()` encapsula a chamada ao endpoint `/plans.json` usando o `api` compartilhado.
+- **Types**: `PlansResponse`, `PlanIndicator` e `PlansData` garantem tipagem dos benefícios inclusos e indicadores de cada plano (conversão, ROI e valor).
+
 
 ### 🛠️ Stack Técnica
 - **Next.js 16** (App Router)
@@ -28,6 +63,14 @@ Dashboard administrativo desenvolvido com Next.js 16, TypeScript e Tailwind CSS,
 ```
 src/
 ├── app/              # Rotas do Next.js
+│   ├── login/
+│   ├── (authenticated)/
+│   │   ├── dashboard/
+│   │   ├── tickets/
+│   │   ├── plans/
+│   │   ├── chats/
+│   │   └── view-360/
+│   └── globals.css
 ├── modules/          # Módulos de negócio
 │   ├── auth/
 │   ├── dashboard/
@@ -36,9 +79,10 @@ src/
 │   └── customer360/
 └── lib/              # Configurações básicas
     ├── api/
-    ├── hooks/
+    ├── config/
+    ├── providers/
     ├── query/
-    └── stores/
+    ├── utils/
 ```
 
 ## 🚀 Como Executar
@@ -68,7 +112,7 @@ Acesse: `http://localhost:3000/login`
 3. Digite qualquer senha (máx. 12 caracteres)
 4. Marque "Lembrar de mim" (opcional)
 5. Clique em "Entrar"
-6. Redirecionamento automático para `/dashboard`
+6. Após o sucesso, você volta para a rota que tentou acessar (ex.: `/dashboard`, `/tickets`, etc.)
 
 **Armazenamento:**
 - 🍪 Token salvo em **cookies** (`auth-token`)
@@ -97,18 +141,21 @@ auth/
 - **Stores**: Zustand para estado global
 - **Utils**: Cookies, formatadores, etc
 - **Providers**: Theme provider + Query provider
+- **Services e hooks**: `getDashboardData()`/`getMapData()` e `useDashboardData()`/`useMapData()` com cache via TanStack Query (mapa construído com [react-map-gl](https://github.com/visgl/react-map-gl#readme))
 
 ## 📡 Endpoints Disponíveis
 
 | Endpoint | Descrição |
 |----------|-----------|
 | `/login.json` | Autenticação |
+| `/dash.json` | KPIs, Mapa de Impacto, Gráficos de Métricas e Clientes Ativos |
+| `/map.json` | Dados geográficos para o mapa 360 |
 
 ## 📝 Próximos Passos
 
 - [x] Implementar página de login ✅
-- [ ] Criar dashboard com KPIs
+- [x] Criar dashboard
 - [ ] Desenvolver gestão de tickets
 - [ ] Adicionar simulador de planos
 - [ ] Implementar customer 360
-- [ ] Adicionar guards de rotas protegidas
+- [x] Adicionar guards de rotas protegidas
