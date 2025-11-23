@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { X } from "lucide-react";
+import { CheckCircle2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -36,6 +36,7 @@ import type {
 import { createTicket, updateTicket } from "../services/tickets-service";
 import { useInvalidateTicketsQueries } from "../hooks/useTicketsData";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 
 interface NewTicketModalProps {
   open: boolean;
@@ -101,6 +102,27 @@ function NewTicketModal({ open, onOpenChange, ticket }: NewTicketModalProps) {
     onOpenChange(nextOpen);
   };
 
+  const showTicketCreatedToast = () => {
+    toast.custom((toastId) => (
+      <div className="flex w-[380px] items-start gap-3 rounded-2xl border border-white/15 bg-[#1E86FF] p-4 text-white shadow-[0_10px_40px_rgba(30,134,255,0.5)]">
+        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/20">
+          <CheckCircle2 className="h-5 w-5" />
+        </div>
+        <div className="flex-1">
+          <p className="text-sm font-semibold">{t("tickets:toast.createTitle")}</p>
+          <p className="text-xs text-white/90">{t("tickets:toast.createDescription")}</p>
+        </div>
+        <button
+          type="button"
+          onClick={() => toast.dismiss(toastId)}
+          className="text-white/80 transition hover:text-white"
+        >
+          <X className="h-4 w-4" />
+        </button>
+      </div>
+    ));
+  };
+
   const onSubmit = async (values: TicketFormValues) => {
     if (ticket) {
       updateTicket({
@@ -109,6 +131,7 @@ function NewTicketModal({ open, onOpenChange, ticket }: NewTicketModalProps) {
       });
     } else {
       createTicket(values);
+      showTicketCreatedToast();
     }
 
     invalidateTickets();

@@ -60,6 +60,11 @@ Dashboard administrativo desenvolvido com Next.js 16, TypeScript e Tailwind CSS,
 - **Services**: `getView360Data()` encapsula a chamada ao endpoint `/360-view.json` através do `api` compartilhado.
 - **Types**: `View360Data`, `Client`, `Product`, `Suggestion`, `SuggestionsIA`, `SmartClassification`, `CapturedPhrase` e `AppAction` descrevem o payload completo usado pelos componentes.
 
+### Chat
+- **Chat**: Tela de atendimento com histórico, input e sidebar inteligente (dados do cliente, perfil, ações e sugestões IA).
+- **Hooks**: `useChatsData` centraliza o fetch/cache do transcript, insights e próximos passos; integra com `useView360Data` para enriquecer o sidebar.
+- **Services**: Dados mockados consumidos via TanStack Query, prontos para apontar para um endpoint real quando necessário.
+- **Types**: `ChatMessage`, `ChatTranscript`, `ChatInsight`, `ChatAction` e `ChatsData` tipam mensagens, recomendações e ações futuras.
 
 ### 🛠️ Stack Técnica
 - **Next.js 16** (App Router)

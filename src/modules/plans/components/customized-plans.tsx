@@ -8,8 +8,8 @@ import { useTranslation } from "react-i18next";
 
 const plans = [
   { id: "basic", price: 8990, recommended: false },
-  { id: "intermediate", price: 14590, recommended: false },
-  { id: "premium", price: 22590, recommended: true },
+  { id: "intermediate", price: 14590, recommended: true },
+  { id: "premium", price: 22590, recommended: false },
 ] as const;
 
 const additionalCoverages = [

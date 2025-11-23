@@ -84,6 +84,10 @@
       "saving": "Saving..."
     }
   },
+  "toast": {
+    "createTitle": "Ticket created successfully!",
+    "createDescription": "The ticket was created and is already in your list."
+  },
   "validation": {
     "clientMin": "Enter at least 3 characters",
     "clientMax": "Maximum of 80 characters",
