@@ -1,0 +1,107 @@
+{
+  "header": {
+    "title": "Gestão de Tickets",
+    "new": "Novo Ticket"
+  },
+  "summary": {
+    "open": "Tickets Abertos",
+    "inProgress": "Em andamento",
+    "solvedToday": "Resolvidos hoje",
+    "averageTime": "Tempo Médio",
+    "icons": {
+      "open": "Tickets abertos",
+      "progress": "Tickets em andamento",
+      "resolved": "Tickets resolvidos",
+      "average": "Tempo médio de atendimento"
+    }
+  },
+  "filters": {
+    "searchLabel": "Buscar por ID, cliente ou assunto",
+    "searchPlaceholder": "Buscar por ID, cliente ou assunto...",
+    "status": "Status",
+    "allStatus": "Todos os status",
+    "priority": "Prioridade",
+    "allPriorities": "Todas as prioridades",
+    "responsible": "Responsável",
+    "allResponsible": "Todos os responsáveis"
+  },
+  "table": {
+    "empty": "Nenhum ticket encontrado.",
+    "emptyState": "Nenhum registro para exibir",
+    "range": "Mostrando {{from}}-{{to}} de {{total}} tickets",
+    "rowsPerPage": "Linhas por página",
+    "page": "Página {{page}} de {{total}}",
+    "previous": "Anterior",
+    "next": "Próximo"
+  },
+  "columns": {
+    "id": "ID",
+    "priority": "Prioridade",
+    "client": "Cliente",
+    "subject": "Assunto",
+    "status": "Status",
+    "createdAt": "Criado em",
+    "responsible": "Responsável",
+    "actions": "Ações",
+    "edit": "Editar",
+    "view": "Ver"
+  },
+  "modal": {
+    "newTitle": "Novo Ticket",
+    "editTitle": "Editar Ticket",
+    "newDescription": "Preencha os dados abaixo para registrar um novo ticket na plataforma.",
+    "editDescription": "Atualize as informações necessárias e salve as alterações.",
+    "fields": {
+      "client": {
+        "label": "Nome do cliente",
+        "placeholder": "Nome da pessoa ou empresa que está solicitando o suporte"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "E-mail de contato para atualizações e resposta"
+      },
+      "priority": {
+        "label": "Prioridade",
+        "placeholder": "Selecione o nível de urgência do atendimento"
+      },
+      "responsible": {
+        "label": "Responsável",
+        "placeholder": "Quem será o responsável por esse ticket"
+      },
+      "subject": {
+        "label": "Assunto",
+        "placeholder": "Resumo breve do problema ou solicitação"
+      },
+      "status": {
+        "label": "Status",
+        "placeholder": "Selecione o status do ticket"
+      }
+    },
+    "buttons": {
+      "cancel": "Cancelar",
+      "save": "Salvar",
+      "saveChanges": "Salvar alterações",
+      "saving": "Salvando..."
+    }
+  },
+  "validation": {
+    "clientMin": "Informe pelo menos 3 caracteres",
+    "clientMax": "Máximo de 80 caracteres",
+    "email": "Informe um e-mail válido",
+    "subjectMin": "Assunto muito curto",
+    "subjectMax": "Limite de 200 caracteres",
+    "responsibleMin": "Informe o responsável",
+    "responsibleMax": "Limite de 60 caracteres"
+  },
+  "status": {
+    "open": "Aberto",
+    "inProgress": "Em andamento",
+    "closed": "Fechado"
+  },
+  "priority": {
+    "urgent": "Urgente",
+    "medium": "Média",
+    "low": "Baixa"
+  }
+}
+

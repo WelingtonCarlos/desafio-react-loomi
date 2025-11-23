@@ -1,0 +1,43 @@
+{
+  "brand": {
+    "name": "Nortus",
+    "tagline": "Nortus - Intelligent Management Platform"
+  },
+  "language": {
+    "short": {
+      "pt": "PT-BR",
+      "en": "EN"
+    },
+    "full": {
+      "pt": "Portuguese (Brazil)",
+      "en": "English"
+    }
+  },
+  "actions": {
+    "help": "Help",
+    "call": "Call",
+    "sendEmail": "Send email",
+    "viewMore": "View more",
+    "simulate": "Simulate",
+    "simulateConversation": "Simulate AI conversation",
+    "cancel": "Cancel",
+    "save": "Save",
+    "saveChanges": "Save changes",
+    "saving": "Saving...",
+    "analyzeSegments": "Analyze segments"
+  },
+  "status": {
+    "loading": "Loading...",
+    "error": "Error",
+    "empty": "No records to display"
+  },
+  "labels": {
+    "perMonth": "Per month",
+    "perOnly": "For only:",
+    "inPeriod": "in the period"
+  },
+  "filters": {
+    "all": "All"
+  }
+}
+

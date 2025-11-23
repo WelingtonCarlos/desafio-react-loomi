@@ -1,0 +1,107 @@
+{
+  "header": {
+    "title": "Ticket Management",
+    "new": "New Ticket"
+  },
+  "summary": {
+    "open": "Open tickets",
+    "inProgress": "In progress",
+    "solvedToday": "Resolved today",
+    "averageTime": "Average time",
+    "icons": {
+      "open": "Open tickets",
+      "progress": "Tickets in progress",
+      "resolved": "Resolved tickets",
+      "average": "Average handling time"
+    }
+  },
+  "filters": {
+    "searchLabel": "Search by ID, client or subject",
+    "searchPlaceholder": "Search by ID, client or subject...",
+    "status": "Status",
+    "allStatus": "All statuses",
+    "priority": "Priority",
+    "allPriorities": "All priorities",
+    "responsible": "Assignee",
+    "allResponsible": "All assignees"
+  },
+  "table": {
+    "empty": "No tickets found.",
+    "emptyState": "No records to display",
+    "range": "Showing {{from}}-{{to}} of {{total}} tickets",
+    "rowsPerPage": "Rows per page",
+    "page": "Page {{page}} of {{total}}",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "columns": {
+    "id": "ID",
+    "priority": "Priority",
+    "client": "Client",
+    "subject": "Subject",
+    "status": "Status",
+    "createdAt": "Created on",
+    "responsible": "Assignee",
+    "actions": "Actions",
+    "edit": "Edit",
+    "view": "View"
+  },
+  "modal": {
+    "newTitle": "New Ticket",
+    "editTitle": "Edit Ticket",
+    "newDescription": "Fill out the fields below to register a new ticket on the platform.",
+    "editDescription": "Update the necessary information and save the changes.",
+    "fields": {
+      "client": {
+        "label": "Client name",
+        "placeholder": "Person or company requesting support"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Contact email for updates and replies"
+      },
+      "priority": {
+        "label": "Priority",
+        "placeholder": "Select the urgency level"
+      },
+      "responsible": {
+        "label": "Assignee",
+        "placeholder": "Who will take ownership of this ticket"
+      },
+      "subject": {
+        "label": "Subject",
+        "placeholder": "Brief summary of the issue or request"
+      },
+      "status": {
+        "label": "Status",
+        "placeholder": "Select the ticket status"
+      }
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "save": "Save",
+      "saveChanges": "Save changes",
+      "saving": "Saving..."
+    }
+  },
+  "validation": {
+    "clientMin": "Enter at least 3 characters",
+    "clientMax": "Maximum of 80 characters",
+    "email": "Enter a valid email",
+    "subjectMin": "Subject is too short",
+    "subjectMax": "Limit of 200 characters",
+    "responsibleMin": "Enter the assignee",
+    "responsibleMax": "Limit of 60 characters"
+  },
+  "status": {
+    "open": "Open",
+    "inProgress": "In progress",
+    "closed": "Closed"
+  },
+  "priority": {
+    "urgent": "Urgent",
+    "medium": "Medium",
+    "low": "Low"
+  }
+}
+

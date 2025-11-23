@@ -13,6 +13,7 @@ import {
 import { useEffect, useMemo, useState } from "react";
 
 import type { TicketItem } from "../types/tickets.types";
+import { useTranslation } from "react-i18next";
 
 interface DataTableProps {
   columns: ColumnDef<TicketItem>[];
@@ -30,6 +31,8 @@ export function DataTable({
   pageSizeOptions = FALLBACK_PAGE_OPTIONS,
   defaultPageSize = DEFAULT_PAGE_SIZE,
 }: DataTableProps) {
+  const { t } = useTranslation(["tickets", "common"]);
+
   const [sorting, setSorting] = useState<SortingState>([]);
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
@@ -108,7 +111,7 @@ export function DataTable({
                 colSpan={columns.length}
                 className="py-6 text-center text-slate-500"
               >
-                Nenhum ticket encontrado.
+                {t("tickets:table.empty")}
               </td>
             </tr>
           )}
@@ -118,17 +121,19 @@ export function DataTable({
       <div className="mt-6 flex flex-col gap-4 text-xs text-slate-300 md:flex-row md:items-center md:justify-between">
         <div>
           {totalRows === 0
-            ? "Nenhum registro para exibir"
+            ? t("tickets:table.emptyState")
             : `Mostrando ${firstRow}-${lastRow} de ${totalRows} tickets`}
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
           <label className="flex items-center gap-2 text-slate-400">
-            Linhas por página
+            {t("tickets:table.rowsPerPage")}
             <select
               className="rounded-md border border-slate-700 bg-slate-900 px-2 py-1 text-slate-100"
               value={pagination.pageSize}
-              onChange={(event) => table.setPageSize(Number(event.target.value))}
+              onChange={(event) =>
+                table.setPageSize(Number(event.target.value))
+              }
             >
               {pageSizeOptions.map((size) => (
                 <option key={size} value={size}>
@@ -145,10 +150,13 @@ export function DataTable({
               disabled={!table.getCanPreviousPage()}
               className="rounded-md border border-slate-700 px-3 py-1 text-slate-100 transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              Anterior
+              {t("tickets:table.previous")}
             </button>
             <span className="text-slate-400">
-              Página {pagination.pageIndex + 1} de{" "}
+              {t("tickets:table.page", {
+                page: pagination.pageIndex + 1,
+                total: Math.max(1, table.getPageCount()),
+              })}
               {Math.max(1, table.getPageCount())}
             </span>
             <button
@@ -157,7 +165,7 @@ export function DataTable({
               disabled={!table.getCanNextPage()}
               className="rounded-md border border-slate-700 px-3 py-1 text-slate-100 transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              Próximo
+              {t("tickets:table.next")}
             </button>
           </div>
         </div>

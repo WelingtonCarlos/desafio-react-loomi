@@ -28,9 +28,14 @@ import {
   ticketFormSchema,
   type TicketFormValues,
 } from "../schemas/ticket-form-schema";
-import type { TicketItem, TicketPriority, TicketStatus } from "../types/tickets.types";
+import type {
+  TicketItem,
+  TicketPriority,
+  TicketStatus,
+} from "../types/tickets.types";
 import { createTicket, updateTicket } from "../services/tickets-service";
 import { useInvalidateTicketsQueries } from "../hooks/useTicketsData";
+import { useTranslation } from "react-i18next";
 
 interface NewTicketModalProps {
   open: boolean;
@@ -39,6 +44,8 @@ interface NewTicketModalProps {
 }
 
 function NewTicketModal({ open, onOpenChange, ticket }: NewTicketModalProps) {
+  const { t } = useTranslation(["tickets", "common"]);
+
   const invalidateTickets = useInvalidateTicketsQueries();
   const isEditing = Boolean(ticket);
 
@@ -118,12 +125,14 @@ function NewTicketModal({ open, onOpenChange, ticket }: NewTicketModalProps) {
         <DialogHeader className="p-6 pb-4 border-b border-[#1f2937] flex flex-row items-start justify-between space-y-0">
           <div className="space-y-1">
             <DialogTitle className="text-xl font-medium">
-              {isEditing ? "Editar Ticket" : "Novo Ticket"}
+              {isEditing
+                ? t("tickets:modal.editTitle")
+                : t("tickets:modal.newTitle")}
             </DialogTitle>
             <DialogDescription className="text-gray-400 text-sm">
               {isEditing
-                ? "Atualize as informações necessárias e salve as alterações."
-                : "Preencha os dados abaixo para registrar um novo ticket na plataforma."}
+                ? t("tickets:modal.editDescription")
+                : t("tickets:modal.newDescription")}
             </DialogDescription>
           </div>
           <Button
@@ -144,11 +153,11 @@ function NewTicketModal({ open, onOpenChange, ticket }: NewTicketModalProps) {
                   htmlFor="client-name"
                   className="text-sm font-medium text-gray-200"
                 >
-                  Nome do cliente
+                  {t("tickets:modal.fields.client.label")}
                 </Label>
                 <Input
                   id="client-name"
-                  placeholder="Nome da pessoa ou empresa que está solicitando o suporte"
+                  placeholder={t("tickets:modal.fields.client.placeholder")}
                   className="bg-[#151b26] border-[#1f2937] placeholder:text-gray-500 text-gray-200 h-11"
                   {...register("client")}
                 />
@@ -164,11 +173,11 @@ function NewTicketModal({ open, onOpenChange, ticket }: NewTicketModalProps) {
                   htmlFor="email"
                   className="text-sm font-medium text-gray-200"
                 >
-                  Email
+                  {t("tickets:modal.fields.email.label")}
                 </Label>
                 <Input
                   id="email"
-                  placeholder="E-mail de contato para atualizações e resposta"
+                  placeholder={t("tickets:modal.fields.email.placeholder")}
                   className="bg-[#151b26] border-[#1f2937] placeholder:text-gray-500 text-gray-200 h-11"
                   {...register("email")}
                 />
@@ -182,7 +191,7 @@ function NewTicketModal({ open, onOpenChange, ticket }: NewTicketModalProps) {
                   htmlFor="priority"
                   className="text-sm font-medium text-gray-200"
                 >
-                  Prioridade
+                  {t("tickets:modal.fields.priority.label")}
                 </Label>
                 <Select
                   value={selectedPriority}
@@ -193,7 +202,11 @@ function NewTicketModal({ open, onOpenChange, ticket }: NewTicketModalProps) {
                   }
                 >
                   <SelectTrigger className="bg-[#151b26] border-[#1f2937] text-gray-500 h-11 w-full">
-                    <SelectValue placeholder="Selecione o nível de urgência do atendimento" />
+                    <SelectValue
+                      placeholder={t(
+                        "tickets:modal.fields.priority.placeholder"
+                      )}
+                    />
                   </SelectTrigger>
                   <SelectContent className="bg-[#151b26] border-[#1f2937] text-gray-200 w-full">
                     {TICKET_PRIORITY_VALUES.map((option) => (
@@ -215,11 +228,13 @@ function NewTicketModal({ open, onOpenChange, ticket }: NewTicketModalProps) {
                   htmlFor="assignee"
                   className="text-sm font-medium text-gray-200"
                 >
-                  Responsável
+                  {t("tickets:modal.fields.responsible.label")}
                 </Label>
                 <Input
                   id="assignee"
-                  placeholder="Quem será o responsável por esse ticket"
+                  placeholder={t(
+                    "tickets:modal.fields.responsible.placeholder"
+                  )}
                   className="bg-[#151b26] border-[#1f2937] placeholder:text-gray-500 text-gray-200 h-11"
                   {...register("responsible")}
                 />
@@ -235,11 +250,11 @@ function NewTicketModal({ open, onOpenChange, ticket }: NewTicketModalProps) {
                   htmlFor="subject"
                   className="text-sm font-medium text-gray-200"
                 >
-                  Assunto
+                  {t("tickets:modal.fields.subject.label")}
                 </Label>
                 <Textarea
                   id="subject"
-                  placeholder="Resumo breve do problema ou solicitação"
+                  placeholder={t("tickets:modal.fields.subject.placeholder")}
                   className="bg-[#151b26] border-[#1f2937] placeholder:text-gray-500 text-gray-200 min-h-[100px] resize-none"
                   {...register("subject")}
                 />
@@ -255,7 +270,7 @@ function NewTicketModal({ open, onOpenChange, ticket }: NewTicketModalProps) {
                   htmlFor="status"
                   className="text-sm font-medium text-gray-200"
                 >
-                  Status
+                  {t("tickets:modal.fields.status.label")}
                 </Label>
                 <Select
                   value={selectedStatus}
@@ -266,7 +281,7 @@ function NewTicketModal({ open, onOpenChange, ticket }: NewTicketModalProps) {
                   }
                 >
                   <SelectTrigger className="bg-[#151b26] border-[#1f2937] text-gray-500 h-11 w-full">
-                    <SelectValue placeholder="Selecione o status do ticket" />
+                    <SelectValue placeholder={t("tickets:modal.fields.status.placeholder")} />
                   </SelectTrigger>
                   <SelectContent className="bg-[#151b26] border-[#1f2937] text-gray-200 w-full">
                     {TICKET_STATUS_VALUES.map((option) => (
@@ -292,7 +307,7 @@ function NewTicketModal({ open, onOpenChange, ticket }: NewTicketModalProps) {
               onClick={() => handleDialogChange(false)}
               className="bg-transparent border-[#2d3748] cursor-pointer text-white hover:bg-[#1f2937] hover:text-white px-6"
             >
-              Cancelar
+              {t("tickets:modal.buttons.cancel")}
             </Button>
             <Button
               type="submit"
@@ -300,10 +315,10 @@ function NewTicketModal({ open, onOpenChange, ticket }: NewTicketModalProps) {
               disabled={isSubmitting}
             >
               {isSubmitting
-                ? "Salvando..."
+                ? t("tickets:modal.buttons.saving")
                 : isEditing
-                ? "Salvar alterações"
-                : "Salvar"}
+                ? t("tickets:modal.buttons.saveChanges")
+                : t("tickets:modal.buttons.save")}
             </Button>
           </div>
         </form>

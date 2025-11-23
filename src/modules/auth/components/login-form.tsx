@@ -12,6 +12,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { loginSchema, type LoginFormData } from "../schemas/login-schema";
 import { useLogin } from "../hooks/useLogin";
+import { useTranslation } from "react-i18next";
 
 export function LoginForm() {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -20,6 +21,7 @@ export function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectTo = searchParams.get("redirectTo") || "/dashboard";
+  const { t } = useTranslation("auth");
 
   
   const {
@@ -37,19 +39,19 @@ export function LoginForm() {
     const result = await login({ ...data, rememberMe });
     
     if (result.success) {
-      toast.success(result.message || 'Login realizado com sucesso!');
+      toast.success(result.message || t("messages.loginSuccess"));
       router.push(redirectTo);
     } else {
-      toast.error(result.message || 'Erro ao fazer login. Tente novamente mais tarde.');
+      toast.error(result.message || t("messages.genericError"));
     }
   };
 
   return (
     <div className="w-full max-w-md space-y-8">
       <div className="space-y-2">
-        <h1 className="text-3xl font-medium text-white">Login</h1>
+        <h1 className="text-3xl font-medium text-white">{t("page.title")}</h1>
         <p className="text-gray-400 text-sm">
-          Entre com suas credenciais para acessar a sua conta.
+          {t("page.subtitle")}
         </p>
       </div>
 
@@ -59,7 +61,7 @@ export function LoginForm() {
             <Input
               id="username"
               type="email"
-              placeholder="E-mail*"
+              placeholder={t("form.emailPlaceholder")}
               className="bg-[#0f1623] border-gray-800 text-white placeholder:text-gray-500 h-14 rounded-lg"
               {...register("username")}
             />
@@ -68,7 +70,7 @@ export function LoginForm() {
             <p className="text-sm text-red-500">{errors.username.message}</p>
           )}
           <p className="text-xs text-gray-500">
-            Insira o seu e-mail.
+            {t("form.emailHelper")}
           </p>
         </div>
 
@@ -77,7 +79,7 @@ export function LoginForm() {
             <Input
               id="password"
               type={showPassword ? "text" : "password"}
-              placeholder="Senha*"
+              placeholder={t("form.passwordPlaceholder")}
               maxLength={12}
               className="bg-[#0f1623] border-gray-800 text-white placeholder:text-gray-500 h-14 pr-10 rounded-lg"
               {...register("password")}
@@ -111,14 +113,14 @@ export function LoginForm() {
               htmlFor="remember"
               className="text-sm text-gray-300 font-normal cursor-pointer"
             >
-              Lembrar meu usuário
+              {t("form.rememberMe")}
             </Label>
           </div>
           <a
             href="#"
             className="text-sm text-blue-500 hover:text-blue-400 transition-colors"
           >
-            Esqueci minha senha
+            {t("form.forgotPassword")}
           </a>
         </div>
 
@@ -127,7 +129,7 @@ export function LoginForm() {
           disabled={isLoading}
           className="w-full h-12 cursor-pointer bg-blue-600 hover:bg-blue-700 text-white text-base font-medium rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isLoading ? 'Entrando...' : 'Entrar'}
+          {isLoading ? t("form.submitting") : t("form.submit")}
         </Button>
       </form>
     </div>

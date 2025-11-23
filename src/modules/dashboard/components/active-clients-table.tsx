@@ -2,9 +2,10 @@
 
 import { useMemo, useState } from "react";
 import { useDashboardData } from "../hooks/useDashboardData";
-import { columns } from "./columns";
+import { getColumns } from "./columns";
 import { Filters } from "./filters";
 import { DataTable } from "./table";
+import { useTranslation } from "react-i18next";
 
 
 
@@ -13,6 +14,7 @@ export function ActiveClientsTable() {
   const { data: dashboardResponse, isLoading } = useDashboardData();
   const { data: activeClientsData, filters: activeClientsFilters } = dashboardResponse?.activeClients || {};
 
+  const { t } = useTranslation("dashboard");
 
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("Todos");
@@ -49,7 +51,7 @@ export function ActiveClientsTable() {
       {isLoading ? (
         <div className="h-full w-full animate-pulse rounded-2xl bg-white/5" />
       ) : (
-        <DataTable columns={columns} data={filtered || []} />
+        <DataTable columns={getColumns(t)} data={filtered || []} />
       )}
     </div>
   );

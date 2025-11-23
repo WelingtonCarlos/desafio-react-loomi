@@ -1,0 +1,63 @@
+{
+  "titles": {
+    "header": "Dashboard",
+    "kpiEvolution": "Evolução dos KPI's",
+    "impactMap": "Mapa de impacto por segmento",
+    "clientMap": "Mapa de clientes por região"
+  },
+  "filters": {
+    "searchLabel": "Buscar por nome",
+    "searchPlaceholder": "Buscar por nome...",
+    "status": "Status",
+    "statusPlaceholder": "Status",
+    "secureType": "Tipo de Seguro",
+    "secureTypePlaceholder": "Tipo de Seguro",
+    "location": "Localização",
+    "locationPlaceholder": "Localização",
+    "all": "Todos"
+  },
+  "columns": {
+    "name": "Nome",
+    "secureType": "Tipo de Seguro",
+    "monthValue": "Valor mensal",
+    "status": "Status",
+    "renewalDate": "Renovação",
+    "location": "Região"
+  },
+  "table": {
+    "empty": "Nenhum cliente encontrado."
+  },
+  "map": {
+    "title": "Mapa de clientes por região",
+    "locationsPlaceholder": "Todos os locais",
+    "typesPlaceholder": "Todos os tipos",
+    "locations": {
+      "all": "Todos os locais",
+      "recife": "Recife",
+      "olinda": "Olinda"
+    },
+    "types": {
+      "all": "Todos os tipos",
+      "tourism": "Turismo",
+      "health": "Saúde",
+      "education": "Educação"
+    }
+  },
+  "impact": {
+    "title": "Mapa de impacto por segmento",
+    "cta": "Analisar segmentos"
+  },
+  "kpi": {
+    "title": "Evolução dos KPI's",
+    "labels": {
+      "arpu": "ARPU",
+      "conversion": "Conversão",
+      "churn": "Churn",
+      "retention": "Retenção"
+    }
+  },
+  "messages": {
+    "inPeriod": "no período"
+  }
+}
+

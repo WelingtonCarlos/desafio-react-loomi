@@ -1,0 +1,17 @@
+{
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "tickets": "Gestão de Tickets",
+    "chats": "Chats",
+    "view360": "Visão 360º",
+    "plans": "Planos"
+  },
+  "headers": {
+    "dashboard": "Dashboard",
+    "tickets": "Gestão de Tickets",
+    "plans": "Simulador de Planos",
+    "view360": "Visão 360º",
+    "chats": "Chat"
+  }
+}
+

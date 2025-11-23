@@ -2,14 +2,15 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
+import type { TFunction } from "i18next";
 
 import type { ActiveClientItem } from "../types/dashboard.types";
 
-export const columns: ColumnDef<ActiveClientItem>[] = [
+export const getColumns = (t: TFunction<"dashboard">): ColumnDef<ActiveClientItem>[] => [
   {
     id: "name",
     accessorKey: "name",
-    header: () => <span>Nome</span>,
+    header: () => <span>{t("columns.name")}</span>,
     cell: ({ row }) => {
       const { name, email } = row.original;
       return (
@@ -22,11 +23,11 @@ export const columns: ColumnDef<ActiveClientItem>[] = [
   },
   {
     accessorKey: "secureType",
-    header: "Tipo de Seguro",
+    header: t("columns.secureType"),
   },
   {
     accessorKey: "monthValue",
-    header: "Valor mensal",
+    header: t("columns.monthValue"),
     cell: ({ row }) => {
       const value = row.original.monthValue;
       return new Intl.NumberFormat("pt-BR", {
@@ -37,7 +38,7 @@ export const columns: ColumnDef<ActiveClientItem>[] = [
   },
   {
     accessorKey: "status",
-    header: "Status",
+    header: t("columns.status"),
     cell: ({ row }) => {
       const status = row.original.status;
 
@@ -57,10 +58,10 @@ export const columns: ColumnDef<ActiveClientItem>[] = [
   },
   {
     accessorKey: "renewalDate",
-    header: "Renovação",
+    header: t("columns.renewalDate"),
   },
   {
     accessorKey: "location",
-    header: "Região",
+    header: t("columns.location"),
   },
 ];

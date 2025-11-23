@@ -1,0 +1,63 @@
+{
+  "header": {
+    "title": "Visão 360º"
+  },
+  "common": {
+    "perMonthSuffix": "/mês"
+  },
+  "clientSidebar": {
+    "loading": "Carregando...",
+    "buttons": {
+      "call": "Telefonar",
+      "email": "Enviar e-mail",
+      "viewMore": "Ver mais"
+    },
+    "sections": {
+      "products": "Produtos",
+      "profile": "Perfil",
+      "phrases": "Frases captadas",
+      "appActions": "Ações no app"
+    },
+    "labels": {
+      "serviceDay": "Atendimento do dia",
+      "pageTime": "Tempo na página"
+    }
+  },
+  "aiSuggestions": {
+    "title": "Sugestão da IA",
+    "loading": "Carregando...",
+    "error": "Erro ao carregar sugestões da IA",
+    "empty": "Nenhuma sugestão disponível",
+    "tabs": {
+      "nbo": "NBO",
+      "nba": "NBA",
+      "nbx": "NBX"
+    },
+    "offerLabel": "Oferta recomendada",
+    "valueLabel": "Valor recomendado",
+    "conversionLabel": "Probabilidade de conversão",
+    "reasonWhy": "Motivos (Reason Why)",
+    "cta": "Simular conversa com IA"
+  },
+  "suggestionCards": {
+    "loading": "Carregando...",
+    "priceLabel": "Por apenas:",
+    "priceSuffix": "/mês",
+    "life": {
+      "title": "Seguro de vida individual",
+      "description": "Proteção financeira completa com cobertura por morte e doenças graves"
+    },
+    "home": {
+      "title": "Upgrade do seguro residencial",
+      "description": "Plano Completo com proteção contra danos elétricos e assistência 24h"
+    }
+  },
+  "smartClassification": {
+    "title": "Classificação inteligente",
+    "lifeTimeValue": "Life time value",
+    "churnProbability": "Probabilidade de churn",
+    "expansionScore": "Score de expansão",
+    "retentionScore": "Score de retenção"
+  }
+}
+

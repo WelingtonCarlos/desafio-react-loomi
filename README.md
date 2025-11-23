@@ -4,6 +4,13 @@ Dashboard administrativo desenvolvido com Next.js 16, TypeScript e Tailwind CSS,
 
 ## ✨ Funcionalidades Implementadas
 
+### 🌐 Internacionalização (i18n)
+- **Arquivos de idioma** em `public/locales/{pt-BR,en}` organizados por namespace (`common`, `auth`, `dashboard`, `tickets`, `plans`, `view360`, etc.).
+- **Integração react-i18next** centralizada em `src/lib/i18n.ts` com `LanguageDetector` (persistindo a escolha em `localStorage`/cookies) e tipagem dos namespaces.
+- **Provider global** (`src/lib/providers/i18n-provider.tsx`) envolve o App para disponibilizar `useTranslation` em qualquer componente.
+- **Seletor de idioma** no header do login (`HeaderActions`) usando `i18n.changeLanguage`, refletindo o idioma atual e respeitando o detector.
+- **Módulos migrados**: Login, Dashboard, Tickets (em andamento), Planos e Visão 360 estão sendo traduzidos iterativamente com `t('namespace.chave')`.
+
 ### 🔐 Sistema de Autenticação
 - **Formulário de Login** com validação de e-mail e senha
 - **Integração com API** mock via endpoint `/login.json`
@@ -40,6 +47,19 @@ Dashboard administrativo desenvolvido com Next.js 16, TypeScript e Tailwind CSS,
 - Criei as funções createTicket e updateTicket, que operam sobre o clone usando updateTicketsClone, recalculam o resumo (contagem por status) e persistem o resultado. IDs são gerados via crypto.randomUUID (com fallback).
 - Mantive useTicketsData e os componentes inalterados: após chamar createTicket/updateTicket, basta invalidar/com revalidar a query (ex.: useInvalidateTicketsQueries) para refletir os dados persistidos.
 - Assim, novas criações/edições permanecem mesmo após recarregar a página; para limpar basta remover a chave de storage (há resetTicketsClone caso queira limpar).
+
+### Gestão de Planos
+- **Planos**: Tela de gestão de planos onde você consegue criar um plano personalizado ou apenas selecionar um plano padrão. Mostra beneícios inclusos e Indicadores de cada plano.
+- **Hooks**: `usePlansData` e `useInvalidatePlansQueries` gerenciam o cache de dados dos planos via TanStack Query com delay simulado e invalidation centralizada.
+- **Services**: `getPlansData()` encapsula a chamada ao endpoint `/plans.json` usando o `api` compartilhado.
+- **Types**: `PlansResponse`, `PlanIndicator` e `PlansData` garantem tipagem dos benefícios inclusos e indicadores de cada plano (conversão, ROI e valor).
+
+### Visão 360º
+- **Planos**: Tela Visão 360º combina os componentes `ClientInfoSidebar`, `AISuggestions`, `SmartClassification` e `SuggestionCards` para exibir perfil completo, produtos contratados, frases captadas e ofertas recomendadas pela IA.
+- **Hooks**: `useView360Data` e `useInvalidateView360Queries` cuidam do fetch/cache do endpoint `/360-view.json`, com delay simulado e invalidação centralizada via TanStack Query.
+- **Services**: `getView360Data()` encapsula a chamada ao endpoint `/360-view.json` através do `api` compartilhado.
+- **Types**: `View360Data`, `Client`, `Product`, `Suggestion`, `SuggestionsIA`, `SmartClassification`, `CapturedPhrase` e `AppAction` descrevem o payload completo usado pelos componentes.
+
 
 ### 🛠️ Stack Técnica
 - **Next.js 16** (App Router)
@@ -148,7 +168,7 @@ auth/
 
 - [x] Implementar página de login ✅
 - [x] Criar dashboard
-- [ ] Desenvolver gestão de tickets
-- [ ] Adicionar simulador de planos
-- [ ] Implementar customer 360
+- [x] Desenvolver gestão de tickets
+- [x] Adicionar simulador de planos
+- [x] Implementar customer 360
 - [x] Adicionar guards de rotas protegidas

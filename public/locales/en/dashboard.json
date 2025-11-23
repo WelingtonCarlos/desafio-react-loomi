@@ -1,0 +1,63 @@
+{
+  "titles": {
+    "header": "Dashboard",
+    "kpiEvolution": "KPI trends",
+    "impactMap": "Impact map by segment",
+    "clientMap": "Clients by region"
+  },
+  "filters": {
+    "searchLabel": "Search by name",
+    "searchPlaceholder": "Search by name...",
+    "status": "Status",
+    "statusPlaceholder": "Status",
+    "secureType": "Insurance type",
+    "secureTypePlaceholder": "Insurance type",
+    "location": "Location",
+    "locationPlaceholder": "Location",
+    "all": "All"
+  },
+  "columns": {
+    "name": "Name",
+    "secureType": "Insurance type",
+    "monthValue": "Monthly value",
+    "status": "Status",
+    "renewalDate": "Renewal",
+    "location": "Region"
+  },
+  "table": {
+    "empty": "No clients found."
+  },
+  "map": {
+    "title": "Clients by region",
+    "locationsPlaceholder": "All locations",
+    "typesPlaceholder": "All types",
+    "locations": {
+      "all": "All locations",
+      "recife": "Recife",
+      "olinda": "Olinda"
+    },
+    "types": {
+      "all": "All types",
+      "tourism": "Tourism",
+      "health": "Health",
+      "education": "Education"
+    }
+  },
+  "impact": {
+    "title": "Impact map by segment",
+    "cta": "Analyze segments"
+  },
+  "kpi": {
+    "title": "KPI trends",
+    "labels": {
+      "arpu": "ARPU",
+      "conversion": "Conversion",
+      "churn": "Churn",
+      "retention": "Retention"
+    }
+  },
+  "messages": {
+    "inPeriod": "in the period"
+  }
+}
+

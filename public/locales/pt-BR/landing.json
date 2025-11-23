@@ -1,0 +1,19 @@
+{
+  "hero": {
+    "title": "Para começar, edite o arquivo page.tsx.",
+    "description": "Procurando um ponto de partida ou mais instruções? Acesse os Templates ou o centro de Aprendizado.",
+    "links": {
+      "templates": "Templates",
+      "learning": "Aprendizado"
+    }
+  },
+  "cta": {
+    "deploy": "Implantar agora",
+    "docs": "Documentação"
+  },
+  "assets": {
+    "nextLogoAlt": "Logotipo do Next.js",
+    "vercelLogoAlt": "Logomarca da Vercel"
+  }
+}
+
