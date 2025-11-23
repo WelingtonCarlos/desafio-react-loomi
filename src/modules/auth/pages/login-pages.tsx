@@ -1,5 +1,6 @@
 "use client"
 
+import { Suspense } from "react"
 import { LoginForm } from "../components/login-form"
 import { HeaderActions } from "../components/header-actions"
 import Image from "next/image"
@@ -20,7 +21,9 @@ export function LoginPage() {
         </div>
 
         <div className="mt-12">
-          <LoginForm />
+          <Suspense fallback={null}>
+            <LoginForm />
+          </Suspense>
         </div>
       </div>
 
