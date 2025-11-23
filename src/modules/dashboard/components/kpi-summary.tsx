@@ -3,34 +3,42 @@
 import { MetricCard } from "./metric-card";
 import type { KpisResume } from "../types/dashboard.types";
 import { useDashboardData } from "../hooks/useDashboardData";
+import { useTranslation } from "react-i18next";
+
+type KpiLabelKey =
+  | "kpi.labels.arpu"
+  | "kpi.labels.conversion"
+  | "kpi.labels.retention"
+  | "kpi.labels.churn";
 
 const METRIC_CONFIG: Array<{
   key: keyof KpisResume;
-  label: string;
+  labelKey: KpiLabelKey;
   formatValue?: (value: number) => string;
 }> = [
   {
     key: "arpu",
-    label: "ARPU",
+    labelKey: "kpi.labels.arpu",
     formatValue: (value) => `R$ ${value.toFixed(2)}`,
   },
   {
     key: "conversion",
-    label: "Conversão",
+    labelKey: "kpi.labels.conversion",
   },
   {
     key: "retention",
-    label: "Retenção",
+    labelKey: "kpi.labels.retention",
   },
   {
     key: "churn",
-    label: "Churn",
+    labelKey: "kpi.labels.churn",
   },
 ];
 
 export function KpiSummary() {
   const { data: dashboardResponse, isLoading } = useDashboardData();
   const resume = dashboardResponse?.kpisResume;
+  const { t } = useTranslation("dashboard");
 
   if (isLoading) {
     return (
@@ -47,7 +55,7 @@ export function KpiSummary() {
 
   return (
     <div className="grid grid-cols-2 gap-4 flex-1">
-      {METRIC_CONFIG.map(({ key, label, formatValue }) => {
+      {METRIC_CONFIG.map(({ key, labelKey, formatValue }) => {
         const metric = resume?.[key];
         const value = metric
           ? formatValue
@@ -60,12 +68,13 @@ export function KpiSummary() {
         return (
           <MetricCard
             key={key}
-            label={label}
+            label={t(labelKey)}
             value={value}
             change={change}
             trend={isPositive ? "up" : "down"}
             trendColor={isPositive ? "text-green-500" : "text-red-500"}
             hasArrow
+            periodLabel={t("messages.inPeriod")}
           />
         );
       })}

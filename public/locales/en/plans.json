@@ -1,0 +1,39 @@
+{
+  "header": {
+    "title": "Plan Simulator"
+  },
+  "customizer": {
+    "title": "Personalized plans",
+    "plans": {
+      "basic": "Basic",
+      "intermediate": "Intermediate",
+      "premium": "Premium"
+    },
+    "recommended": "Recommended",
+    "vehicleValue": "Vehicle value",
+    "age": "Customer age",
+    "ageSuffix": "years",
+    "ranges": {
+      "vehicleMin": "R$ 10,000",
+      "vehicleMax": "R$ 500,000",
+      "ageMin": "18 years",
+      "ageMax": "90 years"
+    },
+    "coveragesTitle": "Additional coverages",
+    "coverages": {
+      "theft": "Theft and robbery coverage",
+      "collision": "Collision damage",
+      "fire": "Fire coverage",
+      "natural": "Natural events (hail, flood)"
+    }
+  },
+  "includedBenefits": {
+    "title": "Included benefits"
+  },
+  "indicators": {
+    "title": "Indicators",
+    "conversion": "Conversion",
+    "roi": "ROI"
+  }
+}
+

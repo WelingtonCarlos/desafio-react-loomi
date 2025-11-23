@@ -1,0 +1,37 @@
+{
+  "title": "Chat",
+  "messages": {
+    "empty": "Nenhuma mensagem disponível.",
+    "actions": {
+      "sendProposal": "Enviar proposta",
+      "call": "Fazer ligação",
+      "viewHistory": "Ver histórico"
+    }
+  },
+  "input": {
+    "placeholder": "Escreva aqui..."
+  },
+  "sidebar": {
+    "products": "Produtos",
+    "profile": "Perfil",
+    "appActions": "Ações no app",
+    "aiSuggestion": "Sugestão da IA",
+    "useSuggestion": "Utilizar sugestão",
+    "timeOnPage": "Tempo na página {{time}}",
+    "noData": "Sem dados disponíveis",
+    "actions": {
+      "call": "Telefonar",
+      "email": "Enviar e-mail",
+      "viewMore": "Ver mais"
+    },
+    "recommendedOffers": {
+      "title": "Ofertas recomendadas",
+      "planTitle": "Plano de proteção completa",
+      "benefits": "Vida Modular • Internação • Proteção de Renda • Itens Portáteis",
+      "normalPrice": "Valor normal:",
+      "discountPrice": "Valor com desconto:",
+      "yearlySaving": "Economia anual:"
+    }
+  }
+}
+

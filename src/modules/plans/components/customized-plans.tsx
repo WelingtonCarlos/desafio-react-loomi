@@ -1,67 +1,79 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Slider } from "@/components/ui/slider"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Label } from "@/components/ui/label"
+import { useState } from "react";
+import { Slider } from "@/components/ui/slider";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { useTranslation } from "react-i18next";
 
 const plans = [
-  { name: "Básico", price: 8990, recommended: false },
-  { name: "Intermediário", price: 14590, recommended: false },
-  { name: "Premium", price: 22590, recommended: true },
-]
+  { id: "basic", price: 8990, recommended: false },
+  { id: "intermediate", price: 14590, recommended: true },
+  { id: "premium", price: 22590, recommended: false },
+] as const;
 
 const additionalCoverages = [
-  { id: "theft", label: "Cobertura contra roubo e furto", price: 2500 },
-  { id: "collision", label: "Danos por colisão", price: 3500 },
-  { id: "fire", label: "Cobertura contra incêndio", price: 2000 },
-  { id: "natural", label: "Fenômenos naturais (granizo, enchente)", price: 3000 },
-]
+  { id: "theft", price: 2500 },
+  { id: "collision", price: 3500 },
+  { id: "fire", price: 2000 },
+  {
+    id: "natural",
+    price: 3000,
+  },
+] as const;
 
-const centsToReais = (cents: number) => cents / 100
+const centsToReais = (cents: number) => cents / 100;
+
+const sliderCustomClasses =
+  "**:data-[slot=slider-track]:bg-gray-700 **:data-[slot=slider-range]:bg-[#1E86FF] **:data-[slot=slider-thumb]:bg-[#1E86FF] **:data-[slot=slider-thumb]:border-[#1E86FF]";
 
 export function CustomizedPlans() {
-  const [selectedPlan, setSelectedPlan] = useState(plans.find((p) => p.recommended) || plans[0])
-  const [vehicleValue, setVehicleValue] = useState([50000])
-  const [clientAge, setClientAge] = useState([28])
+  const { t } = useTranslation(["plans", "common"])
+
+  const initialPlan = (plans.find((p) => p.recommended) || plans[0]) as (typeof plans)[number]
+
+  const [selectedPlan, setSelectedPlan] = useState<(typeof plans)[number]>(
+    initialPlan
+  );
+  const [vehicleValue, setVehicleValue] = useState([50000]);
+  const [clientAge, setClientAge] = useState([28]);
   const [coverages, setCoverages] = useState(
-    additionalCoverages.reduce(
-      (acc, coverage) => {
-        acc[coverage.id] = false
-        return acc
-      },
-      {} as Record<string, boolean>,
-    ),
-  )
+    additionalCoverages.reduce((acc, coverage) => {
+      acc[coverage.id] = false;
+      return acc;
+    }, {} as Record<string, boolean>)
+  );
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat("pt-BR", {
       style: "currency",
       currency: "BRL",
-    }).format(value)
-  }
+    }).format(value);
+  };
 
   const calculateTotal = () => {
     const coveragesTotal = additionalCoverages
       .filter((coverage) => coverages[coverage.id])
-      .reduce((sum, coverage) => sum + coverage.price, 0)
+      .reduce((sum, coverage) => sum + coverage.price, 0);
 
-    return selectedPlan.price + coveragesTotal
-  }
+    return selectedPlan.price + coveragesTotal;
+  };
 
   return (
-    <div className="bg-[#151a23] border border-white/5 rounded-3xl p-8">
-      <h2 className="text-xl font-semibold text-white mb-6">Planos personalizados</h2>
+    <div className="bg-linear-to-br from-[#28335098] via-[#28335098 ]/60 to-[#28335098 ]/10 border border-white/5 rounded-3xl p-8">
+      <h2 className="text-xl font-semibold text-white mb-6">
+        {t("plans:customizer.title")}
+      </h2>
 
       {/* Plan Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         {plans.map((plan) => {
-          const isSelected = selectedPlan.name === plan.name
-          const totalPrice = isSelected ? calculateTotal() : plan.price
+          const isSelected = selectedPlan.id === plan.id;
+          const totalPrice = isSelected ? calculateTotal() : plan.price;
 
           return (
             <div
-              key={plan.name}
+              key={plan.id}
               onClick={() => setSelectedPlan(plan)}
               className={`relative bg-[#1a2332] rounded-2xl p-6 transition-all cursor-pointer hover:scale-105 ${
                 isSelected
@@ -72,22 +84,30 @@ export function CustomizedPlans() {
               {plan.recommended && (
                 <div className="absolute -top-3 right-6">
                   <span className="bg-[#00D9C0] text-[#0a0f1a] text-xs font-semibold px-3 py-1 rounded-full">
-                    Recomendado
+                    {t("plans:customizer.recommended")}
                   </span>
                 </div>
               )}
-              <h3 className="text-white font-medium mb-4">{plan.name}</h3>
-              <div className="text-3xl font-bold text-white mb-1">{formatCurrency(centsToReais(totalPrice))}</div>
-              <p className="text-sm text-gray-400">Por mês</p>
+              <h3 className="text-white font-medium mb-4">
+                {t(`plans:customizer.plans.${plan.id}`)}
+              </h3>
+              <div className="text-3xl font-bold text-white mb-1">
+                {formatCurrency(centsToReais(totalPrice))}
+              </div>
+              <p className="text-sm text-gray-400">
+                {t("common:labels.perMonth")}
+              </p>
             </div>
-          )
+          );
         })}
       </div>
 
       {/* Vehicle Value Slider */}
       <div className="mb-8">
         <div className="flex justify-between items-center mb-3">
-          <Label className="text-white font-medium">Valor do veículo: {formatCurrency(vehicleValue[0])}</Label>
+          <Label className="text-white font-medium">
+            {t("plans:customizer.vehicleValue")}: {formatCurrency(vehicleValue[0])}
+          </Label>
         </div>
         <Slider
           value={vehicleValue}
@@ -95,18 +115,20 @@ export function CustomizedPlans() {
           min={10000}
           max={500000}
           step={1000}
-          className="[&_[data-slot=slider-track]]:bg-gray-700 [&_[data-slot=slider-range]]:bg-[#1E86FF] [&_[data-slot=slider-thumb]]:bg-[#1E86FF] [&_[data-slot=slider-thumb]]:border-[#1E86FF]"
+          className={sliderCustomClasses}
         />
         <div className="flex justify-between text-xs text-gray-500 mt-2">
-          <span>R$ 10.000</span>
-          <span>R$ 500.000</span>
+          <span>{t("plans:customizer.ranges.vehicleMin")}</span>
+          <span>{t("plans:customizer.ranges.vehicleMax")}</span>
         </div>
       </div>
 
       {/* Client Age Slider */}
       <div className="mb-8">
         <div className="flex justify-between items-center mb-3">
-          <Label className="text-white font-medium">Idade do Cliente: {clientAge[0]} anos</Label>
+          <Label className="text-white font-medium">
+            {t("plans:customizer.age")}: {clientAge[0]} {t("plans:customizer.ageSuffix")}
+          </Label>
         </div>
         <Slider
           value={clientAge}
@@ -114,36 +136,48 @@ export function CustomizedPlans() {
           min={18}
           max={90}
           step={1}
-          className="[&_[data-slot=slider-track]]:bg-gray-700 [&_[data-slot=slider-range]]:bg-[#1E86FF] [&_[data-slot=slider-thumb]]:bg-[#1E86FF] [&_[data-slot=slider-thumb]]:border-[#1E86FF]"
+          className={sliderCustomClasses}
         />
         <div className="flex justify-between text-xs text-gray-500 mt-2">
-          <span>18 anos</span>
-          <span>90 anos</span>
+          <span>{t("plans:customizer.ranges.ageMin")}</span>
+          <span>{t("plans:customizer.ranges.ageMax")}</span>
         </div>
       </div>
 
       {/* Additional Coverages */}
       <div>
-        <h3 className="text-white font-medium mb-4">Coberturas Adicionais</h3>
+        <h3 className="text-white font-medium mb-4">
+          {t("plans:customizer.coveragesTitle")}
+        </h3>
         <div className="space-y-4">
           {additionalCoverages.map((coverage) => (
-            <div key={coverage.id} className="flex items-center justify-between">
+            <div
+              key={coverage.id}
+              className="flex items-center justify-between"
+            >
               <div className="flex items-center gap-3">
                 <Checkbox
                   id={coverage.id}
                   checked={coverages[coverage.id]}
-                  onCheckedChange={(checked) => setCoverages({ ...coverages, [coverage.id]: !!checked })}
+                  onCheckedChange={(checked) =>
+                    setCoverages({ ...coverages, [coverage.id]: !!checked })
+                  }
                   className="data-[state=checked]:bg-[#1E86FF] data-[state=checked]:border-[#1E86FF]"
                 />
-                <Label htmlFor={coverage.id} className="text-gray-300 cursor-pointer text-sm">
-                  {coverage.label}
+                <Label
+                  htmlFor={coverage.id}
+                  className="text-gray-300 cursor-pointer text-sm"
+                >
+                  {t(`plans:customizer.coverages.${coverage.id}`)}
                 </Label>
               </div>
-              <span className="text-white font-medium text-sm">+ {formatCurrency(centsToReais(coverage.price))}</span>
+              <span className="text-white font-medium text-sm">
+                + {formatCurrency(centsToReais(coverage.price))}
+              </span>
             </div>
           ))}
         </div>
       </div>
     </div>
-  )
+  );
 }

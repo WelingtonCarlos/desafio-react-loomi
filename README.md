@@ -4,6 +4,13 @@ Dashboard administrativo desenvolvido com Next.js 16, TypeScript e Tailwind CSS,
 
 ## ✨ Funcionalidades Implementadas
 
+### 🌐 Internacionalização (i18n)
+- **Arquivos de idioma** em `public/locales/{pt-BR,en}` organizados por namespace (`common`, `auth`, `dashboard`, `tickets`, `plans`, `view360`, etc.).
+- **Integração react-i18next** centralizada em `src/lib/i18n.ts` com `LanguageDetector` (persistindo a escolha em `localStorage`/cookies) e tipagem dos namespaces.
+- **Provider global** (`src/lib/providers/i18n-provider.tsx`) envolve o App para disponibilizar `useTranslation` em qualquer componente.
+- **Seletor de idioma** no header do login (`HeaderActions`) usando `i18n.changeLanguage`, refletindo o idioma atual e respeitando o detector.
+- **Módulos migrados**: Login, Dashboard, Tickets (em andamento), Planos e Visão 360 estão sendo traduzidos iterativamente com `t('namespace.chave')`.
+
 ### 🔐 Sistema de Autenticação
 - **Formulário de Login** com validação de e-mail e senha
 - **Integração com API** mock via endpoint `/login.json`
@@ -47,6 +54,17 @@ Dashboard administrativo desenvolvido com Next.js 16, TypeScript e Tailwind CSS,
 - **Services**: `getPlansData()` encapsula a chamada ao endpoint `/plans.json` usando o `api` compartilhado.
 - **Types**: `PlansResponse`, `PlanIndicator` e `PlansData` garantem tipagem dos benefícios inclusos e indicadores de cada plano (conversão, ROI e valor).
 
+### Visão 360º
+- **Planos**: Tela Visão 360º combina os componentes `ClientInfoSidebar`, `AISuggestions`, `SmartClassification` e `SuggestionCards` para exibir perfil completo, produtos contratados, frases captadas e ofertas recomendadas pela IA.
+- **Hooks**: `useView360Data` e `useInvalidateView360Queries` cuidam do fetch/cache do endpoint `/360-view.json`, com delay simulado e invalidação centralizada via TanStack Query.
+- **Services**: `getView360Data()` encapsula a chamada ao endpoint `/360-view.json` através do `api` compartilhado.
+- **Types**: `View360Data`, `Client`, `Product`, `Suggestion`, `SuggestionsIA`, `SmartClassification`, `CapturedPhrase` e `AppAction` descrevem o payload completo usado pelos componentes.
+
+### Chat
+- **Chat**: Tela de atendimento com histórico, input e sidebar inteligente (dados do cliente, perfil, ações e sugestões IA).
+- **Hooks**: `useChatsData` centraliza o fetch/cache do transcript, insights e próximos passos; integra com `useView360Data` para enriquecer o sidebar.
+- **Services**: Dados mockados consumidos via TanStack Query, prontos para apontar para um endpoint real quando necessário.
+- **Types**: `ChatMessage`, `ChatTranscript`, `ChatInsight`, `ChatAction` e `ChatsData` tipam mensagens, recomendações e ações futuras.
 
 ### 🛠️ Stack Técnica
 - **Next.js 16** (App Router)
@@ -155,7 +173,7 @@ auth/
 
 - [x] Implementar página de login ✅
 - [x] Criar dashboard
-- [ ] Desenvolver gestão de tickets
-- [ ] Adicionar simulador de planos
-- [ ] Implementar customer 360
+- [x] Desenvolver gestão de tickets
+- [x] Adicionar simulador de planos
+- [x] Implementar customer 360
 - [x] Adicionar guards de rotas protegidas

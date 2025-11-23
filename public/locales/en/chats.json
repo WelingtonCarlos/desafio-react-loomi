@@ -1,0 +1,37 @@
+{
+  "title": "Chat",
+  "messages": {
+    "empty": "No messages yet.",
+    "actions": {
+      "sendProposal": "Send proposal",
+      "call": "Make a call",
+      "viewHistory": "View history"
+    }
+  },
+  "input": {
+    "placeholder": "Type your message..."
+  },
+  "sidebar": {
+    "products": "Products",
+    "profile": "Profile",
+    "appActions": "In-app actions",
+    "aiSuggestion": "AI suggestion",
+    "useSuggestion": "Use suggestion",
+    "timeOnPage": "Time on page {{time}}",
+    "noData": "No data available",
+    "actions": {
+      "call": "Call",
+      "email": "Send email",
+      "viewMore": "View more"
+    },
+    "recommendedOffers": {
+      "title": "Recommended offers",
+      "planTitle": "Complete protection plan",
+      "benefits": "Modular Life • Hospitalization • Income Protection • Portable items",
+      "normalPrice": "Regular price:",
+      "discountPrice": "Discounted price:",
+      "yearlySaving": "Yearly savings:"
+    }
+  }
+}
+
