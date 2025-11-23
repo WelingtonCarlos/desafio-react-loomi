@@ -1,13 +1,46 @@
+"use client";
+
+import { PageHeader } from "@/modules/navigation/components/page-header";
+import { ChatMessages } from "../components/chat-messages";
+import { ChatInput } from "../components/chat-input";
+import { ChatSidebar } from "../components/chat-sidebar";
+import {
+  SkeletonChatInput,
+  SkeletonChatMessages,
+  SkeletonChatSidebar,
+} from "../components/skeletons-chat";
+import { useChatsData } from "../hooks/useChatsData";
+import { useTranslation } from "react-i18next";
+
 export function ChatPage() {
-    return (
-      <div className="p-8">
-        <header className="mb-8">
-          <h1 className="text-2xl font-medium text-white">Chat</h1>
-        </header>
-        <div className="grid place-items-center h-[60vh] border-2 border-dashed border-gray-800 rounded-2xl bg-[#0f1623]/50">
-          <p className="text-gray-500">Chat Content Placeholder</p>
+  const { data: chatsData, isLoading } = useChatsData();
+  const { t } = useTranslation("chats");
+
+  return (
+    <div className="mx-auto flex flex-col">
+      <PageHeader title={t("title")} />
+
+      <div className="flex h-[calc(100vh-102px)] flex-col-reverse  lg:flex-row">
+        <div className="flex flex-1 flex-col border border-white/5 bg-[#050816] overflow-hidden">
+          {isLoading ? (
+            <SkeletonChatMessages />
+          ) : (
+            <ChatMessages data={chatsData} />
+          )}
+
+          {isLoading ? <SkeletonChatInput /> : <ChatInput />}
+        </div>
+
+        <div className="w-full shrink-0 lg:w-[360px]">
+          <div className="h-full border border-white/5 overflow-hidden">
+            {isLoading ? (
+              <SkeletonChatSidebar />
+            ) : (
+              <ChatSidebar data={chatsData} />
+            )}
+          </div>
         </div>
       </div>
-    )
-  }
-  
+    </div>
+  );
+}

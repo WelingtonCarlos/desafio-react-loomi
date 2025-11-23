@@ -84,6 +84,10 @@
       "saving": "Salvando..."
     }
   },
+  "toast": {
+    "createTitle": "Ticket criado com sucesso!",
+    "createDescription": "O ticket foi criado e já está na sua lista."
+  },
   "validation": {
     "clientMin": "Informe pelo menos 3 caracteres",
     "clientMax": "Máximo de 80 caracteres",
