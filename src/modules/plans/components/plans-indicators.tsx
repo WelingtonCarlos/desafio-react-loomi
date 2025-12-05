@@ -5,9 +5,17 @@ import { useErrorToast } from "@/hooks/use-error-toast"
 import { usePlanCustomizerStore } from "@/lib/stores/plan-customizer-store"
 import { memo, useMemo } from "react"
 import { useTranslation } from "react-i18next"
-import { ADDITIONAL_COVERAGES } from "../constants/customizer"
+import { ADDITIONAL_COVERAGES, PLANS_CONFIG } from "../constants/customizer"
 import { usePlansData } from "../hooks/usePlansData"
 import { SkeletonPlansIndicators } from "./skeletons-plans"
+type PlanId = (typeof PLANS_CONFIG)[number]["id"]
+
+const PLAN_LABEL_KEYS: Record<PlanId, `plans:customizer.plans.${PlanId}`> = {
+  basic: "plans:customizer.plans.basic",
+  intermediate: "plans:customizer.plans.intermediate",
+  premium: "plans:customizer.plans.premium",
+}
+
 
 function PlansIndicatorsComponent() {
   const { t } = useTranslation(["plans", "common"]);
@@ -84,7 +92,10 @@ function PlansIndicatorsComponent() {
 
       <div className="mb-6 rounded-2xl border border-soft bg-surface-contrast/60 p-4 text-sm text-muted-soft">
         <p className="font-medium">
-          Plano selecionado: {t(`plans:customizer.plans.${selectedPlanId}`)}
+          Plano selecionado:{" "}
+          {t(
+            PLAN_LABEL_KEYS[selectedPlanId as PlanId] ?? PLAN_LABEL_KEYS.basic
+          )}
         </p>
         <p className="text-muted-soft">
           {t("plans:customizer.vehicleValue")}: {formatter.format(vehicleValue)} •{" "}
