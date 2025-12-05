@@ -2,14 +2,15 @@
 
 import { Input } from "@/components/ui/input";
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
-import type { TicketPriority, TicketStatus } from "../types/tickets.types";
+import { memo } from "react";
 import { useTranslation } from "react-i18next";
+import type { TicketPriority, TicketStatus } from "../types/tickets.types";
 
 export const ALL_SELECT_OPTION_VALUE = "all" as const;
 
@@ -32,8 +33,8 @@ interface FiltersProps {
   };
 }
 
-export function Filters({ search, lists }: FiltersProps) {
-  const { t } = useTranslation(["tickets", "common"])
+function FiltersComponent({ search, lists }: FiltersProps) {
+  const { t } = useTranslation(["tickets", "common"]);
 
   return (
     <div className="mb-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
@@ -124,3 +125,6 @@ export function Filters({ search, lists }: FiltersProps) {
     </div>
   );
 }
+
+export const Filters = memo(FiltersComponent);
+Filters.displayName = "TicketsFilters";

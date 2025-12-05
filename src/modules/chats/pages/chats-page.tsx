@@ -1,20 +1,57 @@
 "use client";
 
-import { PageHeader } from "@/modules/navigation/components/page-header";
-import { ChatMessages } from "../components/chat-messages";
-import { ChatInput } from "../components/chat-input";
-import { ChatSidebar } from "../components/chat-sidebar";
+import { ErrorState } from "@/components/error-state"
+import { useErrorToast } from "@/hooks/use-error-toast"
+import { PageHeader } from "@/modules/navigation/components/page-header"
+import { ChatMessages } from "../components/chat-messages"
+import { ChatInput } from "../components/chat-input"
+import { ChatSidebar } from "../components/chat-sidebar"
 import {
   SkeletonChatInput,
   SkeletonChatMessages,
   SkeletonChatSidebar,
 } from "../components/skeletons-chat";
-import { useChatsData } from "../hooks/useChatsData";
-import { useTranslation } from "react-i18next";
+import { useChatsData } from "../hooks/useChatsData"
+import { useTranslation } from "react-i18next"
 
 export function ChatPage() {
-  const { data: chatsData, isLoading } = useChatsData();
-  const { t } = useTranslation("chats");
+  const {
+    data: chatsData,
+    isLoading,
+    isError,
+    refetch,
+  } = useChatsData()
+  const { t } = useTranslation("chats")
+
+  useErrorToast(isError, {
+    message: t("errors.listTitle", {
+      defaultValue: "Não foi possível carregar a conversa.",
+    }),
+    description: t("errors.listDescription", {
+      defaultValue: "Verifique sua conexão e tente novamente.",
+    }),
+    toastId: "chat-page-error",
+  })
+
+  if (isError) {
+    return (
+      <div className="mx-auto flex flex-col">
+        <PageHeader title={t("title")} />
+        <div className="p-6">
+          <ErrorState
+            title={t("errors.listTitle", {
+              defaultValue: "Não foi possível carregar a conversa.",
+            })}
+            description={t("errors.listDescription", {
+              defaultValue: "Verifique sua conexão e tente novamente.",
+            })}
+            onRetry={refetch}
+            className="h-[300px] bg-gradient-glass border border-soft"
+          />
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="mx-auto flex flex-col">

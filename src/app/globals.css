@@ -75,6 +75,37 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+  --surface-base: #050a14;
+  --surface-panel: #0f1623;
+  --surface-card: #161d30;
+  --surface-contrast: #1a2332;
+  --surface-contrast-strong: #23283b;
+  --surface-sidebar: #20273E;
+  --border-soft: rgba(255, 255, 255, 0.05);
+  --border-strong: rgba(31, 41, 55, 1);
+  --border-panel: #1f2937;
+  --brand: #1E86FF;
+  --brand-foreground: #ffffff;
+  --brand-strong: #1b77e3;
+  --brand-shadow: rgba(30, 134, 255, 0.3);
+  --brand-soft: rgba(30, 134, 255, 0.2);
+  --success: #00D9C0;
+  --success-foreground: #0a0f1a;
+  --muted-soft: #9ca3af;
+  --gradient-glass: linear-gradient(
+    135deg,
+    #283350f9 0%,
+    #28335099 60%,
+    #28335019 100%
+  );
+  --gradient-slate: linear-gradient(
+    135deg,
+    #36446bf9 0%,
+    #36446b99 60%,
+    #36446b19 100%
+  );
+  --gradient-brand-card: linear-gradient(135deg, #52B3FF 0%, #3B8CFF 55%, #2A6DFF 100%);
+  --shadow-brand: 0 0 20px var(--brand-shadow);
 }
 
 @layer base {
@@ -83,5 +114,80 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .bg-surface-base {
+    background-color: var(--surface-base);
+  }
+  .bg-surface-panel {
+    background-color: var(--surface-panel);
+  }
+  .bg-surface-card {
+    background-color: var(--surface-card);
+  }
+  .bg-surface-contrast {
+    background-color: var(--surface-contrast);
+  }
+  .bg-surface-contrast-strong {
+    background-color: var(--surface-contrast-strong);
+  }
+  .bg-sidebar {
+    background-color: var(--surface-sidebar);
+  }
+  .text-sidebar-foreground {
+    color: var(--sidebar-foreground);
+  }
+  .border-sidebar {
+    border-color: var(--sidebar-border);
+  }
+  .border-soft {
+    border-color: var(--border-soft);
+  }
+  .border-strong {
+    border-color: var(--border-strong);
+  }
+  .border-panel {
+    border-color: var(--border-panel);
+  }
+  .text-muted-soft {
+    color: var(--muted-soft);
+  }
+  .placeholder-muted::placeholder {
+    color: var(--muted-soft);
+  }
+  .bg-brand {
+    background-color: var(--brand);
+  }
+  .bg-brand-soft {
+    background-color: var(--brand-soft);
+  }
+  .text-brand {
+    color: var(--brand);
+  }
+  .text-brand-foreground {
+    color: var(--brand-foreground);
+  }
+  .hover\:bg-brand-strong:hover {
+    background-color: var(--brand-strong);
+  }
+  .bg-success {
+    background-color: var(--success);
+  }
+  .text-success-foreground {
+    color: var(--success-foreground);
+  }
+  .bg-gradient-glass {
+    background-image: var(--gradient-glass);
+  }
+  .bg-gradient-slate {
+    background-image: var(--gradient-slate);
+  }
+  .bg-gradient-brand-card {
+    background-image: var(--gradient-brand-card);
+  }
+  .shadow-brand {
+    box-shadow: var(--shadow-brand);
   }
 }

@@ -4,10 +4,8 @@ export function SkeletonSuggestionsCards() {
       {Array.from({ length: 2 }).map((_, index) => (
         <div
           key={`suggestion-skeleton-${index}`}
-          className={`h-64 w-[312px] rounded-2xl border border-white/10 p-6 ${
-            index === 0
-              ? "bg-linear-to-br from-[#52B3FF]/40 via-[#3B8CFF]/40 to-[#2A6DFF]/40"
-              : "bg-[#1c2437]"
+          className={`h-64 w-[312px] rounded-2xl border border-soft p-6 ${
+            index === 0 ? "bg-gradient-brand-card" : "bg-surface-contrast"
           }`}
         >
           <div className="flex h-full flex-col justify-between">
@@ -32,10 +30,10 @@ export function SkeletonSuggestionsCards() {
 
 export function SkeletonSmartClassification() {
   return (
-    <div className="rounded-2xl border border-white/5 bg-linear-to-br from-[#28335098] via-[#28335098]/60 to-[#28335098]/10 p-6">
+    <div className="rounded-2xl border border-soft bg-gradient-glass p-6">
       <div className="animate-pulse space-y-6">
         <div className="flex flex-col gap-6 lg:flex-row">
-          <div className="flex w-full flex-col items-center rounded-2xl border border-slate-800 bg-[#212639] px-8 py-6 lg:max-w-sm">
+          <div className="flex w-full flex-col items-center rounded-2xl border border-soft bg-surface-contrast px-8 py-6 lg:max-w-sm">
             <div className="h-20 w-20 rounded-full bg-white/10" />
             <div className="mt-4 h-4 w-32 rounded bg-white/10" />
             <div className="mt-6 grid w-full grid-cols-2 gap-4 text-left">
@@ -47,7 +45,7 @@ export function SkeletonSmartClassification() {
             {Array.from({ length: 2 }).map((_, index) => (
               <div
                 key={`score-skeleton-${index}`}
-                className="rounded-2xl border border-slate-800 bg-[#212639] px-6 py-5 space-y-3"
+                className="rounded-2xl border border-soft bg-surface-contrast px-6 py-5 space-y-3"
               >
                 <div className="flex items-center justify-between">
                   <span className="h-4 w-32 rounded bg-white/10" />
@@ -65,11 +63,11 @@ export function SkeletonSmartClassification() {
 
 export function SkeletonAISuggestions() {
   return (
-    <div className="w-full h-[536px] bg-linear-to-br from-[#28335098] via-[#28335098 ]/60 to-[#28335098 ]/10 border border-white/5 rounded-2xl p-6">
+    <div className="w-full h-[536px] bg-gradient-glass border border-soft rounded-2xl p-6">
       <div className="flex flex-col gap-6 animate-pulse">
         <div className="flex items-center justify-between">
           <div className="h-5 w-40 rounded bg-white/10" />
-          <div className="flex bg-[#23283b] rounded-full px-3 py-2 w-56 justify-between">
+          <div className="flex bg-surface-contrast-strong rounded-full px-3 py-2 w-56 justify-between">
             {Array.from({ length: 3 }).map((_, index) => (
               <span
                 key={`tab-skeleton-${index}`}
@@ -79,7 +77,7 @@ export function SkeletonAISuggestions() {
           </div>
         </div>
 
-        <div className="space-y-4 p-6 rounded-2xl bg-linear-to-br from-[#23283b] via-[#23283b] to-[#303545]">
+        <div className="space-y-4 p-6 rounded-2xl bg-surface-contrast-strong">
           <div className="space-y-2">
             <div className="h-3 w-32 rounded bg-white/10" />
             <div className="h-4 w-64 rounded bg-white/10" />
@@ -113,7 +111,7 @@ export function SkeletonAISuggestions() {
 
 export function SkeletonClientInfoSidebar() {
   return (
-    <div className="bg-linear-to-br from-[#28335098] via-[#28335098 ]/60 to-[#28335098 ]/10 border border-white/5 rounded-2xl p-6 space-y-6 animate-pulse">
+    <div className="bg-gradient-glass border border-soft rounded-2xl p-6 space-y-6 animate-pulse">
       <div className="flex flex-col items-center text-center space-y-3">
         <div className="w-20 h-20 rounded-full bg-white/10" />
         <div className="h-4 w-32 rounded bg-white/10" />

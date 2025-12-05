@@ -1,18 +1,21 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { useTicketsData } from "../hooks/useTicketsData";
-import { createTicketColumns } from "./columns";
-import { Filters } from "./filters";
-import { DataTable } from "./table";
+import { useTicketFiltersStore } from "@/lib/stores/ticket-filters-store";
+import { useMemo } from "react"
+import { useTranslation } from "react-i18next"
+import { ErrorState } from "@/components/error-state"
+import { useErrorToast } from "@/hooks/use-error-toast"
+import { useTicketsData } from "../hooks/useTicketsData"
 import type {
   TicketItem,
   TicketPriority,
   TicketStatus,
   TicketsResponse,
 } from "../types/tickets.types";
+import { createTicketColumns } from "./columns";
+import { Filters } from "./filters";
 import { SkeletonTicketsTable } from "./skeletons-tickets";
-import { useTranslation } from "react-i18next";
+import { DataTable } from "./table";
 
 interface TicketsTableProps {
   onEditTicket: (ticket: TicketItem) => void;
@@ -21,21 +24,29 @@ interface TicketsTableProps {
 export function TicketsTable({ onEditTicket }: TicketsTableProps) {
   const { t } = useTranslation("tickets")
 
-  const { data, isLoading } = useTicketsData<TicketsResponse>();
+  const { data, isLoading, isError, refetch } =
+    useTicketsData<TicketsResponse>()
 
   const ticketsData: TicketItem[] = data?.tickets ?? [];
   const statusOptions: TicketStatus[] = data?.status ?? [];
   const priorityOptions: TicketPriority[] = data?.priorities ?? [];
 
+  const search = useTicketFiltersStore((state) => state.search);
+  const status = useTicketFiltersStore((state) => state.status);
+  const priority = useTicketFiltersStore((state) => state.priority);
+  const responsible = useTicketFiltersStore((state) => state.responsible);
+
+  const setSearch = useTicketFiltersStore((state) => state.setSearch);
+  const setStatus = useTicketFiltersStore((state) => state.setStatus);
+  const setPriority = useTicketFiltersStore((state) => state.setPriority);
+  const setResponsible = useTicketFiltersStore(
+    (state) => state.setResponsible
+  );
+
   const responsibleOptions = useMemo(
     () => Array.from(new Set(ticketsData.map((t) => t.responsible))),
     [ticketsData]
   );
-
-  const [search, setSearch] = useState("");
-  const [status, setStatus] = useState<string>("");
-  const [priority, setPriority] = useState<string>("");
-  const [responsible, setResponsible] = useState<string>("");
 
   const filteredTickets = useMemo(() => {
     return ticketsData.filter((ticket) => {
@@ -66,10 +77,35 @@ export function TicketsTable({ onEditTicket }: TicketsTableProps) {
     [onEditTicket, t]
   );
 
-  if (isLoading) return <SkeletonTicketsTable />;
+  useErrorToast(isError, {
+    message: t("tickets:errors.listTitle", {
+      defaultValue: "Não foi possível carregar os tickets.",
+    }),
+    description: t("tickets:errors.listDescription", {
+      defaultValue: "Recarregue a página ou tente novamente.",
+    }),
+    toastId: "tickets-table-error",
+  })
+
+  if (isLoading) return <SkeletonTicketsTable />
+
+  if (isError) {
+    return (
+      <ErrorState
+        title={t("tickets:errors.listTitle", {
+          defaultValue: "Não foi possível carregar os tickets.",
+        })}
+        description={t("tickets:errors.listDescription", {
+          defaultValue: "Recarregue a página ou tente novamente.",
+        })}
+        onRetry={refetch}
+        className="h-full w-full bg-gradient-glass border border-soft"
+      />
+    )
+  }
 
   return (
-    <div className="h-full w-full rounded-3xl bg-linear-to-br from-[#28335098] via-[#28335098]/60 to-[#28335098]/10 px-6 py-10">
+    <div className="h-full w-full rounded-3xl bg-gradient-glass border border-soft px-6 py-10">
       <Filters
         search={{ value: search, set: setSearch }}
         lists={{

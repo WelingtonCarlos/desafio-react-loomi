@@ -1,21 +1,53 @@
 "use client";
 
-import type React from "react";
+import type React from "react"
 
-import { Progress } from "@/components/ui/progress";
-import { Diamond } from "lucide-react";
-import { useView360Data } from "../hooks/useView360Data";
-import Image from "next/image";
-import { SkeletonSmartClassification } from "./skeleton-view-360";
-import { useTranslation } from "react-i18next";
+import { Progress } from "@/components/ui/progress"
+import { Diamond } from "lucide-react"
+import { useView360Data } from "../hooks/useView360Data"
+import Image from "next/image"
+import { SkeletonSmartClassification } from "./skeleton-view-360"
+import { useTranslation } from "react-i18next"
+import { ErrorState } from "@/components/error-state"
+import { useErrorToast } from "@/hooks/use-error-toast"
 
 export function SmartClassification() {
   const { t } = useTranslation("view360")
-  const { data: view360Data, isLoading: isLoadingView360Data } =
-    useView360Data();
+  const {
+    data: view360Data,
+    isLoading: isLoadingView360Data,
+    isError,
+    refetch,
+  } = useView360Data()
   const smartClassification = view360Data?.smartClassification;
 
-  if (isLoadingView360Data) { return <SkeletonSmartClassification />;
+  useErrorToast(isError, {
+    message: t("view360:errors.smartClassificationTitle", {
+      defaultValue: "Não conseguimos carregar a classificação inteligente.",
+    }),
+    description: t("view360:errors.smartClassificationDescription", {
+      defaultValue: "Tente novamente em alguns instantes.",
+    }),
+    toastId: "view360-smart-classification-error",
+  })
+
+  if (isLoadingView360Data) {
+    return <SkeletonSmartClassification />
+  }
+
+  if (isError) {
+    return (
+      <ErrorState
+        title={t("view360:errors.smartClassificationTitle", {
+          defaultValue: "Não conseguimos carregar a classificação inteligente.",
+        })}
+        description={t("view360:errors.smartClassificationDescription", {
+          defaultValue: "Tente novamente em alguns instantes.",
+        })}
+        onRetry={refetch}
+        className="bg-gradient-glass border border-soft"
+      />
+    )
   }
 
   if (!smartClassification) return null;
@@ -48,13 +80,13 @@ export function SmartClassification() {
       : "#ef4444";
 
   return (
-    <div className="rounded-2xl border border-white/5 bg-linear-to-br from-[#28335098] via-[#28335098]/60 to-[#28335098]/10 p-6">
-      <h2 className="mb-4 text-base font-semibold text-slate-50">
+    <div className="rounded-2xl border border-soft bg-gradient-glass p-6">
+      <h2 className="mb-4 text-base font-semibold text-foreground">
         {t("smartClassification.title")}
       </h2>
 
       <div className="flex flex-col gap-6 lg:flex-row ">
-        <div className="flex w-full h-56 flex-col items-center justify-between rounded-2xl border border-slate-800 bg-[#212639] px-8 py-4 lg:max-w-sm">
+        <div className="flex w-full h-56 flex-col items-center justify-between rounded-2xl border border-soft bg-surface-contrast px-8 py-4 lg:max-w-sm">
           {/* Gauge “semicírculo” + ícone */}
           <div className="flex flex-col items-center gap-4">
             <div className="relative h-10 w-h-10 overflow-hidden rounded-full">
@@ -68,7 +100,7 @@ export function SmartClassification() {
               />
             </div>
 
-            <p className="text-lg font-semibold text-slate-50">
+            <p className="text-lg font-semibold text-foreground">
               {smartClassification.segment}
             </p>
           </div>
@@ -76,8 +108,8 @@ export function SmartClassification() {
           {/* Métricas embaixo */}
           <div className="mt-6 grid w-full grid-cols-2 gap-4 text-left">
             <div>
-              <p className="text-xs text-slate-400">{t("smartClassification.lifeTimeValue")}</p>
-              <p className="mt-1 text-lg font-semibold text-slate-50">
+              <p className="text-xs text-muted-soft">{t("smartClassification.lifeTimeValue")}</p>
+              <p className="mt-1 text-lg font-semibold text-foreground">
                 R{" "}
                 {smartClassification.lifeTimeValue.toLocaleString("pt-BR", {
                   minimumFractionDigits: 2,
@@ -85,7 +117,7 @@ export function SmartClassification() {
               </p>
             </div>
             <div>
-              <p className="text-xs text-slate-400">{t("smartClassification.churnProbability")}</p>
+              <p className="text-xs text-muted-soft">{t("smartClassification.churnProbability")}</p>
               <p className="mt-1 text-lg font-semibold text-emerald-400">
                 {smartClassification.churnProbability}%
               </p>
@@ -95,9 +127,9 @@ export function SmartClassification() {
 
         <div className="flex flex-1 flex-col gap-6">
           {/* Score de expansão */}
-          <div className="rounded-2xl h-24 border border-slate-800 bg-[#212639] px-6 py-4">
+          <div className="rounded-2xl h-24 border border-soft bg-surface-contrast px-6 py-4">
             <div className="mb-3 flex items-center justify-between">
-              <p className="text-sm text-slate-200">{t("smartClassification.expansionScore")}</p>
+              <p className="text-sm text-muted-soft">{t("smartClassification.expansionScore")}</p>
               <span
                 className={`rounded-full border px-3 py-1 text-xs font-medium ${getScoreBadgeColor(
                   smartClassification.expansionScore.level
@@ -108,7 +140,7 @@ export function SmartClassification() {
             </div>
             <Progress
               value={smartClassification.expansionScore.value}
-              className="h-2 bg-[#0f1623]"
+              className="h-2 bg-surface-panel"
               style={
                 {
                   "--progress-indicator-color": expansionColor,
@@ -118,9 +150,9 @@ export function SmartClassification() {
           </div>
 
           {/* Score de retenção */}
-          <div className="rounded-2xl h-24 border border-slate-800 bg-[#212639] px-6 py-4">
+          <div className="rounded-2xl h-24 border border-soft bg-surface-contrast px-6 py-4">
             <div className="mb-3 flex items-center justify-between">
-              <p className="text-sm text-slate-200">{t("smartClassification.retentionScore")}</p>
+              <p className="text-sm text-muted-soft">{t("smartClassification.retentionScore")}</p>
               <span
                 className={`rounded-full border px-3 py-1 text-xs font-medium ${getScoreBadgeColor(
                   smartClassification.retetionScore?.level || ""
@@ -131,7 +163,7 @@ export function SmartClassification() {
             </div>
             <Progress
               value={smartClassification.retetionScore?.value || 0}
-              className="h-2 bg-[#0f1623]"
+              className="h-2 bg-surface-panel"
             />
           </div>
         </div>
