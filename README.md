@@ -76,6 +76,26 @@ Dashboard administrativo desenvolvido com Next.js 16, TypeScript e Tailwind CSS,
 - **Sonner** para notificações toast
 - **shadcn/ui** componentes reutilizáveis
 
+## Melhorias
+
+### Melhores estados globais
+- Centralizei os filtros da listagem de tickets e do dashboard em stores dedicados (`src/lib/stores/ticket-filters-store.ts` e `src/lib/stores/dashboard-filters-store.ts`). Dessa forma, o mesmo estado é reaproveitado entre tabelas, resumos e futuros widgets, evitando `prop drilling` e mantendo a configuração dos filtros ao navegar entre páginas.
+- Criei também `src/lib/stores/ticket-modal-store.ts`, que controla abertura e ticket selecionado para o modal de criação/edição. Agora qualquer componente pode disparar o modal sem precisar receber callbacks em cadeia, e o estado é limpo de forma previsível quando o modal fecha.
+- Adicionei `src/lib/stores/plan-customizer-store.ts` para orquestrar toda a simulação de planos (plano escolhido, sliders e coberturas). Isso permite que `CustomizedPlans` e `PlansIndicators` compartilhem o mesmo contexto e exibam o resumo das escolhas do usuário.
+- Introduzi `src/lib/stores/dashboard-kpi-store.ts` para sincronizar o KPI ativo entre o gráfico e os cards de resumo, mantendo toda a página alinhada ao mesmo filtro.
+
+### Memoização
+- Os componentes de filtros (`src/modules/tickets/components/filters.tsx` e `src/modules/dashboard/components/filters.tsx`) foram encapsulados com `React.memo`. Como eles recebem apenas valores/handlers derivados dos stores, a memoização impede renders desnecessários sempre que apenas os dados das tabelas mudam.
+- A memoização garante que o layout dos filtros permaneça estável mesmo diante de atualizações frequentes do restante da página, melhorando a responsividade da UI.
+- `src/modules/plans/components/plans-indicators.tsx` agora é memoizado e consome diretamente o estado global da customização, evitando recomputar indicadores quando apenas um slider muda.
+- `src/modules/chats/components/chat-messages.tsx` foi encapsulado com `React.memo`, impedindo que o histórico inteiro seja reprocessado quando apenas o input sofre alterações.
+- Em `src/modules/view-360/components/ai-suggestions.tsx`, o bloco da sugestão ativa foi protegido com `useMemo`, evitando recalcular a cada poll de dados quando o tab não muda.
+
+### useCallback
+- Nas páginas e modais de tickets (`src/modules/tickets/pages/tickets-page.tsx` e `src/modules/tickets/components/ticket-modal.tsx`), envolvi os handlers (`handleCreateClick`, `handleEditTicket`, `handleDialogChange`, `onSubmit`, etc.) com `useCallback`. Isso mantém as referências estáveis ao repassá-las para tabelas, colunas e componentes memoizados, evitando que eles recalculam estrutura interna toda vez.
+- Com callbacks estáveis, os efeitos colaterais como re-renderizações do TanStack Table ou reprocessamento de formulários foram reduzidos, tornando as interações mais fluídas.
+- `CustomizedPlans`, `KpiChart`, `ChatInput` e `AISuggestions` agora expõem handlers estáveis (`handleSelectPlan`, `handleSelectKpi`, `handleSend`, `handleTabChange`, etc.), garantindo que componentes filhos apenas re-renderizam quando algo realmente muda.
+
 ## 📁 Estrutura do Projeto
 
 ```

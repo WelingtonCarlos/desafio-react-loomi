@@ -1,25 +1,26 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useTicketFiltersStore } from "@/lib/stores/ticket-filters-store";
+import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { useTicketsData } from "../hooks/useTicketsData";
-import { createTicketColumns } from "./columns";
-import { Filters } from "./filters";
-import { DataTable } from "./table";
 import type {
   TicketItem,
   TicketPriority,
   TicketStatus,
   TicketsResponse,
 } from "../types/tickets.types";
+import { createTicketColumns } from "./columns";
+import { Filters } from "./filters";
 import { SkeletonTicketsTable } from "./skeletons-tickets";
-import { useTranslation } from "react-i18next";
+import { DataTable } from "./table";
 
 interface TicketsTableProps {
   onEditTicket: (ticket: TicketItem) => void;
 }
 
 export function TicketsTable({ onEditTicket }: TicketsTableProps) {
-  const { t } = useTranslation("tickets")
+  const { t } = useTranslation("tickets");
 
   const { data, isLoading } = useTicketsData<TicketsResponse>();
 
@@ -27,15 +28,22 @@ export function TicketsTable({ onEditTicket }: TicketsTableProps) {
   const statusOptions: TicketStatus[] = data?.status ?? [];
   const priorityOptions: TicketPriority[] = data?.priorities ?? [];
 
+  const search = useTicketFiltersStore((state) => state.search);
+  const status = useTicketFiltersStore((state) => state.status);
+  const priority = useTicketFiltersStore((state) => state.priority);
+  const responsible = useTicketFiltersStore((state) => state.responsible);
+
+  const setSearch = useTicketFiltersStore((state) => state.setSearch);
+  const setStatus = useTicketFiltersStore((state) => state.setStatus);
+  const setPriority = useTicketFiltersStore((state) => state.setPriority);
+  const setResponsible = useTicketFiltersStore(
+    (state) => state.setResponsible
+  );
+
   const responsibleOptions = useMemo(
     () => Array.from(new Set(ticketsData.map((t) => t.responsible))),
     [ticketsData]
   );
-
-  const [search, setSearch] = useState("");
-  const [status, setStatus] = useState<string>("");
-  const [priority, setPriority] = useState<string>("");
-  const [responsible, setResponsible] = useState<string>("");
 
   const filteredTickets = useMemo(() => {
     return ticketsData.filter((ticket) => {

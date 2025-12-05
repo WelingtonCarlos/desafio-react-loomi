@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
-import { CheckCircle2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -20,32 +18,32 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useForm } from "react-hook-form";
+import { useTicketModalStore } from "@/lib/stores/ticket-modal-store";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { CheckCircle2, X } from "lucide-react";
+import { useCallback, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
+import { useInvalidateTicketsQueries } from "../hooks/useTicketsData";
 import {
   TICKET_PRIORITY_VALUES,
   TICKET_STATUS_VALUES,
   ticketFormSchema,
   type TicketFormValues,
 } from "../schemas/ticket-form-schema";
+import { createTicket, updateTicket } from "../services/tickets-service";
 import type {
-  TicketItem,
   TicketPriority,
   TicketStatus,
 } from "../types/tickets.types";
-import { createTicket, updateTicket } from "../services/tickets-service";
-import { useInvalidateTicketsQueries } from "../hooks/useTicketsData";
-import { useTranslation } from "react-i18next";
-import { toast } from "sonner";
 
-interface NewTicketModalProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  ticket?: TicketItem | null;
-}
-
-function NewTicketModal({ open, onOpenChange, ticket }: NewTicketModalProps) {
+function NewTicketModal() {
   const { t } = useTranslation(["tickets", "common"]);
+
+  const ticket = useTicketModalStore((state) => state.ticket);
+  const isOpen = useTicketModalStore((state) => state.isOpen);
+  const setModalOpen = useTicketModalStore((state) => state.setOpen);
 
   const invalidateTickets = useInvalidateTicketsQueries();
   const isEditing = Boolean(ticket);
@@ -91,16 +89,19 @@ function NewTicketModal({ open, onOpenChange, ticket }: NewTicketModalProps) {
     });
   }, [ticket, reset]);
 
-  function closeAndReset() {
+  const closeAndReset = useCallback(() => {
     reset();
-  }
+  }, [reset]);
 
-  const handleDialogChange = (nextOpen: boolean) => {
-    if (!nextOpen) {
-      closeAndReset();
-    }
-    onOpenChange(nextOpen);
-  };
+  const handleDialogChange = useCallback(
+    (nextOpen: boolean) => {
+      if (!nextOpen) {
+        closeAndReset();
+      }
+      setModalOpen(nextOpen);
+    },
+    [closeAndReset, setModalOpen]
+  );
 
   const showTicketCreatedToast = () => {
     toast.custom((toastId) => (
@@ -123,24 +124,27 @@ function NewTicketModal({ open, onOpenChange, ticket }: NewTicketModalProps) {
     ));
   };
 
-  const onSubmit = async (values: TicketFormValues) => {
-    if (ticket) {
-      updateTicket({
-        id: ticket.id,
-        data: values,
-      });
-    } else {
-      createTicket(values);
-      showTicketCreatedToast();
-    }
+  const onSubmit = useCallback(
+    async (values: TicketFormValues) => {
+      if (ticket) {
+        updateTicket({
+          id: ticket.id,
+          data: values,
+        });
+      } else {
+        createTicket(values);
+        showTicketCreatedToast();
+      }
 
-    invalidateTickets();
-    closeAndReset();
-    onOpenChange(false);
-  };
+      invalidateTickets();
+      closeAndReset();
+      setModalOpen(false);
+    },
+    [ticket, invalidateTickets, closeAndReset, setModalOpen]
+  );
 
   return (
-    <Dialog open={open} onOpenChange={handleDialogChange}>
+    <Dialog open={isOpen} onOpenChange={handleDialogChange}>
       <DialogContent
         className="bg-[#0f1623] border-[#1f2937] text-white sm:max-w-[600px] p-0 gap-0 overflow-hidden"
         showCloseButton={false}
@@ -162,7 +166,7 @@ function NewTicketModal({ open, onOpenChange, ticket }: NewTicketModalProps) {
             variant="ghost"
             size="icon"
             className="rounded-full border cursor-pointer border-[#2d3748] hover:bg-[#1f2937] text-gray-400 h-8 w-8"
-            onClick={() => onOpenChange(false)}
+            onClick={() => handleDialogChange(false)}
           >
             <X className="h-4 w-4" />
           </Button>

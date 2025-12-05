@@ -8,8 +8,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ActiveClientFilters } from "../types/dashboard.types";
+import { memo } from "react";
 import { useTranslation } from "react-i18next";
+import { ActiveClientFilters } from "../types/dashboard.types";
 
 interface SelectState {
   value: string;
@@ -26,7 +27,7 @@ interface FiltersProps {
   };
 }
 
-export function Filters({ search, lists }: FiltersProps) {
+function DashboardFiltersComponent({ search, lists }: FiltersProps) {
   const { t } = useTranslation("dashboard");
 
   return (
@@ -106,3 +107,6 @@ export function Filters({ search, lists }: FiltersProps) {
     </div>
   );
 }
+
+export const Filters = memo(DashboardFiltersComponent);
+Filters.displayName = "DashboardFilters";

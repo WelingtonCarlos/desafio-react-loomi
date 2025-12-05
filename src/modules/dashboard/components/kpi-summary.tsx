@@ -1,9 +1,11 @@
 "use client";
 
-import { MetricCard } from "./metric-card";
-import type { KpisResume } from "../types/dashboard.types";
-import { useDashboardData } from "../hooks/useDashboardData";
+import { useDashboardKpiStore } from "@/lib/stores/dashboard-kpi-store";
 import { useTranslation } from "react-i18next";
+import type { KpiType } from "../constants/kpi-config";
+import { useDashboardData } from "../hooks/useDashboardData";
+import type { KpisResume } from "../types/dashboard.types";
+import { MetricCard } from "./metric-card";
 
 type KpiLabelKey =
   | "kpi.labels.arpu"
@@ -35,10 +37,20 @@ const METRIC_CONFIG: Array<{
   },
 ];
 
+const KPI_METRIC_MAP: Record<KpiType, keyof KpisResume> = {
+  arpuTrend: "arpu",
+  conversionTrend: "conversion",
+  retentionTrend: "retention",
+  churnTrend: "churn",
+};
+
 export function KpiSummary() {
   const { data: dashboardResponse, isLoading } = useDashboardData();
   const resume = dashboardResponse?.kpisResume;
   const { t } = useTranslation("dashboard");
+  const activeKpi = useDashboardKpiStore((state) => state.activeKpi);
+
+  const activeMetricKey = KPI_METRIC_MAP[activeKpi];
 
   if (isLoading) {
     return (
@@ -64,6 +76,7 @@ export function KpiSummary() {
           : "--";
         const change = metric ? `${metric.variacao}%` : "--";
         const isPositive = metric ? metric.variacao >= 0 : true;
+        const isActive = key === activeMetricKey;
 
         return (
           <MetricCard
@@ -75,6 +88,7 @@ export function KpiSummary() {
             trendColor={isPositive ? "text-green-500" : "text-red-500"}
             hasArrow
             periodLabel={t("messages.inPeriod")}
+            isActive={isActive}
           />
         );
       })}

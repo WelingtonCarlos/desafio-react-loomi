@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ArrowUpRight, ArrowDownRight } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 
 interface MetricCardProps {
   label: string;
@@ -11,6 +11,7 @@ interface MetricCardProps {
   trendColor: string;
   hasArrow?: boolean;
   periodLabel?: string;
+  isActive?: boolean;
 }
 
 export function MetricCard({
@@ -21,9 +22,15 @@ export function MetricCard({
   trendColor,
   hasArrow,
   periodLabel = "no período",
+  isActive = false,
 }: MetricCardProps) {
   return (
-    <div className="bg-linear-to-br from-[#36446b98] via-[#36446b98 ]/60 to-[#36446b98 ]/10 rounded-3xl p-6 border border-gray-800/50 shadow-xl flex flex-col justify-between h-full relative overflow-hidden group">
+    <div
+      className={cn(
+        "bg-linear-to-br from-[#36446b98] via-[#36446b98 ]/60 to-[#36446b98 ]/10 rounded-3xl p-6 border border-gray-800/50 shadow-xl flex flex-col justify-between h-full relative overflow-hidden group transition-all",
+        isActive ? "border-cyan-400/60 shadow-cyan-500/30" : ""
+      )}
+    >
       <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full blur-3xl -mr-12 -mt-12 transition-opacity opacity-0 group-hover:opacity-100" />
 
       <div className="space-y-1">

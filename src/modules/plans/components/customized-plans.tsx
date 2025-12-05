@@ -1,26 +1,15 @@
 "use client";
 
-import { useState } from "react";
-import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
+import { usePlanCustomizerStore } from "@/lib/stores/plan-customizer-store";
+import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-
-const plans = [
-  { id: "basic", price: 8990, recommended: false },
-  { id: "intermediate", price: 14590, recommended: true },
-  { id: "premium", price: 22590, recommended: false },
-] as const;
-
-const additionalCoverages = [
-  { id: "theft", price: 2500 },
-  { id: "collision", price: 3500 },
-  { id: "fire", price: 2000 },
-  {
-    id: "natural",
-    price: 3000,
-  },
-] as const;
+import {
+  ADDITIONAL_COVERAGES,
+  PLANS_CONFIG,
+} from "../constants/customizer";
 
 const centsToReais = (cents: number) => cents / 100;
 
@@ -28,36 +17,64 @@ const sliderCustomClasses =
   "**:data-[slot=slider-track]:bg-gray-700 **:data-[slot=slider-range]:bg-[#1E86FF] **:data-[slot=slider-thumb]:bg-[#1E86FF] **:data-[slot=slider-thumb]:border-[#1E86FF]";
 
 export function CustomizedPlans() {
-  const { t } = useTranslation(["plans", "common"])
+  const { t } = useTranslation(["plans", "common"]);
 
-  const initialPlan = (plans.find((p) => p.recommended) || plans[0]) as (typeof plans)[number]
+  const selectedPlanId = usePlanCustomizerStore((state) => state.selectedPlanId);
+  const vehicleValue = usePlanCustomizerStore((state) => state.vehicleValue);
+  const clientAge = usePlanCustomizerStore((state) => state.clientAge);
+  const coverages = usePlanCustomizerStore((state) => state.coverages);
 
-  const [selectedPlan, setSelectedPlan] = useState<(typeof plans)[number]>(
-    initialPlan
+  const setSelectedPlanId = usePlanCustomizerStore(
+    (state) => state.setSelectedPlanId
   );
-  const [vehicleValue, setVehicleValue] = useState([50000]);
-  const [clientAge, setClientAge] = useState([28]);
-  const [coverages, setCoverages] = useState(
-    additionalCoverages.reduce((acc, coverage) => {
-      acc[coverage.id] = false;
-      return acc;
-    }, {} as Record<string, boolean>)
+  const setVehicleValue = usePlanCustomizerStore(
+    (state) => state.setVehicleValue
+  );
+  const setClientAge = usePlanCustomizerStore((state) => state.setClientAge);
+  const setCoverage = usePlanCustomizerStore((state) => state.setCoverage);
+
+  const formatter = useMemo(
+    () =>
+      new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }),
+    []
   );
 
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    }).format(value);
-  };
+  const selectedPlan = useMemo(
+    () => PLANS_CONFIG.find((plan) => plan.id === selectedPlanId) ?? PLANS_CONFIG[0],
+    [selectedPlanId]
+  );
 
-  const calculateTotal = () => {
-    const coveragesTotal = additionalCoverages
-      .filter((coverage) => coverages[coverage.id])
-      .reduce((sum, coverage) => sum + coverage.price, 0);
+  const coveragesTotal = useMemo(
+    () =>
+      ADDITIONAL_COVERAGES.filter((coverage) => coverages[coverage.id])
+        .reduce((sum, coverage) => sum + coverage.price, 0),
+    [coverages]
+  );
 
-    return selectedPlan.price + coveragesTotal;
-  };
+  const selectedPlanTotal = useMemo(
+    () => selectedPlan.price + coveragesTotal,
+    [selectedPlan.price, coveragesTotal]
+  );
+
+  const handleSelectPlan = useCallback(
+    (planId: string) => setSelectedPlanId(planId),
+    [setSelectedPlanId]
+  );
+
+  const handleVehicleChange = useCallback(
+    (value: number[]) => setVehicleValue(value[0]),
+    [setVehicleValue]
+  );
+
+  const handleClientAgeChange = useCallback(
+    (value: number[]) => setClientAge(value[0]),
+    [setClientAge]
+  );
+
+  const handleCoverageToggle = useCallback(
+    (coverageId: string, checked: boolean) => setCoverage(coverageId, checked),
+    [setCoverage]
+  );
 
   return (
     <div className="bg-linear-to-br from-[#28335098] via-[#28335098 ]/60 to-[#28335098 ]/10 border border-white/5 rounded-3xl p-8">
@@ -67,14 +84,14 @@ export function CustomizedPlans() {
 
       {/* Plan Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-        {plans.map((plan) => {
-          const isSelected = selectedPlan.id === plan.id;
-          const totalPrice = isSelected ? calculateTotal() : plan.price;
+        {PLANS_CONFIG.map((plan) => {
+          const isSelected = selectedPlanId === plan.id;
+          const totalPrice = isSelected ? selectedPlanTotal : plan.price;
 
           return (
             <div
               key={plan.id}
-              onClick={() => setSelectedPlan(plan)}
+              onClick={() => handleSelectPlan(plan.id)}
               className={`relative bg-[#1a2332] rounded-2xl p-6 transition-all cursor-pointer hover:scale-105 ${
                 isSelected
                   ? "border-2 border-[#1E86FF] shadow-lg shadow-[#1E86FF]/20"
@@ -92,7 +109,7 @@ export function CustomizedPlans() {
                 {t(`plans:customizer.plans.${plan.id}`)}
               </h3>
               <div className="text-3xl font-bold text-white mb-1">
-                {formatCurrency(centsToReais(totalPrice))}
+                {formatter.format(centsToReais(totalPrice))}
               </div>
               <p className="text-sm text-gray-400">
                 {t("common:labels.perMonth")}
@@ -106,12 +123,13 @@ export function CustomizedPlans() {
       <div className="mb-8">
         <div className="flex justify-between items-center mb-3">
           <Label className="text-white font-medium">
-            {t("plans:customizer.vehicleValue")}: {formatCurrency(vehicleValue[0])}
+            {t("plans:customizer.vehicleValue")}:{" "}
+            {formatter.format(vehicleValue)}
           </Label>
         </div>
         <Slider
-          value={vehicleValue}
-          onValueChange={setVehicleValue}
+          value={[vehicleValue]}
+          onValueChange={handleVehicleChange}
           min={10000}
           max={500000}
           step={1000}
@@ -127,12 +145,13 @@ export function CustomizedPlans() {
       <div className="mb-8">
         <div className="flex justify-between items-center mb-3">
           <Label className="text-white font-medium">
-            {t("plans:customizer.age")}: {clientAge[0]} {t("plans:customizer.ageSuffix")}
+            {t("plans:customizer.age")}: {clientAge}{" "}
+            {t("plans:customizer.ageSuffix")}
           </Label>
         </div>
         <Slider
-          value={clientAge}
-          onValueChange={setClientAge}
+          value={[clientAge]}
+          onValueChange={handleClientAgeChange}
           min={18}
           max={90}
           step={1}
@@ -150,7 +169,7 @@ export function CustomizedPlans() {
           {t("plans:customizer.coveragesTitle")}
         </h3>
         <div className="space-y-4">
-          {additionalCoverages.map((coverage) => (
+          {ADDITIONAL_COVERAGES.map((coverage) => (
             <div
               key={coverage.id}
               className="flex items-center justify-between"
@@ -160,7 +179,7 @@ export function CustomizedPlans() {
                   id={coverage.id}
                   checked={coverages[coverage.id]}
                   onCheckedChange={(checked) =>
-                    setCoverages({ ...coverages, [coverage.id]: !!checked })
+                    handleCoverageToggle(coverage.id, !!checked)
                   }
                   className="data-[state=checked]:bg-[#1E86FF] data-[state=checked]:border-[#1E86FF]"
                 />
@@ -172,7 +191,7 @@ export function CustomizedPlans() {
                 </Label>
               </div>
               <span className="text-white font-medium text-sm">
-                + {formatCurrency(centsToReais(coverage.price))}
+                + {formatter.format(centsToReais(coverage.price))}
               </span>
             </div>
           ))}

@@ -1,11 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useDashboardFiltersStore } from "@/lib/stores/dashboard-filters-store";
+import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { useDashboardData } from "../hooks/useDashboardData";
 import { getColumns } from "./columns";
 import { Filters } from "./filters";
 import { DataTable } from "./table";
-import { useTranslation } from "react-i18next";
 
 
 
@@ -16,15 +17,22 @@ export function ActiveClientsTable() {
 
   const { t } = useTranslation("dashboard");
 
-  const [search, setSearch] = useState("");
-  const [status, setStatus] = useState("Todos");
-  const [secureType, setSecureType] = useState("Todos");
-  const [location, setLocation] = useState("Todos");
+  const search = useDashboardFiltersStore((state) => state.search);
+  const status = useDashboardFiltersStore((state) => state.status);
+  const secureType = useDashboardFiltersStore((state) => state.secureType);
+  const location = useDashboardFiltersStore((state) => state.location);
+
+  const setSearch = useDashboardFiltersStore((state) => state.setSearch);
+  const setStatus = useDashboardFiltersStore((state) => state.setStatus);
+  const setSecureType = useDashboardFiltersStore(
+    (state) => state.setSecureType
+  );
+  const setLocation = useDashboardFiltersStore((state) => state.setLocation);
 
   const filtered = useMemo(() => {
     return activeClientsData?.filter((c) => {
       const matchesSearch =
-        c.name.toLowerCase().includes(search.toLowerCase())
+        c.name.toLowerCase().includes(search.toLowerCase());
 
       const matchesStatus = status === "Todos" || c.status === status;
       const matchesType =

@@ -1,14 +1,15 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import type { ChatsData } from "../types/chats.types";
+import { memo } from "react";
 import { useTranslation } from "react-i18next";
+import type { ChatsData } from "../types/chats.types";
 
 interface ChatMessagesProps {
   data?: ChatsData;
 }
 
-export function ChatMessages({ data }: ChatMessagesProps) {
+function ChatMessagesComponent({ data }: ChatMessagesProps) {
   const { t } = useTranslation("chats");
   const messages = data?.messages ?? [];
 
@@ -87,3 +88,6 @@ export function ChatMessages({ data }: ChatMessagesProps) {
     </div>
   );
 }
+
+export const ChatMessages = memo(ChatMessagesComponent);
+ChatMessages.displayName = "ChatMessages";

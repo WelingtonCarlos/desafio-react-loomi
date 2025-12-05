@@ -1,37 +1,32 @@
 "use client";
 
-import { PageHeader } from "@/modules/navigation/components/page-header";
-import { TicketsTable } from "../components/tickets-table";
-import { TicketsSummary } from "../components/tickets-summary";
 import { Button } from "@/components/ui/button";
+import { useTicketModalStore } from "@/lib/stores/ticket-modal-store";
+import { PageHeader } from "@/modules/navigation/components/page-header";
 import { Plus } from "lucide-react";
-import { useState } from "react";
-import { NewTicketModal } from "../components/ticket-modal";
-import type { TicketItem } from "../types/tickets.types";
+import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import { NewTicketModal } from "../components/ticket-modal";
+import { TicketsSummary } from "../components/tickets-summary";
+import { TicketsTable } from "../components/tickets-table";
+import type { TicketItem } from "../types/tickets.types";
 
 export function TicketsPage() {
 
   const { t } = useTranslation(["tickets", "common"])
-  const [isNewTicketOpen, setIsNewTicketOpen] = useState(false);
-  const [editingTicket, setEditingTicket] = useState<TicketItem | null>(null);
+  const openForCreate = useTicketModalStore((state) => state.openForCreate);
+  const openForEdit = useTicketModalStore((state) => state.openForEdit);
 
-  const handleCreateClick = () => {
-    setEditingTicket(null);
-    setIsNewTicketOpen(true);
-  };
+  const handleCreateClick = useCallback(() => {
+    openForCreate();
+  }, [openForCreate]);
 
-  const handleEditTicket = (ticket: TicketItem) => {
-    setEditingTicket(ticket);
-    setIsNewTicketOpen(true);
-  };
-
-  const handleModalOpenChange = (open: boolean) => {
-    if (!open) {
-      setEditingTicket(null);
-    }
-    setIsNewTicketOpen(open);
-  };
+  const handleEditTicket = useCallback(
+    (ticket: TicketItem) => {
+      openForEdit(ticket);
+    },
+    [openForEdit]
+  );
 
   return (
     <div className="flex flex-col gap-10 m-auto">
@@ -55,11 +50,7 @@ export function TicketsPage() {
         <TicketsTable onEditTicket={handleEditTicket} />
       </div>
 
-      <NewTicketModal
-        open={isNewTicketOpen}
-        onOpenChange={handleModalOpenChange}
-        ticket={editingTicket}
-      />
+      <NewTicketModal />
     </div>
   );
 }

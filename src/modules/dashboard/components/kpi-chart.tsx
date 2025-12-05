@@ -1,20 +1,27 @@
 "use client"
 
-import { useState } from "react"
-import dynamic from "next/dynamic"
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { useDashboardData } from "../hooks/useDashboardData"
+import { useDashboardKpiStore } from "@/lib/stores/dashboard-kpi-store"
+import { cn } from "@/lib/utils"
+import dynamic from "next/dynamic"
+import { useCallback } from "react"
+import { useTranslation } from "react-i18next"
 import { KPI_CONFIG, type KpiType } from "../constants/kpi-config"
+import { useDashboardData } from "../hooks/useDashboardData"
 import { useKpiChartConfig } from "../hooks/useKpiChartConfig"
-import { useTranslation } from "react-i18next";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false })
 
 export function KpiChart() {
   const { t } = useTranslation("dashboard")
   const { data: dashboardResponse, isLoading } = useDashboardData();
-  const [activeKpi, setActiveKpi] = useState<KpiType>("arpuTrend")
+  const activeKpi = useDashboardKpiStore((state) => state.activeKpi);
+  const setActiveKpi = useDashboardKpiStore((state) => state.setActiveKpi);
+
+  const handleSelectKpi = useCallback(
+    (key: KpiType) => setActiveKpi(key),
+    [setActiveKpi]
+  );
 
   const { options, series } = useKpiChartConfig(dashboardResponse, activeKpi)
 
@@ -26,7 +33,7 @@ export function KpiChart() {
           {(["arpuTrend", "conversionTrend", "churnTrend", "retentionTrend"] as KpiType[]).map((key) => (
             <Button
               key={key}
-              onClick={() => setActiveKpi(key)}
+              onClick={() => handleSelectKpi(key)}
               className={cn(
                 "px-4 py-1.5 text-sm font-medium rounded-3xl cursor-pointer transition-all duration-200",
                 activeKpi === key

@@ -2,10 +2,10 @@
 
 import type React from "react";
 
-import { useState } from "react";
-import { SendHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { SendHorizontal } from "lucide-react";
+import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 interface ChatInputProps {
@@ -16,19 +16,22 @@ export function ChatInput({ onSendMessage }: ChatInputProps) {
   const [message, setMessage] = useState("");
   const { t } = useTranslation("chats");
 
-  const handleSend = () => {
+  const handleSend = useCallback(() => {
     if (message.trim()) {
       onSendMessage?.(message);
       setMessage("");
     }
-  };
+  }, [message, onSendMessage]);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSend();
-    }
-  };
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        handleSend();
+      }
+    },
+    [handleSend]
+  );
 
   return (
     <div className="border-t border-slate-800/60 px-6 py-4 bg-[#050816]">

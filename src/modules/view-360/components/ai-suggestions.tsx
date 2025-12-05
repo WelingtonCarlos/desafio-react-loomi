@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2 } from "lucide-react";
+import { useCallback, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useView360Data } from "../hooks/useView360Data";
 import { SkeletonAISuggestions } from "./skeleton-view-360";
-import { useTranslation } from "react-i18next";
 
 const tabs = [
   { key: "NBO" as const, label: "NBO" },
@@ -19,7 +19,15 @@ export function AISuggestions() {
   const [activeTab, setActiveTab] = useState<"NBO" | "NBA" | "NBX">("NBO");
 
   const sugestionsIA = view360Data?.sugestionsIA;
-  const currentSuggestion = sugestionsIA?.[activeTab];
+  const currentSuggestion = useMemo(
+    () => sugestionsIA?.[activeTab],
+    [sugestionsIA, activeTab]
+  );
+
+  const handleTabChange = useCallback(
+    (key: "NBO" | "NBA" | "NBX") => setActiveTab(key),
+    []
+  );
 
   if (isLoading) return <SkeletonAISuggestions />;
 
@@ -49,7 +57,7 @@ export function AISuggestions() {
               key={tab.key}
               variant={activeTab === tab.key ? "default" : "ghost"}
               size="sm"
-              onClick={() => setActiveTab(tab.key)}
+              onClick={() => handleTabChange(tab.key)}
               className={
                 activeTab === tab.key
                   ? "bg-blue-500 hover:bg-blue-600 text-white rounded-full w-12"
