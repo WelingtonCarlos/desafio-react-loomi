@@ -4,5 +4,5 @@ const DEFAULT_API_URL =
 
 export const env = {
   API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL || DEFAULT_API_URL,
-  SIMULATE_ERRORS: process.env.NEXT_PUBLIC_SIMULATE_ERRORS !== "false",
+  SIMULATE_ERRORS: process.env.NEXT_PUBLIC_SIMULATE_ERRORS === "true",
 } as const
