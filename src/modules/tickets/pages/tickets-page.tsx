@@ -34,7 +34,7 @@ export function TicketsPage() {
         title={t("tickets:header.title")}
         action={
           <Button
-            className="bg-[#1E86FF] hover:bg-[#1E86FF]/90 text-white rounded-full cursor-pointer px-6 shadow-[0_0_20px_rgba(30,134,255,0.3)]"
+            className="bg-brand text-brand-foreground hover:bg-brand-strong shadow-brand rounded-full cursor-pointer px-6"
             onClick={handleCreateClick}
           >
             <Plus className="w-4 h-4 mr-2" />

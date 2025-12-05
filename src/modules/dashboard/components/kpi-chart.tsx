@@ -1,6 +1,8 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import { ErrorState } from "@/components/error-state"
+import { useErrorToast } from "@/hooks/use-error-toast"
 import { useDashboardKpiStore } from "@/lib/stores/dashboard-kpi-store"
 import { cn } from "@/lib/utils"
 import dynamic from "next/dynamic"
@@ -14,7 +16,12 @@ const Chart = dynamic(() => import("react-apexcharts"), { ssr: false })
 
 export function KpiChart() {
   const { t } = useTranslation("dashboard")
-  const { data: dashboardResponse, isLoading } = useDashboardData();
+  const {
+    data: dashboardResponse,
+    isLoading,
+    isError,
+    refetch,
+  } = useDashboardData()
   const activeKpi = useDashboardKpiStore((state) => state.activeKpi);
   const setActiveKpi = useDashboardKpiStore((state) => state.setActiveKpi);
 
@@ -24,6 +31,31 @@ export function KpiChart() {
   );
 
   const { options, series } = useKpiChartConfig(dashboardResponse, activeKpi)
+
+  useErrorToast(isError, {
+    message: t("dashboard:errors.kpiChartTitle", {
+      defaultValue: "Não foi possível carregar os dados de KPI.",
+    }),
+    description: t("dashboard:errors.kpiChartDescription", {
+      defaultValue: "Verifique sua conexão e tente novamente.",
+    }),
+    toastId: "kpi-chart-error",
+  })
+
+  if (isError) {
+    return (
+      <ErrorState
+        title={t("dashboard:errors.kpiChartTitle", {
+          defaultValue: "Não foi possível carregar os dados de KPI.",
+        })}
+        description={t("dashboard:errors.kpiChartDescription", {
+          defaultValue: "Verifique sua conexão e tente novamente.",
+        })}
+        onRetry={refetch}
+        className="w-full h-full bg-gradient-slate border border-soft"
+      />
+    )
+  }
 
   return (
     <div className="w-full h-full bg-linear-to-br from-[#36446b98] via-[#36446b98 ]/60 to-[#36446b98 ]/10 rounded-3xl p-6 border border-gray-800/50 shadow-xl">

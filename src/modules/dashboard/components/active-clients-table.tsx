@@ -1,18 +1,25 @@
 "use client";
 
-import { useDashboardFiltersStore } from "@/lib/stores/dashboard-filters-store";
-import { useMemo } from "react";
-import { useTranslation } from "react-i18next";
-import { useDashboardData } from "../hooks/useDashboardData";
-import { getColumns } from "./columns";
-import { Filters } from "./filters";
-import { DataTable } from "./table";
+import { ErrorState } from "@/components/error-state"
+import { useErrorToast } from "@/hooks/use-error-toast"
+import { useDashboardFiltersStore } from "@/lib/stores/dashboard-filters-store"
+import { useMemo } from "react"
+import { useTranslation } from "react-i18next"
+import { useDashboardData } from "../hooks/useDashboardData"
+import { getColumns } from "./columns"
+import { Filters } from "./filters"
+import { DataTable } from "./table"
 
 
 
 export function ActiveClientsTable() {
 //   const { data, filters } = activeClients;
-  const { data: dashboardResponse, isLoading } = useDashboardData();
+  const {
+    data: dashboardResponse,
+    isLoading,
+    isError,
+    refetch,
+  } = useDashboardData()
   const { data: activeClientsData, filters: activeClientsFilters } = dashboardResponse?.activeClients || {};
 
   const { t } = useTranslation("dashboard");
@@ -44,8 +51,33 @@ export function ActiveClientsTable() {
     });
   }, [activeClientsData, search, status, secureType, location]);
 
+  useErrorToast(isError, {
+    message: t("dashboard:errors.activeClientsTitle", {
+      defaultValue: "Erro ao carregar clientes ativos.",
+    }),
+    description: t("dashboard:errors.activeClientsDescription", {
+      defaultValue: "Tente novamente em instantes.",
+    }),
+    toastId: "active-clients-error",
+  })
+
+  if (isError) {
+    return (
+      <ErrorState
+        title={t("dashboard:errors.activeClientsTitle", {
+          defaultValue: "Erro ao carregar clientes ativos.",
+        })}
+        description={t("dashboard:errors.activeClientsDescription", {
+          defaultValue: "Tente novamente em instantes.",
+        })}
+        onRetry={refetch}
+        className="w-full h-full bg-gradient-slate border border-soft"
+      />
+    )
+  }
+
   return (
-    <div className="w-full h-full rounded-3xl px-6 py-10 bg-linear-to-br from-[#28335098] via-[#28335098 ]/60 to-[#28335098 ]/10">
+    <div className="w-full h-full rounded-3xl px-6 py-10 bg-gradient-glass border border-soft">
       <Filters
         search={{ value: search, set: setSearch }}
         lists={{

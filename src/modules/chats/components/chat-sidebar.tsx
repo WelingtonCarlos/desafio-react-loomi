@@ -6,19 +6,27 @@ import {
   Eye,
   Plus,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useView360Data } from "@/modules/view-360/hooks/useView360Data";
+import { Button } from "@/components/ui/button"
+import { ErrorState } from "@/components/error-state"
+import { useErrorToast } from "@/hooks/use-error-toast"
+import { useView360Data } from "@/modules/view-360/hooks/useView360Data"
 import type { ChatsData } from "../types/chats.types";
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
+import { SkeletonChatSidebar } from "./skeletons-chat"
 
 interface ChatSidebarProps {
   data?: ChatsData;
 }
 
 export function ChatSidebar({ data }: ChatSidebarProps) {
-  const { data: view360Data } = useView360Data();
-  const { t } = useTranslation("chats");
+  const {
+    data: view360Data,
+    isLoading,
+    isError,
+    refetch,
+  } = useView360Data()
+  const { t } = useTranslation("chats")
 
   const client = view360Data?.client;
   const produtos = view360Data?.produtos;
@@ -48,6 +56,41 @@ export function ChatSidebar({ data }: ChatSidebarProps) {
         return "bg-slate-400";
     }
   };
+
+  useErrorToast(isError, {
+    message: t("sidebar.errors.title", {
+      defaultValue: "Erro ao carregar dados do cliente.",
+    }),
+    description: t("sidebar.errors.description", {
+      defaultValue: "Tente novamente em instantes.",
+    }),
+    toastId: "chat-sidebar-error",
+  })
+
+  if (isLoading) {
+    return (
+      <div className="h-full overflow-y-auto bg-[#050816] p-6">
+        <SkeletonChatSidebar />
+      </div>
+    )
+  }
+
+  if (isError) {
+    return (
+      <div className="h-full overflow-y-auto bg-[#050816] p-6">
+        <ErrorState
+          title={t("sidebar.errors.title", {
+            defaultValue: "Erro ao carregar dados do cliente.",
+          })}
+          description={t("sidebar.errors.description", {
+            defaultValue: "Tente novamente em instantes.",
+          })}
+          onRetry={refetch}
+          className="w-full"
+        />
+      </div>
+    )
+  }
 
   return (
     <div className="h-full overflow-y-auto space-y-6 bg-[#050816] p-6">

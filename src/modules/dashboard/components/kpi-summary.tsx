@@ -1,11 +1,13 @@
 "use client";
 
-import { useDashboardKpiStore } from "@/lib/stores/dashboard-kpi-store";
-import { useTranslation } from "react-i18next";
-import type { KpiType } from "../constants/kpi-config";
-import { useDashboardData } from "../hooks/useDashboardData";
-import type { KpisResume } from "../types/dashboard.types";
-import { MetricCard } from "./metric-card";
+import { ErrorState } from "@/components/error-state"
+import { useErrorToast } from "@/hooks/use-error-toast"
+import { useDashboardKpiStore } from "@/lib/stores/dashboard-kpi-store"
+import { useTranslation } from "react-i18next"
+import type { KpiType } from "../constants/kpi-config"
+import { useDashboardData } from "../hooks/useDashboardData"
+import type { KpisResume } from "../types/dashboard.types"
+import { MetricCard } from "./metric-card"
 
 type KpiLabelKey =
   | "kpi.labels.arpu"
@@ -45,12 +47,27 @@ const KPI_METRIC_MAP: Record<KpiType, keyof KpisResume> = {
 };
 
 export function KpiSummary() {
-  const { data: dashboardResponse, isLoading } = useDashboardData();
-  const resume = dashboardResponse?.kpisResume;
-  const { t } = useTranslation("dashboard");
-  const activeKpi = useDashboardKpiStore((state) => state.activeKpi);
+  const {
+    data: dashboardResponse,
+    isLoading,
+    isError,
+    refetch,
+  } = useDashboardData()
+  const resume = dashboardResponse?.kpisResume
+  const { t } = useTranslation("dashboard")
+  const activeKpi = useDashboardKpiStore((state) => state.activeKpi)
 
   const activeMetricKey = KPI_METRIC_MAP[activeKpi];
+
+  useErrorToast(isError, {
+    message: t("dashboard:errors.kpiSummaryTitle", {
+      defaultValue: "Não foi possível carregar o resumo dos KPIs.",
+    }),
+    description: t("dashboard:errors.kpiSummaryDescription", {
+      defaultValue: "Atualize a página ou tente novamente.",
+    }),
+    toastId: "kpi-summary-error",
+  })
 
   if (isLoading) {
     return (
@@ -63,6 +80,21 @@ export function KpiSummary() {
         ))}
       </div>
     );
+  }
+
+  if (isError) {
+    return (
+      <ErrorState
+        title={t("dashboard:errors.kpiSummaryTitle", {
+          defaultValue: "Não foi possível carregar o resumo dos KPIs.",
+        })}
+        description={t("dashboard:errors.kpiSummaryDescription", {
+          defaultValue: "Atualize a página ou tente novamente.",
+        })}
+        onRetry={refetch}
+        className="w-full min-h-[180px] bg-gradient-slate border border-soft"
+      />
+    )
   }
 
   return (

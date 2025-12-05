@@ -96,6 +96,12 @@ Dashboard administrativo desenvolvido com Next.js 16, TypeScript e Tailwind CSS,
 - Com callbacks estáveis, os efeitos colaterais como re-renderizações do TanStack Table ou reprocessamento de formulários foram reduzidos, tornando as interações mais fluídas.
 - `CustomizedPlans`, `KpiChart`, `ChatInput` e `AISuggestions` agora expõem handlers estáveis (`handleSelectPlan`, `handleSelectKpi`, `handleSend`, `handleTabChange`, etc.), garantindo que componentes filhos apenas re-renderizam quando algo realmente muda.
 
+### Tratamento de erros e feedback visual
+- Adicionei `ErrorState`, um componente reutilizável com ícone, descrição e botão de “Tentar novamente” usado em todos os módulos (Dashboard, Tickets, Planos, Visão 360 e Chat). Isso evita telas silenciosamente quebradas e mantém o layout consistente.
+- Criei o hook `useErrorToast`, que dispara automaticamente um toast via Sonner sempre que `isError` é verdadeiro. Cada tela agora informa imediatamente ao usuário quando uma chamada falha, mantendo o Skeleton/Conteúdo intacto.
+- Todos os hooks de dados (`useDashboardData`, `useTicketsData`, `usePlansData`, `useView360Data`, `useChatsData`) propagam seus estados de erro e expõem `refetch`, permitindo que o botão do `ErrorState` force uma nova tentativa.
+- Para facilitar QA, o cliente HTTP respeita `NEXT_PUBLIC_SIMULATE_ERRORS` (por padrão `true`). Basta definir `false` após testar para voltar aos dados reais.
+
 ## 📁 Estrutura do Projeto
 
 ```

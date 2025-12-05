@@ -1,6 +1,6 @@
 "use client";
-import Map, { Marker, NavigationControl } from "react-map-gl/maplibre";
-import "maplibre-gl/dist/maplibre-gl.css";
+import Map, { Marker, NavigationControl } from "react-map-gl/maplibre"
+import "maplibre-gl/dist/maplibre-gl.css"
 import {
   MapPin,
   Hospital,
@@ -15,8 +15,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-// import { mapLocations } from "../data/mock-data"
+} from "@/components/ui/select"
+import { ErrorState } from "@/components/error-state"
+import { useErrorToast } from "@/hooks/use-error-toast"
 import { useDashboardMapData } from "../hooks/useDashboardData";
 import { useTranslation } from "react-i18next";
 
@@ -43,8 +44,13 @@ const getIcon = (iconName: string) => {
 };
 
 export function CustomerByRegionMap() {
-  const { data: mapData, isLoading } = useDashboardMapData();
-  const { t } = useTranslation("dashboard");
+  const {
+    data: mapData,
+    isLoading,
+    isError,
+    refetch,
+  } = useDashboardMapData()
+  const { t } = useTranslation("dashboard")
   const INITIAL_VIEW_STATE = {
     latitude: mapData?.data?.center[1],
     longitude: mapData?.data?.center[0],
@@ -52,6 +58,31 @@ export function CustomerByRegionMap() {
     bearing: 0,
     pitch: 0,
   };
+
+  useErrorToast(isError, {
+    message: t("dashboard:errors.mapTitle", {
+      defaultValue: "Não foi possível carregar o mapa.",
+    }),
+    description: t("dashboard:errors.mapDescription", {
+      defaultValue: "Atualize a página ou tente novamente.",
+    }),
+    toastId: "dashboard-map-error",
+  })
+
+  if (isError) {
+    return (
+      <ErrorState
+        title={t("dashboard:errors.mapTitle", {
+          defaultValue: "Não foi possível carregar o mapa.",
+        })}
+        description={t("dashboard:errors.mapDescription", {
+          defaultValue: "Atualize a página ou tente novamente.",
+        })}
+        onRetry={refetch}
+        className="w-full h-[470px] bg-gradient-slate border border-soft"
+      />
+    )
+  }
 
   return (
     <div className="w-full h-[470px] rounded-3xl bg-linear-to-br from-[#36446b98] via-[#36446b98 ]/60 to-[#36446b98 ]/10 border border-white/5 shadow-lg">

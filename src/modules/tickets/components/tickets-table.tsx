@@ -1,9 +1,11 @@
 "use client";
 
 import { useTicketFiltersStore } from "@/lib/stores/ticket-filters-store";
-import { useMemo } from "react";
-import { useTranslation } from "react-i18next";
-import { useTicketsData } from "../hooks/useTicketsData";
+import { useMemo } from "react"
+import { useTranslation } from "react-i18next"
+import { ErrorState } from "@/components/error-state"
+import { useErrorToast } from "@/hooks/use-error-toast"
+import { useTicketsData } from "../hooks/useTicketsData"
 import type {
   TicketItem,
   TicketPriority,
@@ -20,9 +22,10 @@ interface TicketsTableProps {
 }
 
 export function TicketsTable({ onEditTicket }: TicketsTableProps) {
-  const { t } = useTranslation("tickets");
+  const { t } = useTranslation("tickets")
 
-  const { data, isLoading } = useTicketsData<TicketsResponse>();
+  const { data, isLoading, isError, refetch } =
+    useTicketsData<TicketsResponse>()
 
   const ticketsData: TicketItem[] = data?.tickets ?? [];
   const statusOptions: TicketStatus[] = data?.status ?? [];
@@ -74,10 +77,35 @@ export function TicketsTable({ onEditTicket }: TicketsTableProps) {
     [onEditTicket, t]
   );
 
-  if (isLoading) return <SkeletonTicketsTable />;
+  useErrorToast(isError, {
+    message: t("tickets:errors.listTitle", {
+      defaultValue: "Não foi possível carregar os tickets.",
+    }),
+    description: t("tickets:errors.listDescription", {
+      defaultValue: "Recarregue a página ou tente novamente.",
+    }),
+    toastId: "tickets-table-error",
+  })
+
+  if (isLoading) return <SkeletonTicketsTable />
+
+  if (isError) {
+    return (
+      <ErrorState
+        title={t("tickets:errors.listTitle", {
+          defaultValue: "Não foi possível carregar os tickets.",
+        })}
+        description={t("tickets:errors.listDescription", {
+          defaultValue: "Recarregue a página ou tente novamente.",
+        })}
+        onRetry={refetch}
+        className="h-full w-full bg-gradient-glass border border-soft"
+      />
+    )
+  }
 
   return (
-    <div className="h-full w-full rounded-3xl bg-linear-to-br from-[#28335098] via-[#28335098]/60 to-[#28335098]/10 px-6 py-10">
+    <div className="h-full w-full rounded-3xl bg-gradient-glass border border-soft px-6 py-10">
       <Filters
         search={{ value: search, set: setSearch }}
         lists={{

@@ -1,15 +1,22 @@
 "use client";
 
-import { usePlanCustomizerStore } from "@/lib/stores/plan-customizer-store";
-import { memo, useMemo } from "react";
-import { useTranslation } from "react-i18next";
-import { ADDITIONAL_COVERAGES } from "../constants/customizer";
-import { usePlansData } from "../hooks/usePlansData";
-import { SkeletonPlansIndicators } from "./skeletons-plans";
+import { ErrorState } from "@/components/error-state"
+import { useErrorToast } from "@/hooks/use-error-toast"
+import { usePlanCustomizerStore } from "@/lib/stores/plan-customizer-store"
+import { memo, useMemo } from "react"
+import { useTranslation } from "react-i18next"
+import { ADDITIONAL_COVERAGES } from "../constants/customizer"
+import { usePlansData } from "../hooks/usePlansData"
+import { SkeletonPlansIndicators } from "./skeletons-plans"
 
 function PlansIndicatorsComponent() {
   const { t } = useTranslation(["plans", "common"]);
-  const { data: plansData, isLoading } = usePlansData();
+  const {
+    data: plansData,
+    isLoading,
+    isError,
+    refetch,
+  } = usePlansData()
 
   const selectedPlanId = usePlanCustomizerStore((state) => state.selectedPlanId);
   const vehicleValue = usePlanCustomizerStore((state) => state.vehicleValue);
@@ -42,24 +49,49 @@ function PlansIndicatorsComponent() {
     return "text-orange-400";
   };
 
-  if (isLoading) return <SkeletonPlansIndicators />;
+  useErrorToast(isError, {
+    message: t("plans:errors.indicatorsTitle", {
+      defaultValue: "Falha ao carregar os indicadores.",
+    }),
+    description: t("plans:errors.indicatorsDescription", {
+      defaultValue: "Tente novamente em instantes.",
+    }),
+    toastId: "plans-indicators-error",
+  })
+
+  if (isLoading) return <SkeletonPlansIndicators />
+
+  if (isError) {
+    return (
+      <ErrorState
+        title={t("plans:errors.indicatorsTitle", {
+          defaultValue: "Falha ao carregar os indicadores.",
+        })}
+        description={t("plans:errors.indicatorsDescription", {
+          defaultValue: "Tente novamente em instantes.",
+        })}
+        onRetry={refetch}
+        className="bg-gradient-glass border border-soft"
+      />
+    )
+  }
 
   return (
-    <div className="bg-linear-to-br from-[#28335098] via-[#28335098 ]/60 to-[#28335098 ]/10 border border-white/5 rounded-3xl p-8">
-      <h2 className="text-xl font-semibold text-white mb-6">
+    <div className="bg-gradient-glass border border-soft rounded-3xl p-8">
+      <h2 className="text-xl font-semibold text-foreground mb-6">
         {t("plans:indicators.title")}
       </h2>
 
-      <div className="mb-6 rounded-2xl border border-white/5 bg-[#1a2332]/60 p-4 text-sm text-slate-200">
+      <div className="mb-6 rounded-2xl border border-soft bg-surface-contrast/60 p-4 text-sm text-muted-soft">
         <p className="font-medium">
           Plano selecionado: {t(`plans:customizer.plans.${selectedPlanId}`)}
         </p>
-        <p className="text-slate-400">
+        <p className="text-muted-soft">
           {t("plans:customizer.vehicleValue")}: {formatter.format(vehicleValue)} •{" "}
           {t("plans:customizer.age")}: {clientAge} {t("plans:customizer.ageSuffix")}
         </p>
         {selectedCoverages.length > 0 && (
-          <p className="text-slate-400">
+        <p className="text-muted-soft">
             {t("plans:customizer.coveragesTitle")}: {selectedCoverages.join(", ")}
           </p>
         )}
@@ -69,20 +101,20 @@ function PlansIndicatorsComponent() {
         {plansData?.plansIndicators.map((indicator) => (
           <div
             key={indicator.name}
-            className="bg-[#1a2332] border border-white/10 rounded-2xl p-6"
+            className="bg-surface-contrast border border-soft rounded-2xl p-6"
           >
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-white font-semibold text-lg">
+              <h3 className="text-foreground font-semibold text-lg">
                 {indicator.name}
               </h3>
-              <span className="text-white font-bold text-xl">
+              <span className="text-foreground font-bold text-xl">
                 {formatter.format(indicator.value)}
               </span>
             </div>
 
             <div className="flex gap-6">
               <div>
-                <span className="text-gray-400 text-sm">Conversão: </span>
+                <span className="text-muted-soft text-sm">Conversão: </span>
                 <span
                   className={`font-semibold ${getConversionColor(
                     indicator.conversion
@@ -92,7 +124,7 @@ function PlansIndicatorsComponent() {
                 </span>
               </div>
               <div>
-                <span className="text-gray-400 text-sm">ROI: </span>
+                <span className="text-muted-soft text-sm">ROI: </span>
                 <span className={`font-semibold ${getRoiColor(indicator.roi)}`}>
                   {indicator.roi}%
                 </span>

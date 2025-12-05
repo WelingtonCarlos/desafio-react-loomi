@@ -10,13 +10,13 @@ interface PageHeaderProps {
 
 export function PageHeader({ title, subtitle, action }: PageHeaderProps) {
   return (
-    <header className="bg-[#20273E] border-b border-gray-800 py-9 px-10 flex justify-between">
+    <header className="bg-sidebar border-b border-sidebar py-9 px-10 flex justify-between text-sidebar-foreground">
       <div className="flex flex-col">
-        <h1 className="text-xl font-medium text-white" suppressHydrationWarning>
+        <h1 className="text-xl font-medium" suppressHydrationWarning>
           {title}
         </h1>
         {subtitle && (
-          <p className="text-sm text-gray-400" suppressHydrationWarning>
+          <p className="text-sm text-muted-soft" suppressHydrationWarning>
             {subtitle}
           </p>
         )}

@@ -25,7 +25,7 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="flex flex-col items-center w-20 h-screen py-6 bg-[#20273E] shadow-2xl border-r border-gray-800 rounded-br-3xl fixed left-0 top-0 z-50">
+    <aside className="flex flex-col items-center w-20 h-screen py-6 bg-sidebar text-sidebar-foreground shadow-2xl border-r border-sidebar rounded-br-3xl fixed left-0 top-0 z-50">
       <div className="mb-48">
         <div className="flex items-center justify-center w-full h-full">
           <div className=" inset-0">
@@ -50,8 +50,8 @@ export function Sidebar() {
               className={cn(
                 "flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-200 group relative",
                 isActive
-                  ? "bg-blue-600 text-white shadow-lg shadow-blue-900/20"
-                  : "text-gray-400 hover:bg-gray-800 hover:text-white"
+                  ? "bg-brand text-brand-foreground shadow-brand"
+                  : "text-gray-400 hover:bg-surface-contrast hover:text-white"
               )}
             >
               <item.icon className="w-6 h-6" />
@@ -67,7 +67,7 @@ export function Sidebar() {
       </nav>
 
       <div className="mt-auto">
-        <button className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors">
+        <button className="flex items-center justify-center w-10 h-10 rounded-full bg-brand text-brand-foreground font-medium hover:bg-brand-strong transition-colors">
           AC
         </button>
       </div>

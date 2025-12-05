@@ -10,7 +10,7 @@ export function LoginPage() {
   const { t } = useTranslation("common")
 
   return (
-    <div className="min-h-screen w-full bg-[#050a14] flex relative overflow-hidden">
+    <div className="min-h-screen w-full bg-surface-base flex relative overflow-hidden">
       <HeaderActions />
 
       <div className="w-full lg:w-[45%] flex flex-col p-8 lg:p-16 xl:p-24 justify-center relative z-10">
