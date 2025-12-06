@@ -30,7 +30,8 @@
       "benefits": "Modular Life • Hospitalization • Income Protection • Portable items",
       "normalPrice": "Regular price:",
       "discountPrice": "Discounted price:",
-      "yearlySaving": "Yearly savings:"
+      "yearlySaving": "Yearly savings:",
+      "cta": "View details"
     }
   }
 }
