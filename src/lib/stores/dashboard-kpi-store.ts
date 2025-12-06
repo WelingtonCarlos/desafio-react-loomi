@@ -11,4 +11,3 @@ export const useDashboardKpiStore = create<DashboardKpiState>((set) => ({
   activeKpi: "arpuTrend",
   setActiveKpi: (kpi) => set({ activeKpi: kpi }),
 }));
-

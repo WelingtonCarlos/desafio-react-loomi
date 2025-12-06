@@ -33,10 +33,7 @@ import {
   type TicketFormValues,
 } from "../schemas/ticket-form-schema";
 import { createTicket, updateTicket } from "../services/tickets-service";
-import type {
-  TicketPriority,
-  TicketStatus,
-} from "../types/tickets.types";
+import type { TicketPriority, TicketStatus } from "../types/tickets.types";
 
 function NewTicketModal() {
   const { t } = useTranslation(["tickets", "common"]);
@@ -63,6 +60,7 @@ function NewTicketModal() {
     },
   });
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const selectedPriority = watch("priority");
   const selectedStatus = watch("status");
 
@@ -100,12 +98,12 @@ function NewTicketModal() {
       }
       setModalOpen(nextOpen);
     },
-    [closeAndReset, setModalOpen]
+    [closeAndReset, setModalOpen],
   );
 
-  const showTicketCreatedToast = () => {
+  const showTicketCreatedToast = useCallback(() => {
     toast.custom((toastId) => (
-      <div className="flex w-[380px] items-start gap-3 rounded-2xl border border-soft bg-brand p-4 text-brand-foreground shadow-brand">
+      <div className="border-soft bg-brand text-brand-foreground shadow-brand flex w-[380px] items-start gap-3 rounded-2xl border p-4">
         <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/20">
           <CheckCircle2 className="h-5 w-5" />
         </div>
@@ -122,7 +120,7 @@ function NewTicketModal() {
         </button>
       </div>
     ));
-  };
+  }, [t]);
 
   const onSubmit = useCallback(
     async (values: TicketFormValues) => {
@@ -140,32 +138,28 @@ function NewTicketModal() {
       closeAndReset();
       setModalOpen(false);
     },
-    [ticket, invalidateTickets, closeAndReset, setModalOpen]
+    [ticket, invalidateTickets, closeAndReset, setModalOpen, showTicketCreatedToast],
   );
 
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogChange}>
       <DialogContent
-        className="bg-surface-panel border border-panel text-foreground sm:max-w-[600px] p-0 gap-0 overflow-hidden"
+        className="bg-surface-panel border-panel text-foreground gap-0 overflow-hidden border p-0 sm:max-w-[600px]"
         showCloseButton={false}
       >
-        <DialogHeader className="p-6 pb-4 border-b border-panel flex flex-row items-start justify-between space-y-0">
+        <DialogHeader className="border-panel flex flex-row items-start justify-between space-y-0 border-b p-6 pb-4">
           <div className="space-y-1">
             <DialogTitle className="text-xl font-medium">
-              {isEditing
-                ? t("tickets:modal.editTitle")
-                : t("tickets:modal.newTitle")}
+              {isEditing ? t("tickets:modal.editTitle") : t("tickets:modal.newTitle")}
             </DialogTitle>
             <DialogDescription className="text-muted-soft text-sm">
-              {isEditing
-                ? t("tickets:modal.editDescription")
-                : t("tickets:modal.newDescription")}
+              {isEditing ? t("tickets:modal.editDescription") : t("tickets:modal.newDescription")}
             </DialogDescription>
           </div>
           <Button
             variant="ghost"
             size="icon"
-            className="rounded-full border cursor-pointer border-panel hover:bg-surface-contrast text-muted-soft h-8 w-8"
+            className="border-panel hover:bg-surface-contrast text-muted-soft h-8 w-8 cursor-pointer rounded-full border"
             onClick={() => handleDialogChange(false)}
           >
             <X className="h-4 w-4" />
@@ -173,51 +167,36 @@ function NewTicketModal() {
         </DialogHeader>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="p-6 space-y-6">
-            <div className="grid grid-cols-2 2xl:grid-cols-1 gap-6 space-y-0">
+          <div className="space-y-6 p-6">
+            <div className="grid grid-cols-2 gap-6 space-y-0 2xl:grid-cols-1">
               <div className="space-y-2">
-                <Label
-                  htmlFor="client-name"
-                  className="text-sm font-medium text-foreground"
-                >
+                <Label htmlFor="client-name" className="text-foreground text-sm font-medium">
                   {t("tickets:modal.fields.client.label")}
                 </Label>
                 <Input
                   id="client-name"
                   placeholder={t("tickets:modal.fields.client.placeholder")}
-                  className="bg-surface-contrast border border-panel placeholder-muted text-foreground h-11"
+                  className="bg-surface-contrast border-panel placeholder-muted text-foreground h-11 border"
                   {...register("client")}
                 />
-                {errors.client && (
-                  <p className="text-xs text-red-400">
-                    {errors.client.message}
-                  </p>
-                )}
+                {errors.client && <p className="text-xs text-red-400">{errors.client.message}</p>}
               </div>
 
               <div className="space-y-2">
-                <Label
-                  htmlFor="email"
-                  className="text-sm font-medium text-foreground"
-                >
+                <Label htmlFor="email" className="text-foreground text-sm font-medium">
                   {t("tickets:modal.fields.email.label")}
                 </Label>
                 <Input
                   id="email"
                   placeholder={t("tickets:modal.fields.email.placeholder")}
-                  className="bg-surface-contrast border border-panel placeholder-muted text-foreground h-11"
+                  className="bg-surface-contrast border-panel placeholder-muted text-foreground h-11 border"
                   {...register("email")}
                 />
-                {errors.email && (
-                  <p className="text-xs text-red-400">{errors.email.message}</p>
-                )}
+                {errors.email && <p className="text-xs text-red-400">{errors.email.message}</p>}
               </div>
 
-              <div className="space-y-2 w-full">
-                <Label
-                  htmlFor="priority"
-                  className="text-sm font-medium text-foreground"
-                >
+              <div className="w-full space-y-2">
+                <Label htmlFor="priority" className="text-foreground text-sm font-medium">
                   {t("tickets:modal.fields.priority.label")}
                 </Label>
                 <Select
@@ -228,14 +207,10 @@ function NewTicketModal() {
                     })
                   }
                 >
-                  <SelectTrigger className="bg-surface-contrast border border-panel text-muted-soft h-11 w-full">
-                    <SelectValue
-                      placeholder={t(
-                        "tickets:modal.fields.priority.placeholder"
-                      )}
-                    />
+                  <SelectTrigger className="bg-surface-contrast border-panel text-muted-soft h-11 w-full border">
+                    <SelectValue placeholder={t("tickets:modal.fields.priority.placeholder")} />
                   </SelectTrigger>
-                  <SelectContent className="bg-surface-contrast border border-panel text-foreground w-full">
+                  <SelectContent className="bg-surface-contrast border-panel text-foreground w-full border">
                     {TICKET_PRIORITY_VALUES.map((option) => (
                       <SelectItem key={option} value={option}>
                         {option}
@@ -244,59 +219,40 @@ function NewTicketModal() {
                   </SelectContent>
                 </Select>
                 {errors.priority && (
-                  <p className="text-xs text-red-400">
-                    {errors.priority.message}
-                  </p>
+                  <p className="text-xs text-red-400">{errors.priority.message}</p>
                 )}
               </div>
 
               <div className="space-y-2">
-                <Label
-                  htmlFor="assignee"
-                  className="text-sm font-medium text-foreground"
-                >
+                <Label htmlFor="assignee" className="text-foreground text-sm font-medium">
                   {t("tickets:modal.fields.responsible.label")}
                 </Label>
                 <Input
                   id="assignee"
-                  placeholder={t(
-                    "tickets:modal.fields.responsible.placeholder"
-                  )}
-                  className="bg-surface-contrast border border-panel placeholder-muted text-foreground h-11"
+                  placeholder={t("tickets:modal.fields.responsible.placeholder")}
+                  className="bg-surface-contrast border-panel placeholder-muted text-foreground h-11 border"
                   {...register("responsible")}
                 />
                 {errors.responsible && (
-                  <p className="text-xs text-red-400">
-                    {errors.responsible.message}
-                  </p>
+                  <p className="text-xs text-red-400">{errors.responsible.message}</p>
                 )}
               </div>
 
               <div className="space-y-2">
-                <Label
-                  htmlFor="subject"
-                  className="text-sm font-medium text-foreground"
-                >
+                <Label htmlFor="subject" className="text-foreground text-sm font-medium">
                   {t("tickets:modal.fields.subject.label")}
                 </Label>
                 <Textarea
                   id="subject"
                   placeholder={t("tickets:modal.fields.subject.placeholder")}
-                  className="bg-surface-contrast border border-panel placeholder-muted text-foreground min-h-[100px] resize-none"
+                  className="bg-surface-contrast border-panel placeholder-muted text-foreground min-h-[100px] resize-none border"
                   {...register("subject")}
                 />
-                {errors.subject && (
-                  <p className="text-xs text-red-400">
-                    {errors.subject.message}
-                  </p>
-                )}
+                {errors.subject && <p className="text-xs text-red-400">{errors.subject.message}</p>}
               </div>
 
               <div className="space-y-2">
-                <Label
-                  htmlFor="status"
-                  className="text-sm font-medium text-foreground"
-                >
+                <Label htmlFor="status" className="text-foreground text-sm font-medium">
                   {t("tickets:modal.fields.status.label")}
                 </Label>
                 <Select
@@ -307,10 +263,10 @@ function NewTicketModal() {
                     })
                   }
                 >
-                  <SelectTrigger className="bg-surface-contrast border border-panel text-muted-soft h-11 w-full">
+                  <SelectTrigger className="bg-surface-contrast border-panel text-muted-soft h-11 w-full border">
                     <SelectValue placeholder={t("tickets:modal.fields.status.placeholder")} />
                   </SelectTrigger>
-                  <SelectContent className="bg-surface-contrast border border-panel text-foreground w-full">
+                  <SelectContent className="bg-surface-contrast border-panel text-foreground w-full border">
                     {TICKET_STATUS_VALUES.map((option) => (
                       <SelectItem key={option} value={option}>
                         {option}
@@ -318,21 +274,17 @@ function NewTicketModal() {
                     ))}
                   </SelectContent>
                 </Select>
-                {errors.status && (
-                  <p className="text-xs text-red-400">
-                    {errors.status.message}
-                  </p>
-                )}
+                {errors.status && <p className="text-xs text-red-400">{errors.status.message}</p>}
               </div>
             </div>
           </div>
 
-          <div className="p-6 pt-0 flex justify-end gap-3">
+          <div className="flex justify-end gap-3 p-6 pt-0">
             <Button
               variant="outline"
               type="button"
               onClick={() => handleDialogChange(false)}
-              className="bg-transparent border border-panel cursor-pointer text-foreground hover:bg-surface-contrast px-6"
+              className="border-panel text-foreground hover:bg-surface-contrast cursor-pointer border bg-transparent px-6"
             >
               {t("tickets:modal.buttons.cancel")}
             </Button>
@@ -344,8 +296,8 @@ function NewTicketModal() {
               {isSubmitting
                 ? t("tickets:modal.buttons.saving")
                 : isEditing
-                ? t("tickets:modal.buttons.saveChanges")
-                : t("tickets:modal.buttons.save")}
+                  ? t("tickets:modal.buttons.saveChanges")
+                  : t("tickets:modal.buttons.save")}
             </Button>
           </div>
         </form>

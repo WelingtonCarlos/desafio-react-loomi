@@ -1,10 +1,7 @@
- "use client";
+"use client";
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-  getDashboardData,
-  getMapData,
-} from "@/modules/dashboard/services/dashboard-service";
+import { getDashboardData, getMapData } from "../services/dashboard-service";
 
 const DASHBOARD_QUERY_KEY = ["dashboard", "data"];
 const MAP_QUERY_KEY = ["dashboard", "map"];
@@ -47,4 +44,3 @@ export function useInvalidateDashboardQueries() {
     queryClient.invalidateQueries({ queryKey: MAP_QUERY_KEY });
   };
 }
-

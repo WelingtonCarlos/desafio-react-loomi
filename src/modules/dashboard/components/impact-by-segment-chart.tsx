@@ -1,23 +1,18 @@
 "use client";
 
-import dynamic from "next/dynamic"
-import { Button } from "@/components/ui/button"
-import { ErrorState } from "@/components/error-state"
-import { useErrorToast } from "@/hooks/use-error-toast"
-import { useDashboardData } from "../hooks/useDashboardData"
-import { useIBSChart } from "../hooks/useIBSChart"
-import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic";
+import { ErrorState } from "@/components/error-state";
+import { Button } from "@/components/ui/button";
+import { useErrorToast } from "@/hooks/use-error-toast";
+import { useDashboardData } from "../hooks/useDashboardData";
+import { useIBSChart } from "../hooks/useIBSChart";
+import { useTranslation } from "react-i18next";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 export function ImpactBySegmentChart() {
-  const {
-    data: dashboardResponse,
-    isLoading,
-    isError,
-    refetch,
-  } = useDashboardData()
-  const { t } = useTranslation("dashboard")
+  const { data: dashboardResponse, isLoading, isError, refetch } = useDashboardData();
+  const { t } = useTranslation("dashboard");
 
   const { options, labels, series } = useIBSChart(dashboardResponse);
 
@@ -29,7 +24,7 @@ export function ImpactBySegmentChart() {
       defaultValue: "Tente novamente mais tarde.",
     }),
     toastId: "impact-segment-error",
-  })
+  });
 
   if (isError) {
     return (
@@ -41,40 +36,33 @@ export function ImpactBySegmentChart() {
           defaultValue: "Tente novamente mais tarde.",
         })}
         onRetry={refetch}
-        className="flex-1 h-[470px] bg-gradient-slate border border-soft"
+        className="bg-gradient-slate border-soft h-[470px] flex-1 border"
       />
-    )
+    );
   }
 
   return (
-    <div className="flex-1 h-[470px] bg-linear-to-br from-[#36446b98] via-[#36446b98 ]/60 to-[#36446b98 ]/10 rounded-3xl p-6 border border-gray-800/50 shadow-xl">
-      <h3 className="text-lg font-medium text-white mb-6">
-        {t("impact.title")}
-      </h3>
+    <div className="via-[#36446b98 ]/60 to-[#36446b98 ]/10 h-[470px] flex-1 rounded-3xl border border-gray-800/50 bg-linear-to-br from-[#36446b98] p-6 shadow-xl">
+      <h3 className="mb-6 text-lg font-medium text-white">{t("impact.title")}</h3>
 
-      <div className="flex-1 flex flex-col items-center justify-center min-h-[280px]">
-        <div className="w-full max-w-[280px] mx-auto relative">
+      <div className="flex min-h-[280px] flex-1 flex-col items-center justify-center">
+        <div className="relative mx-auto w-full max-w-[280px]">
           {isLoading ? (
             <div className="h-full w-full animate-pulse rounded-2xl bg-white/5" />
           ) : (
-            <Chart
-              options={options}
-              series={series}
-              type="donut"
-              height={141}
-            />
+            <Chart options={options} series={series} type="donut" height={141} />
           )}
         </div>
 
         {/* Custom Legend */}
-        <div className="flex flex-wrap justify-center gap-3 mt-8 max-w-sm mx-auto">
+        <div className="mx-auto mt-8 flex max-w-sm flex-wrap justify-center gap-3">
           {labels.map((label, index: number) => (
             <div
               key={index}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#1e232d] border border-white/5"
+              className="flex items-center gap-2 rounded-full border border-white/5 bg-[#1e232d] px-3 py-1.5"
             >
               <span
-                className="w-2.5 h-2.5 rounded-full"
+                className="h-2.5 w-2.5 rounded-full"
                 style={{ backgroundColor: options.colors?.[index] }}
               />
               <span className="text-xs text-gray-300">{label}</span>
@@ -84,7 +72,7 @@ export function ImpactBySegmentChart() {
       </div>
 
       <div className="mt-8 flex justify-center">
-        <Button className="bg-[#1d77ff] hover:bg-[#1d77ff]/90 text-white rounded-full px-8 py-3 h-auto text-sm font-medium shadow-[0_0_20px_rgba(29,119,255,0.3)]">
+        <Button className="h-auto rounded-full bg-[#1d77ff] px-8 py-3 text-sm font-medium text-white shadow-[0_0_20px_rgba(29,119,255,0.3)] hover:bg-[#1d77ff]/90">
           {t("impact.cta")}
         </Button>
       </div>

@@ -56,12 +56,12 @@ export function setTicketsClone(data: TicketsResponse): TicketsResponse {
 }
 
 export function updateTicketsClone(
-  updater: (current: TicketsResponse) => TicketsResponse
+  updater: (current: TicketsResponse) => TicketsResponse,
 ): TicketsResponse {
   const current = readStorage();
   if (!current) {
     throw new Error(
-      "[tickets-storage] Clone não inicializado. Execute o GET de tickets antes de criar/editar."
+      "[tickets-storage] Clone não inicializado. Execute o GET de tickets antes de criar/editar.",
     );
   }
 
@@ -73,4 +73,3 @@ export function resetTicketsClone() {
   if (!isBrowser()) return;
   window.localStorage.removeItem(STORAGE_KEY);
 }
-

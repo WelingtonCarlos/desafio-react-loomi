@@ -11,9 +11,9 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
-
-import type { TicketItem } from "../types/tickets.types";
 import { useTranslation } from "react-i18next";
+import { DEFAULT_PAGE_SIZE, FALLBACK_PAGE_OPTIONS } from "../constants";
+import type { TicketItem } from "../types/tickets.types";
 
 interface DataTableProps {
   columns: ColumnDef<TicketItem>[];
@@ -21,9 +21,6 @@ interface DataTableProps {
   pageSizeOptions?: number[];
   defaultPageSize?: number;
 }
-
-const DEFAULT_PAGE_SIZE = 8;
-const FALLBACK_PAGE_OPTIONS = [5, 8, 15];
 
 export function DataTable({
   columns,
@@ -44,6 +41,7 @@ export function DataTable({
     setPagination((prev) => ({ ...prev, pageIndex: 0 }));
   }, [data]);
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data,
     columns,
@@ -68,21 +66,18 @@ export function DataTable({
   }, [data, pagination.pageIndex, pagination.pageSize]);
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-slate-800 bg-[#23283b] shadow-xl p-6">
+    <div className="overflow-hidden rounded-2xl border border-slate-800 bg-[#23283b] p-6 shadow-xl">
       <table className="w-full text-sm text-slate-200">
-        <thead className="text-xs text-slate-400 border-b border-slate-600">
+        <thead className="border-b border-slate-600 text-xs text-slate-400">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
-                  className="py-3 text-left cursor-pointer select-none"
+                  className="cursor-pointer py-3 text-left select-none"
                   onClick={header.column.getToggleSortingHandler()}
                 >
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  )}
+                  {flexRender(header.column.columnDef.header, header.getContext())}
                   {header.column.getIsSorted() === "asc" && " ↑"}
                   {header.column.getIsSorted() === "desc" && " ↓"}
                 </th>
@@ -95,7 +90,7 @@ export function DataTable({
           {table.getRowModel().rows.map((row) => (
             <tr
               key={row.id}
-              className="border-b border-slate-600 hover:bg-slate-900/50 transition-colors"
+              className="border-b border-slate-600 transition-colors hover:bg-slate-900/50"
             >
               {row.getVisibleCells().map((cell) => (
                 <td key={cell.id} className="py-3 pr-4">
@@ -107,10 +102,7 @@ export function DataTable({
 
           {data.length === 0 && (
             <tr>
-              <td
-                colSpan={columns.length}
-                className="py-6 text-center text-slate-500"
-              >
+              <td colSpan={columns.length} className="py-6 text-center text-slate-500">
                 {t("tickets:table.empty")}
               </td>
             </tr>
@@ -131,9 +123,7 @@ export function DataTable({
             <select
               className="rounded-md border border-slate-700 bg-slate-900 px-2 py-1 text-slate-100"
               value={pagination.pageSize}
-              onChange={(event) =>
-                table.setPageSize(Number(event.target.value))
-              }
+              onChange={(event) => table.setPageSize(Number(event.target.value))}
             >
               {pageSizeOptions.map((size) => (
                 <option key={size} value={size}>

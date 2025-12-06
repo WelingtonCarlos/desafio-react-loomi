@@ -1,10 +1,10 @@
 export function SkeletonSuggestionsCards() {
   return (
-    <div className="space-y-6 animate-pulse">
+    <div className="animate-pulse space-y-6">
       {Array.from({ length: 2 }).map((_, index) => (
         <div
           key={`suggestion-skeleton-${index}`}
-          className={`h-64 w-[312px] rounded-2xl border border-soft p-6 ${
+          className={`border-soft h-64 w-[312px] rounded-2xl border p-6 ${
             index === 0 ? "bg-gradient-brand-card" : "bg-surface-contrast"
           }`}
         >
@@ -30,10 +30,10 @@ export function SkeletonSuggestionsCards() {
 
 export function SkeletonSmartClassification() {
   return (
-    <div className="rounded-2xl border border-soft bg-gradient-glass p-6">
+    <div className="border-soft bg-gradient-glass rounded-2xl border p-6">
       <div className="animate-pulse space-y-6">
         <div className="flex flex-col gap-6 lg:flex-row">
-          <div className="flex w-full flex-col items-center rounded-2xl border border-soft bg-surface-contrast px-8 py-6 lg:max-w-sm">
+          <div className="border-soft bg-surface-contrast flex w-full flex-col items-center rounded-2xl border px-8 py-6 lg:max-w-sm">
             <div className="h-20 w-20 rounded-full bg-white/10" />
             <div className="mt-4 h-4 w-32 rounded bg-white/10" />
             <div className="mt-6 grid w-full grid-cols-2 gap-4 text-left">
@@ -45,7 +45,7 @@ export function SkeletonSmartClassification() {
             {Array.from({ length: 2 }).map((_, index) => (
               <div
                 key={`score-skeleton-${index}`}
-                className="rounded-2xl border border-soft bg-surface-contrast px-6 py-5 space-y-3"
+                className="border-soft bg-surface-contrast space-y-3 rounded-2xl border px-6 py-5"
               >
                 <div className="flex items-center justify-between">
                   <span className="h-4 w-32 rounded bg-white/10" />
@@ -63,21 +63,18 @@ export function SkeletonSmartClassification() {
 
 export function SkeletonAISuggestions() {
   return (
-    <div className="w-full h-[536px] bg-gradient-glass border border-soft rounded-2xl p-6">
-      <div className="flex flex-col gap-6 animate-pulse">
+    <div className="bg-gradient-glass border-soft h-[536px] w-full rounded-2xl border p-6">
+      <div className="flex animate-pulse flex-col gap-6">
         <div className="flex items-center justify-between">
           <div className="h-5 w-40 rounded bg-white/10" />
-          <div className="flex bg-surface-contrast-strong rounded-full px-3 py-2 w-56 justify-between">
+          <div className="bg-surface-contrast-strong flex w-56 justify-between rounded-full px-3 py-2">
             {Array.from({ length: 3 }).map((_, index) => (
-              <span
-                key={`tab-skeleton-${index}`}
-                className="h-7 w-12 rounded-full bg-white/5"
-              />
+              <span key={`tab-skeleton-${index}`} className="h-7 w-12 rounded-full bg-white/5" />
             ))}
           </div>
         </div>
 
-        <div className="space-y-4 p-6 rounded-2xl bg-surface-contrast-strong">
+        <div className="bg-surface-contrast-strong space-y-4 rounded-2xl p-6">
           <div className="space-y-2">
             <div className="h-3 w-32 rounded bg-white/10" />
             <div className="h-4 w-64 rounded bg-white/10" />
@@ -95,10 +92,7 @@ export function SkeletonAISuggestions() {
           <div className="space-y-2">
             <div className="h-3 w-24 rounded bg-white/10" />
             {Array.from({ length: 3 }).map((_, index) => (
-              <div
-                key={`reason-skeleton-${index}`}
-                className="h-4 w-full rounded bg-white/10"
-              />
+              <div key={`reason-skeleton-${index}`} className="h-4 w-full rounded bg-white/10" />
             ))}
           </div>
 
@@ -111,17 +105,14 @@ export function SkeletonAISuggestions() {
 
 export function SkeletonClientInfoSidebar() {
   return (
-    <div className="bg-gradient-glass border border-soft rounded-2xl p-6 space-y-6 animate-pulse">
-      <div className="flex flex-col items-center text-center space-y-3">
-        <div className="w-20 h-20 rounded-full bg-white/10" />
+    <div className="bg-gradient-glass border-soft animate-pulse space-y-6 rounded-2xl border p-6">
+      <div className="flex flex-col items-center space-y-3 text-center">
+        <div className="h-20 w-20 rounded-full bg-white/10" />
         <div className="h-4 w-32 rounded bg-white/10" />
         <div className="h-3 w-24 rounded bg-white/5" />
-        <div className="flex flex-col gap-2 w-full">
+        <div className="flex w-full flex-col gap-2">
           {Array.from({ length: 3 }).map((_, index) => (
-            <div
-              key={`action-skeleton-${index}`}
-              className="h-8 rounded-full bg-white/5"
-            />
+            <div key={`action-skeleton-${index}`} className="h-8 rounded-full bg-white/5" />
           ))}
         </div>
       </div>
@@ -129,10 +120,7 @@ export function SkeletonClientInfoSidebar() {
       <div className="space-y-3">
         <div className="h-4 w-24 rounded bg-white/10" />
         {Array.from({ length: 3 }).map((_, index) => (
-          <div
-            key={`product-skeleton-${index}`}
-            className="h-10 rounded-lg bg-white/5"
-          />
+          <div key={`product-skeleton-${index}`} className="h-10 rounded-lg bg-white/5" />
         ))}
       </div>
 
@@ -140,10 +128,7 @@ export function SkeletonClientInfoSidebar() {
         <div className="h-4 w-16 rounded bg-white/10" />
         <div className="flex flex-wrap gap-2">
           {Array.from({ length: 4 }).map((_, index) => (
-            <div
-              key={`chip-skeleton-${index}`}
-              className="h-7 w-20 rounded-full bg-white/5"
-            />
+            <div key={`chip-skeleton-${index}`} className="h-7 w-20 rounded-full bg-white/5" />
           ))}
         </div>
       </div>
@@ -151,20 +136,14 @@ export function SkeletonClientInfoSidebar() {
       <div className="space-y-3">
         <div className="h-4 w-28 rounded bg-white/10" />
         {Array.from({ length: 2 }).map((_, index) => (
-          <div
-            key={`phrase-skeleton-${index}`}
-            className="h-16 rounded-lg bg-white/5"
-          />
+          <div key={`phrase-skeleton-${index}`} className="h-16 rounded-lg bg-white/5" />
         ))}
       </div>
 
       <div className="space-y-3">
         <div className="h-4 w-24 rounded bg-white/10" />
         {Array.from({ length: 3 }).map((_, index) => (
-          <div
-            key={`action-row-skeleton-${index}`}
-            className="h-12 rounded-lg bg-white/5"
-          />
+          <div key={`action-row-skeleton-${index}`} className="h-12 rounded-lg bg-white/5" />
         ))}
       </div>
     </div>

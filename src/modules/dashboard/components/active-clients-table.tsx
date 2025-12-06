@@ -1,26 +1,20 @@
 "use client";
 
-import { ErrorState } from "@/components/error-state"
-import { useErrorToast } from "@/hooks/use-error-toast"
-import { useDashboardFiltersStore } from "@/lib/stores/dashboard-filters-store"
-import { useMemo } from "react"
-import { useTranslation } from "react-i18next"
-import { useDashboardData } from "../hooks/useDashboardData"
-import { getColumns } from "./columns"
-import { Filters } from "./filters"
-import { DataTable } from "./table"
-
-
+import { ErrorState } from "@/components/error-state";
+import { useErrorToast } from "@/hooks/use-error-toast";
+import { useDashboardFiltersStore } from "@/lib/stores/dashboard-filters-store";
+import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
+import { useDashboardData } from "../hooks/useDashboardData";
+import { DataTable } from "./table";
+import { Filters } from "./filters";
+import { getColumns } from "./columns";
 
 export function ActiveClientsTable() {
-//   const { data, filters } = activeClients;
-  const {
-    data: dashboardResponse,
-    isLoading,
-    isError,
-    refetch,
-  } = useDashboardData()
-  const { data: activeClientsData, filters: activeClientsFilters } = dashboardResponse?.activeClients || {};
+  //   const { data, filters } = activeClients;
+  const { data: dashboardResponse, isLoading, isError, refetch } = useDashboardData();
+  const { data: activeClientsData, filters: activeClientsFilters } =
+    dashboardResponse?.activeClients || {};
 
   const { t } = useTranslation("dashboard");
 
@@ -31,21 +25,16 @@ export function ActiveClientsTable() {
 
   const setSearch = useDashboardFiltersStore((state) => state.setSearch);
   const setStatus = useDashboardFiltersStore((state) => state.setStatus);
-  const setSecureType = useDashboardFiltersStore(
-    (state) => state.setSecureType
-  );
+  const setSecureType = useDashboardFiltersStore((state) => state.setSecureType);
   const setLocation = useDashboardFiltersStore((state) => state.setLocation);
 
   const filtered = useMemo(() => {
     return activeClientsData?.filter((c) => {
-      const matchesSearch =
-        c.name.toLowerCase().includes(search.toLowerCase());
+      const matchesSearch = c.name.toLowerCase().includes(search.toLowerCase());
 
       const matchesStatus = status === "Todos" || c.status === status;
-      const matchesType =
-        secureType === "Todos" || c.secureType === secureType;
-      const matchesLocation =
-        location === "Todos" || c.location === location;
+      const matchesType = secureType === "Todos" || c.secureType === secureType;
+      const matchesLocation = location === "Todos" || c.location === location;
 
       return matchesSearch && matchesStatus && matchesType && matchesLocation;
     });
@@ -59,7 +48,7 @@ export function ActiveClientsTable() {
       defaultValue: "Tente novamente em instantes.",
     }),
     toastId: "active-clients-error",
-  })
+  });
 
   if (isError) {
     return (
@@ -71,13 +60,13 @@ export function ActiveClientsTable() {
           defaultValue: "Tente novamente em instantes.",
         })}
         onRetry={refetch}
-        className="w-full h-full bg-gradient-slate border border-soft"
+        className="bg-gradient-slate border-soft h-full w-full border"
       />
-    )
+    );
   }
 
   return (
-    <div className="w-full h-full rounded-3xl px-6 py-10 bg-gradient-glass border border-soft">
+    <div className="bg-gradient-glass border-soft h-full w-full rounded-3xl border px-6 py-10">
       <Filters
         search={{ value: search, set: setSearch }}
         lists={{

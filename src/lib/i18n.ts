@@ -81,4 +81,3 @@ declare module "i18next" {
 }
 
 export default i18n;
-

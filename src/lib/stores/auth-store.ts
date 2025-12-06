@@ -1,5 +1,5 @@
 // Store simples de autenticação
-import { create } from 'zustand';
+import { create } from "zustand";
 
 interface AuthStore {
   isLoggedIn: boolean;
@@ -11,7 +11,7 @@ interface AuthStore {
 export const useAuth = create<AuthStore>((set) => ({
   isLoggedIn: false,
   user: null,
-  
+
   login: (user) => set({ isLoggedIn: true, user }),
   logout: () => set({ isLoggedIn: false, user: null }),
 }));

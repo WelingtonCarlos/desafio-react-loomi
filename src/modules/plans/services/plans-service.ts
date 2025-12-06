@@ -1,5 +1,5 @@
-import { api } from "@/lib/api/http-client";
 import { endpoints } from "@/lib/api/endpoints";
+import { api } from "@/lib/api/http-client";
 import { PlansData, PlansResponse } from "../types/plans.types";
 
 // Busca os dados do simulador de planos

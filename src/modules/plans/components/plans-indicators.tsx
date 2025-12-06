@@ -1,30 +1,18 @@
 "use client";
 
-import { ErrorState } from "@/components/error-state"
-import { useErrorToast } from "@/hooks/use-error-toast"
-import { usePlanCustomizerStore } from "@/lib/stores/plan-customizer-store"
-import { memo, useMemo } from "react"
-import { useTranslation } from "react-i18next"
-import { ADDITIONAL_COVERAGES, PLANS_CONFIG } from "../constants/customizer"
-import { usePlansData } from "../hooks/usePlansData"
-import { SkeletonPlansIndicators } from "./skeletons-plans"
-type PlanId = (typeof PLANS_CONFIG)[number]["id"]
-
-const PLAN_LABEL_KEYS: Record<PlanId, `plans:customizer.plans.${PlanId}`> = {
-  basic: "plans:customizer.plans.basic",
-  intermediate: "plans:customizer.plans.intermediate",
-  premium: "plans:customizer.plans.premium",
-}
-
+import { ErrorState } from "@/components/error-state";
+import { useErrorToast } from "@/hooks/use-error-toast";
+import { usePlanCustomizerStore } from "@/lib/stores/plan-customizer-store";
+import { memo, useMemo } from "react";
+import { useTranslation } from "react-i18next";
+import { ADDITIONAL_COVERAGES } from "../constants/customizer";
+import { PLAN_LABEL_KEYS, type PlanId } from "../constants/ui";
+import { usePlansData } from "../hooks/usePlansData";
+import { SkeletonPlansIndicators } from "./skeletons-plans";
 
 function PlansIndicatorsComponent() {
   const { t } = useTranslation(["plans", "common"]);
-  const {
-    data: plansData,
-    isLoading,
-    isError,
-    refetch,
-  } = usePlansData()
+  const { data: plansData, isLoading, isError, refetch } = usePlansData();
 
   const selectedPlanId = usePlanCustomizerStore((state) => state.selectedPlanId);
   const vehicleValue = usePlanCustomizerStore((state) => state.vehicleValue);
@@ -32,17 +20,16 @@ function PlansIndicatorsComponent() {
   const coverages = usePlanCustomizerStore((state) => state.coverages);
 
   const formatter = useMemo(
-    () =>
-      new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }),
-    []
+    () => new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }),
+    [],
   );
 
   const selectedCoverages = useMemo(
     () =>
-      ADDITIONAL_COVERAGES.filter((coverage) => coverages[coverage.id]).map(
-        (coverage) => t(`plans:customizer.coverages.${coverage.id}`)
+      ADDITIONAL_COVERAGES.filter((coverage) => coverages[coverage.id]).map((coverage) =>
+        t(`plans:customizer.coverages.${coverage.id}`),
       ),
-    [coverages, t]
+    [coverages, t],
   );
 
   const getConversionColor = (conversion: number) => {
@@ -65,9 +52,9 @@ function PlansIndicatorsComponent() {
       defaultValue: "Tente novamente em instantes.",
     }),
     toastId: "plans-indicators-error",
-  })
+  });
 
-  if (isLoading) return <SkeletonPlansIndicators />
+  if (isLoading) return <SkeletonPlansIndicators />;
 
   if (isError) {
     return (
@@ -79,30 +66,25 @@ function PlansIndicatorsComponent() {
           defaultValue: "Tente novamente em instantes.",
         })}
         onRetry={refetch}
-        className="bg-gradient-glass border border-soft"
+        className="bg-gradient-glass border-soft border"
       />
-    )
+    );
   }
 
   return (
-    <div className="bg-gradient-glass border border-soft rounded-3xl p-8">
-      <h2 className="text-xl font-semibold text-foreground mb-6">
-        {t("plans:indicators.title")}
-      </h2>
+    <div className="bg-gradient-glass border-soft rounded-3xl border p-8">
+      <h2 className="text-foreground mb-6 text-xl font-semibold">{t("plans:indicators.title")}</h2>
 
-      <div className="mb-6 rounded-2xl border border-soft bg-surface-contrast/60 p-4 text-sm text-muted-soft">
+      <div className="border-soft bg-surface-contrast/60 text-muted-soft mb-6 rounded-2xl border p-4 text-sm">
         <p className="font-medium">
-          Plano selecionado:{" "}
-          {t(
-            PLAN_LABEL_KEYS[selectedPlanId as PlanId] ?? PLAN_LABEL_KEYS.basic
-          )}
+          Plano selecionado: {t(PLAN_LABEL_KEYS[selectedPlanId as PlanId] ?? PLAN_LABEL_KEYS.basic)}
         </p>
         <p className="text-muted-soft">
           {t("plans:customizer.vehicleValue")}: {formatter.format(vehicleValue)} •{" "}
           {t("plans:customizer.age")}: {clientAge} {t("plans:customizer.ageSuffix")}
         </p>
         {selectedCoverages.length > 0 && (
-        <p className="text-muted-soft">
+          <p className="text-muted-soft">
             {t("plans:customizer.coveragesTitle")}: {selectedCoverages.join(", ")}
           </p>
         )}
@@ -112,13 +94,11 @@ function PlansIndicatorsComponent() {
         {plansData?.plansIndicators.map((indicator) => (
           <div
             key={indicator.name}
-            className="bg-surface-contrast border border-soft rounded-2xl p-6"
+            className="bg-surface-contrast border-soft rounded-2xl border p-6"
           >
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-foreground font-semibold text-lg">
-                {indicator.name}
-              </h3>
-              <span className="text-foreground font-bold text-xl">
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="text-foreground text-lg font-semibold">{indicator.name}</h3>
+              <span className="text-foreground text-xl font-bold">
                 {formatter.format(indicator.value)}
               </span>
             </div>
@@ -126,11 +106,7 @@ function PlansIndicatorsComponent() {
             <div className="flex gap-6">
               <div>
                 <span className="text-muted-soft text-sm">Conversão: </span>
-                <span
-                  className={`font-semibold ${getConversionColor(
-                    indicator.conversion
-                  )}`}
-                >
+                <span className={`font-semibold ${getConversionColor(indicator.conversion)}`}>
                   {indicator.conversion}%
                 </span>
               </div>

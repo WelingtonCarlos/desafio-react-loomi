@@ -1,7 +1,7 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
+import { ColumnDef } from "@tanstack/react-table";
 import type { TFunction } from "i18next";
 
 import type { ActiveClientItem } from "../types/dashboard.types";
@@ -46,14 +46,10 @@ export const getColumns = (t: TFunction<"dashboard">): ColumnDef<ActiveClientIte
         status === "Ativo"
           ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/40"
           : status === "Pendente"
-          ? "bg-amber-500/15 text-amber-300 border-amber-500/40"
-          : "bg-slate-500/15 text-slate-300 border-slate-500/40";
+            ? "bg-amber-500/15 text-amber-300 border-amber-500/40"
+            : "bg-slate-500/15 text-slate-300 border-slate-500/40";
 
-      return (
-        <Badge className={`border px-3 py-1 text-xs font-medium ${variant}`}>
-          {status}
-        </Badge>
-      );
+      return <Badge className={`border px-3 py-1 text-xs font-medium ${variant}`}>{status}</Badge>;
     },
   },
   {

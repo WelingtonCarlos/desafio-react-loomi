@@ -20,8 +20,6 @@ export const useTicketModalStore = create<TicketModalState>((set) => ({
   ...initialState,
   openForCreate: () => set({ isOpen: true, ticket: null }),
   openForEdit: (ticket) => set({ isOpen: true, ticket }),
-  setOpen: (open) =>
-    set((state) => (open ? { ...state, isOpen: true } : initialState)),
+  setOpen: (open) => set((state) => (open ? { ...state, isOpen: true } : initialState)),
   close: () => set(initialState),
 }));
-

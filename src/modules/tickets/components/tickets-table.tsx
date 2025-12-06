@@ -1,11 +1,11 @@
 "use client";
 
 import { useTicketFiltersStore } from "@/lib/stores/ticket-filters-store";
-import { useMemo } from "react"
-import { useTranslation } from "react-i18next"
-import { ErrorState } from "@/components/error-state"
-import { useErrorToast } from "@/hooks/use-error-toast"
-import { useTicketsData } from "../hooks/useTicketsData"
+import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
+import { ErrorState } from "@/components/error-state";
+import { useErrorToast } from "@/hooks/use-error-toast";
+import { useTicketsData } from "../hooks/useTicketsData";
 import type {
   TicketItem,
   TicketPriority,
@@ -22,14 +22,16 @@ interface TicketsTableProps {
 }
 
 export function TicketsTable({ onEditTicket }: TicketsTableProps) {
-  const { t } = useTranslation("tickets")
+  const { t } = useTranslation("tickets");
 
-  const { data, isLoading, isError, refetch } =
-    useTicketsData<TicketsResponse>()
+  const { data, isLoading, isError, refetch } = useTicketsData<TicketsResponse>();
 
-  const ticketsData: TicketItem[] = data?.tickets ?? [];
-  const statusOptions: TicketStatus[] = data?.status ?? [];
-  const priorityOptions: TicketPriority[] = data?.priorities ?? [];
+  const ticketsData: TicketItem[] = useMemo(() => data?.tickets ?? [], [data?.tickets]);
+  const statusOptions: TicketStatus[] = useMemo(() => data?.status ?? [], [data?.status]);
+  const priorityOptions: TicketPriority[] = useMemo(
+    () => data?.priorities ?? [],
+    [data?.priorities],
+  );
 
   const search = useTicketFiltersStore((state) => state.search);
   const status = useTicketFiltersStore((state) => state.status);
@@ -39,13 +41,11 @@ export function TicketsTable({ onEditTicket }: TicketsTableProps) {
   const setSearch = useTicketFiltersStore((state) => state.setSearch);
   const setStatus = useTicketFiltersStore((state) => state.setStatus);
   const setPriority = useTicketFiltersStore((state) => state.setPriority);
-  const setResponsible = useTicketFiltersStore(
-    (state) => state.setResponsible
-  );
+  const setResponsible = useTicketFiltersStore((state) => state.setResponsible);
 
   const responsibleOptions = useMemo(
     () => Array.from(new Set(ticketsData.map((t) => t.responsible))),
-    [ticketsData]
+    [ticketsData],
   );
 
   const filteredTickets = useMemo(() => {
@@ -60,22 +60,15 @@ export function TicketsTable({ onEditTicket }: TicketsTableProps) {
 
       const matchesStatus = !status || (ticket.status as string) === status;
 
-      const matchesPriority =
-        !priority || (ticket.priority as string) === priority;
+      const matchesPriority = !priority || (ticket.priority as string) === priority;
 
-      const matchesResponsible =
-        !responsible || ticket.responsible === responsible;
+      const matchesResponsible = !responsible || ticket.responsible === responsible;
 
-      return (
-        matchesSearch && matchesStatus && matchesPriority && matchesResponsible
-      );
+      return matchesSearch && matchesStatus && matchesPriority && matchesResponsible;
     });
   }, [ticketsData, search, status, priority, responsible]);
 
-  const tableColumns = useMemo(
-    () => createTicketColumns(onEditTicket, t),
-    [onEditTicket, t]
-  );
+  const tableColumns = useMemo(() => createTicketColumns(onEditTicket, t), [onEditTicket, t]);
 
   useErrorToast(isError, {
     message: t("tickets:errors.listTitle", {
@@ -85,9 +78,9 @@ export function TicketsTable({ onEditTicket }: TicketsTableProps) {
       defaultValue: "Recarregue a página ou tente novamente.",
     }),
     toastId: "tickets-table-error",
-  })
+  });
 
-  if (isLoading) return <SkeletonTicketsTable />
+  if (isLoading) return <SkeletonTicketsTable />;
 
   if (isError) {
     return (
@@ -99,13 +92,13 @@ export function TicketsTable({ onEditTicket }: TicketsTableProps) {
           defaultValue: "Recarregue a página ou tente novamente.",
         })}
         onRetry={refetch}
-        className="h-full w-full bg-gradient-glass border border-soft"
+        className="bg-gradient-glass border-soft h-full w-full border"
       />
-    )
+    );
   }
 
   return (
-    <div className="h-full w-full rounded-3xl bg-gradient-glass border border-soft px-6 py-10">
+    <div className="bg-gradient-glass border-soft h-full w-full rounded-3xl border px-6 py-10">
       <Filters
         search={{ value: search, set: setSearch }}
         lists={{

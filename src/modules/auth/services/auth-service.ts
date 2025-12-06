@@ -1,6 +1,6 @@
 // Serviço de autenticação
-import { api } from '@/lib/api/http-client';
-import { endpoints } from '@/lib/api/endpoints';
+import { endpoints } from "@/lib/api/endpoints";
+import { api } from "@/lib/api/http-client";
 
 export interface LoginRequest {
   username: string;
@@ -28,8 +28,8 @@ interface LoginApiResponse {
 export const authService = {
   async login(credentials: LoginRequest): Promise<LoginResponse> {
     try {
-      const response = await api.get(endpoints.login) as LoginApiResponse;
-      
+      const response = (await api.get(endpoints.login)) as LoginApiResponse;
+
       // Transforma resposta da API no formato esperado
       if (response.data && response.data.accessToken) {
         return {
@@ -39,18 +39,18 @@ export const authService = {
             email: credentials.username, // Usando username do form como email
           },
           token: response.data.accessToken,
-          message: 'Login realizado com sucesso!',
+          message: "Login realizado com sucesso!",
         };
       }
-      
+
       return {
         success: false,
-        message: 'Credenciais inválidas.',
+        message: "Credenciais inválidas.",
       };
-    } catch (error) {
+    } catch {
       return {
         success: false,
-        message: 'Erro ao fazer login. Tente novamente.',
+        message: "Erro ao fazer login. Tente novamente.",
       };
     }
   },

@@ -1,9 +1,6 @@
 import { create } from "zustand";
 
-import {
-    DEFAULT_PLAN_ID,
-    EMPTY_COVERAGES_STATE,
-} from "@/modules/plans/constants/customizer";
+import { DEFAULT_PLAN_ID, EMPTY_COVERAGES_STATE } from "@/modules/plans/constants/customizer";
 
 interface PlanCustomizerState {
   selectedPlanId: string;
@@ -41,4 +38,3 @@ export const usePlanCustomizerStore = create<PlanCustomizerState>((set) => ({
     })),
   reset: () => set(INITIAL_STATE),
 }));
-

@@ -11,4 +11,3 @@ export interface PlansResponse {
 }
 
 export type PlansData = PlansResponse;
-

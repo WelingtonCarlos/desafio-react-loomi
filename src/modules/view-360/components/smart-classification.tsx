@@ -1,24 +1,18 @@
 "use client";
 
-import type React from "react"
+import type React from "react";
 
-import { Progress } from "@/components/ui/progress"
-import { Diamond } from "lucide-react"
-import { useView360Data } from "../hooks/useView360Data"
-import Image from "next/image"
-import { SkeletonSmartClassification } from "./skeleton-view-360"
-import { useTranslation } from "react-i18next"
-import { ErrorState } from "@/components/error-state"
-import { useErrorToast } from "@/hooks/use-error-toast"
+import { ErrorState } from "@/components/error-state";
+import { Progress } from "@/components/ui/progress";
+import { useView360Data } from "../hooks/useView360Data";
+import Image from "next/image";
+import { SkeletonSmartClassification } from "./skeleton-view-360";
+import { useTranslation } from "react-i18next";
+import { useErrorToast } from "@/hooks/use-error-toast";
 
 export function SmartClassification() {
-  const { t } = useTranslation("view360")
-  const {
-    data: view360Data,
-    isLoading: isLoadingView360Data,
-    isError,
-    refetch,
-  } = useView360Data()
+  const { t } = useTranslation("view360");
+  const { data: view360Data, isLoading: isLoadingView360Data, isError, refetch } = useView360Data();
   const smartClassification = view360Data?.smartClassification;
 
   useErrorToast(isError, {
@@ -29,10 +23,10 @@ export function SmartClassification() {
       defaultValue: "Tente novamente em alguns instantes.",
     }),
     toastId: "view360-smart-classification-error",
-  })
+  });
 
   if (isLoadingView360Data) {
-    return <SkeletonSmartClassification />
+    return <SkeletonSmartClassification />;
   }
 
   if (isError) {
@@ -45,9 +39,9 @@ export function SmartClassification() {
           defaultValue: "Tente novamente em alguns instantes.",
         })}
         onRetry={refetch}
-        className="bg-gradient-glass border border-soft"
+        className="bg-gradient-glass border-soft border"
       />
-    )
+    );
   }
 
   if (!smartClassification) return null;
@@ -69,47 +63,38 @@ export function SmartClassification() {
     smartClassification.expansionScore.level.toLowerCase() === "alto"
       ? "#22c55e"
       : smartClassification.expansionScore.level.toLowerCase() === "médio"
-      ? "#eab308"
-      : "#ef4444";
-
-  const retentionColor =
-    smartClassification.retetionScore?.level?.toLowerCase() === "alto"
-      ? "#22c55e"
-      : smartClassification.retetionScore?.level?.toLowerCase() === "médio"
-      ? "#eab308"
-      : "#ef4444";
+        ? "#eab308"
+        : "#ef4444";
 
   return (
-    <div className="rounded-2xl border border-soft bg-gradient-glass p-6">
-      <h2 className="mb-4 text-base font-semibold text-foreground">
+    <div className="border-soft bg-gradient-glass rounded-2xl border p-6">
+      <h2 className="text-foreground mb-4 text-base font-semibold">
         {t("smartClassification.title")}
       </h2>
 
-      <div className="flex flex-col gap-6 lg:flex-row ">
-        <div className="flex w-full h-56 flex-col items-center justify-between rounded-2xl border border-soft bg-surface-contrast px-8 py-4 lg:max-w-sm">
+      <div className="flex flex-col gap-6 lg:flex-row">
+        <div className="border-soft bg-surface-contrast flex h-56 w-full flex-col items-center justify-between rounded-2xl border px-8 py-4 lg:max-w-sm">
           {/* Gauge “semicírculo” + ícone */}
           <div className="flex flex-col items-center gap-4">
-            <div className="relative h-10 w-h-10 overflow-hidden rounded-full">
+            <div className="w-h-10 relative h-10 overflow-hidden rounded-full">
               <Image
                 src="/diamond.png"
                 alt="Diamond"
                 width={80}
                 height={80}
-                className="w-full h-full object-contain"
+                className="h-full w-full object-contain"
                 priority
               />
             </div>
 
-            <p className="text-lg font-semibold text-foreground">
-              {smartClassification.segment}
-            </p>
+            <p className="text-foreground text-lg font-semibold">{smartClassification.segment}</p>
           </div>
 
           {/* Métricas embaixo */}
           <div className="mt-6 grid w-full grid-cols-2 gap-4 text-left">
             <div>
-              <p className="text-xs text-muted-soft">{t("smartClassification.lifeTimeValue")}</p>
-              <p className="mt-1 text-lg font-semibold text-foreground">
+              <p className="text-muted-soft text-xs">{t("smartClassification.lifeTimeValue")}</p>
+              <p className="text-foreground mt-1 text-lg font-semibold">
                 R{" "}
                 {smartClassification.lifeTimeValue.toLocaleString("pt-BR", {
                   minimumFractionDigits: 2,
@@ -117,7 +102,7 @@ export function SmartClassification() {
               </p>
             </div>
             <div>
-              <p className="text-xs text-muted-soft">{t("smartClassification.churnProbability")}</p>
+              <p className="text-muted-soft text-xs">{t("smartClassification.churnProbability")}</p>
               <p className="mt-1 text-lg font-semibold text-emerald-400">
                 {smartClassification.churnProbability}%
               </p>
@@ -127,12 +112,12 @@ export function SmartClassification() {
 
         <div className="flex flex-1 flex-col gap-6">
           {/* Score de expansão */}
-          <div className="rounded-2xl h-24 border border-soft bg-surface-contrast px-6 py-4">
+          <div className="border-soft bg-surface-contrast h-24 rounded-2xl border px-6 py-4">
             <div className="mb-3 flex items-center justify-between">
-              <p className="text-sm text-muted-soft">{t("smartClassification.expansionScore")}</p>
+              <p className="text-muted-soft text-sm">{t("smartClassification.expansionScore")}</p>
               <span
                 className={`rounded-full border px-3 py-1 text-xs font-medium ${getScoreBadgeColor(
-                  smartClassification.expansionScore.level
+                  smartClassification.expansionScore.level,
                 )}`}
               >
                 {smartClassification.expansionScore.level}
@@ -140,7 +125,7 @@ export function SmartClassification() {
             </div>
             <Progress
               value={smartClassification.expansionScore.value}
-              className="h-2 bg-surface-panel"
+              className="bg-surface-panel h-2"
               style={
                 {
                   "--progress-indicator-color": expansionColor,
@@ -150,12 +135,12 @@ export function SmartClassification() {
           </div>
 
           {/* Score de retenção */}
-          <div className="rounded-2xl h-24 border border-soft bg-surface-contrast px-6 py-4">
+          <div className="border-soft bg-surface-contrast h-24 rounded-2xl border px-6 py-4">
             <div className="mb-3 flex items-center justify-between">
-              <p className="text-sm text-muted-soft">{t("smartClassification.retentionScore")}</p>
+              <p className="text-muted-soft text-sm">{t("smartClassification.retentionScore")}</p>
               <span
                 className={`rounded-full border px-3 py-1 text-xs font-medium ${getScoreBadgeColor(
-                  smartClassification.retetionScore?.level || ""
+                  smartClassification.retetionScore?.level || "",
                 )}`}
               >
                 {smartClassification.retetionScore?.level || ""}
@@ -163,7 +148,7 @@ export function SmartClassification() {
             </div>
             <Progress
               value={smartClassification.retetionScore?.value || 0}
-              className="h-2 bg-surface-panel"
+              className="bg-surface-panel h-2"
             />
           </div>
         </div>

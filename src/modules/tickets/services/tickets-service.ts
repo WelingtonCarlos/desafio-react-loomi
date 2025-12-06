@@ -1,12 +1,8 @@
 import { endpoints } from "@/lib/api/endpoints";
 import { api } from "@/lib/api/http-client";
-import {
-  ensureTicketsClone,
-  updateTicketsClone,
-} from "./tickets-storage";
+import { ensureTicketsClone, updateTicketsClone } from "./tickets-storage";
 import type {
   TicketItem,
-  TicketPriority,
   TicketsResponse,
   TicketStatus,
   TicketsResume,
@@ -43,7 +39,7 @@ function rebuildResume(tickets: TicketItem[]): TicketsResume {
       inProgress: 0,
       solved: 0,
       timeAverageHours: 0,
-    }
+    },
   );
 }
 
@@ -92,13 +88,10 @@ export function createTicket(payload: CreateTicketInput): TicketsResponse {
   });
 }
 
-export function updateTicket({
-  id,
-  data,
-}: UpdateTicketInput): TicketsResponse {
+export function updateTicket({ id, data }: UpdateTicketInput): TicketsResponse {
   return updateTicketsClone((current) => {
     const tickets = current.tickets.map((ticket) =>
-      ticket.id === id ? { ...ticket, ...data } : ticket
+      ticket.id === id ? { ...ticket, ...data } : ticket,
     );
 
     return {

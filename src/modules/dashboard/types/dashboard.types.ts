@@ -56,4 +56,3 @@ export interface DashboardData {
   segments: SegmentResume[];
   activeClients: ActiveClients;
 }
-

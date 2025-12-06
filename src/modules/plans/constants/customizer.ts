@@ -19,6 +19,5 @@ export const EMPTY_COVERAGES_STATE = ADDITIONAL_COVERAGES.reduce(
     acc[coverage.id] = false;
     return acc;
   },
-  {} as Record<string, boolean>
+  {} as Record<string, boolean>,
 );
-

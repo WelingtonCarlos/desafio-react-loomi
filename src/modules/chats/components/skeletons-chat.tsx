@@ -6,7 +6,7 @@ export function SkeletonChatMessages() {
       {Array.from({ length: 4 }).map((_, index) => (
         <div
           key={`chat-msg-skeleton-${index}`}
-          className="rounded-2xl border border-white/5 bg-[#0f1623]/60 p-4 animate-pulse"
+          className="animate-pulse rounded-2xl border border-white/5 bg-[#0f1623]/60 p-4"
         >
           <div className="flex justify-between text-sm text-gray-500">
             <span className="h-3 w-32 rounded bg-white/10" />
@@ -25,8 +25,8 @@ export function SkeletonChatMessages() {
 
 export function SkeletonChatSidebar() {
   return (
-    <div className="rounded-2xl border border-white/5 bg-[#0f1623]/50 p-6 animate-pulse">
-      <div className="h-4 w-32 rounded bg-white/10 mb-4" />
+    <div className="animate-pulse rounded-2xl border border-white/5 bg-[#0f1623]/50 p-6">
+      <div className="mb-4 h-4 w-32 rounded bg-white/10" />
       <div className="space-y-3">
         {Array.from({ length: 6 }).map((_, index) => (
           <div key={`sidebar-skeleton-${index}`} className="h-4 w-full rounded bg-white/10" />
@@ -38,9 +38,8 @@ export function SkeletonChatSidebar() {
 
 export function SkeletonChatInput() {
   return (
-    <div className="mt-6 rounded-2xl border border-white/5 bg-[#0f1623]/50 p-4 animate-pulse">
+    <div className="mt-6 animate-pulse rounded-2xl border border-white/5 bg-[#0f1623]/50 p-4">
       <div className="h-12 rounded-xl bg-white/10" />
     </div>
   );
 }
-

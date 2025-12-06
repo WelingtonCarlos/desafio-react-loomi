@@ -1,36 +1,28 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { ErrorState } from "@/components/error-state"
-import { useErrorToast } from "@/hooks/use-error-toast"
-import { useDashboardKpiStore } from "@/lib/stores/dashboard-kpi-store"
-import { cn } from "@/lib/utils"
-import dynamic from "next/dynamic"
-import { useCallback } from "react"
-import { useTranslation } from "react-i18next"
-import { KPI_CONFIG, type KpiType } from "../constants/kpi-config"
-import { useDashboardData } from "../hooks/useDashboardData"
-import { useKpiChartConfig } from "../hooks/useKpiChartConfig"
+import { ErrorState } from "@/components/error-state";
+import { Button } from "@/components/ui/button";
+import { useErrorToast } from "@/hooks/use-error-toast";
+import { useDashboardKpiStore } from "@/lib/stores/dashboard-kpi-store";
+import { cn } from "@/lib/utils";
+import dynamic from "next/dynamic";
+import { useCallback } from "react";
+import { useTranslation } from "react-i18next";
+import { KPI_CONFIG, type KpiType } from "../constants/kpi-config";
+import { useDashboardData } from "../hooks/useDashboardData";
+import { useKpiChartConfig } from "../hooks/useKpiChartConfig";
 
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false })
+const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 export function KpiChart() {
-  const { t } = useTranslation("dashboard")
-  const {
-    data: dashboardResponse,
-    isLoading,
-    isError,
-    refetch,
-  } = useDashboardData()
+  const { t } = useTranslation("dashboard");
+  const { data: dashboardResponse, isLoading, isError, refetch } = useDashboardData();
   const activeKpi = useDashboardKpiStore((state) => state.activeKpi);
   const setActiveKpi = useDashboardKpiStore((state) => state.setActiveKpi);
 
-  const handleSelectKpi = useCallback(
-    (key: KpiType) => setActiveKpi(key),
-    [setActiveKpi]
-  );
+  const handleSelectKpi = useCallback((key: KpiType) => setActiveKpi(key), [setActiveKpi]);
 
-  const { options, series } = useKpiChartConfig(dashboardResponse, activeKpi)
+  const { options, series } = useKpiChartConfig(dashboardResponse, activeKpi);
 
   useErrorToast(isError, {
     message: t("dashboard:errors.kpiChartTitle", {
@@ -40,7 +32,7 @@ export function KpiChart() {
       defaultValue: "Verifique sua conexão e tente novamente.",
     }),
     toastId: "kpi-chart-error",
-  })
+  });
 
   if (isError) {
     return (
@@ -52,35 +44,33 @@ export function KpiChart() {
           defaultValue: "Verifique sua conexão e tente novamente.",
         })}
         onRetry={refetch}
-        className="w-full h-full bg-gradient-slate border border-soft"
+        className="bg-gradient-slate border-soft h-full w-full border"
       />
-    )
+    );
   }
 
   return (
-    <div className="w-full h-full bg-linear-to-br from-[#36446b98] via-[#36446b98 ]/60 to-[#36446b98 ]/10 rounded-3xl p-6 border border-gray-800/50 shadow-xl">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+    <div className="via-[#36446b98 ]/60 to-[#36446b98 ]/10 h-full w-full rounded-3xl border border-gray-800/50 bg-linear-to-br from-[#36446b98] p-6 shadow-xl">
+      <div className="mb-8 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
         <h2 className="text-xl font-semibold text-white">{t("kpi.title")}</h2>
-        <div className="flex bg-[#232f44] p-1 rounded-3xl gap-3 px-3 py-2">
-          {(["arpuTrend", "conversionTrend", "churnTrend", "retentionTrend"] as KpiType[]).map((key) => (
-            <Button
-              key={key}
-              onClick={() => handleSelectKpi(key)}
-              className={cn(
-                "px-4 py-1.5 text-sm font-medium rounded-3xl cursor-pointer transition-all duration-200",
-                activeKpi === key
-                  ? "text-white shadow-lg shadow-cyan-500/20"
-                  : "text-gray-400 hover:text-white hover:bg-white/5",
-              )}
-              style={
-                activeKpi === key
-                  ? { backgroundColor: KPI_CONFIG[key].color }
-                  : undefined
-              }
-            >
-              {t(KPI_CONFIG[key].labelKey)}
-            </Button>
-          ))}
+        <div className="flex gap-3 rounded-3xl bg-[#232f44] p-1 px-3 py-2">
+          {(["arpuTrend", "conversionTrend", "churnTrend", "retentionTrend"] as KpiType[]).map(
+            (key) => (
+              <Button
+                key={key}
+                onClick={() => handleSelectKpi(key)}
+                className={cn(
+                  "cursor-pointer rounded-3xl px-4 py-1.5 text-sm font-medium transition-all duration-200",
+                  activeKpi === key
+                    ? "text-white shadow-lg shadow-cyan-500/20"
+                    : "text-gray-400 hover:bg-white/5 hover:text-white",
+                )}
+                style={activeKpi === key ? { backgroundColor: KPI_CONFIG[key].color } : undefined}
+              >
+                {t(KPI_CONFIG[key].labelKey)}
+              </Button>
+            ),
+          )}
         </div>
       </div>
 
@@ -92,5 +82,5 @@ export function KpiChart() {
         )}
       </div>
     </div>
-  )
+  );
 }

@@ -18,4 +18,3 @@ export const KPI_CONFIG: Record<
   churnTrend: { labelKey: "kpi.labels.churn", color: "#ef4444" },
   retentionTrend: { labelKey: "kpi.labels.retention", color: "#22c55e" },
 };
-

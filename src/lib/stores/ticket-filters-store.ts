@@ -27,4 +27,3 @@ export const useTicketFiltersStore = create<TicketFiltersState>((set) => ({
   setResponsible: (value) => set({ responsible: value }),
   reset: () => set(initialState),
 }));
-

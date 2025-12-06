@@ -8,7 +8,7 @@ import { SuggestionCards } from "../components/suggestions-cards";
 import { useTranslation } from "react-i18next";
 
 export function View360Page() {
-  const { t } = useTranslation(["view360", "common"])
+  const { t } = useTranslation(["view360", "common"]);
   return (
     <div className="m-auto flex flex-col gap-8">
       <PageHeader title={t("view360:header.title")} />

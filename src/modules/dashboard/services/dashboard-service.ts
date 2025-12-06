@@ -1,5 +1,5 @@
-import { api } from "@/lib/api/http-client";
 import { endpoints } from "@/lib/api/endpoints";
+import { api } from "@/lib/api/http-client";
 import type { DashboardData } from "../types/dashboard.types";
 import type { MapData } from "../types/map.types";
 
@@ -12,4 +12,3 @@ export async function getDashboardData(): Promise<DashboardData> {
 export async function getMapData(): Promise<MapData> {
   return api.get<MapData>(endpoints.map);
 }
-

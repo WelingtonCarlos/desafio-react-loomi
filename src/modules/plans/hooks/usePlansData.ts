@@ -1,9 +1,7 @@
 "use client";
 
 import { useQuery, useQueryClient, type UseQueryResult } from "@tanstack/react-query";
-import {
-  getPlansData,
-} from "@/modules/plans/services/plans-service";
+import { getPlansData } from "../services/plans-service";
 import type { PlansData } from "../types/plans.types";
 
 const PLANS_QUERY_KEY = ["plans", "data"] as const;
@@ -34,4 +32,3 @@ export function useInvalidatePlansQueries() {
     queryClient.invalidateQueries({ queryKey: PLANS_QUERY_KEY });
   };
 }
-

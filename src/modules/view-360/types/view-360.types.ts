@@ -57,4 +57,3 @@ export interface View360Response {
 }
 
 export type View360Data = View360Response;
-

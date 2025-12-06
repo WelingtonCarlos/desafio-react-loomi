@@ -6,10 +6,7 @@ import type { DashboardData } from "../types/dashboard.types";
 import type { KpiType } from "../constants/kpi-config";
 import { KPI_CONFIG } from "../constants/kpi-config";
 
-export function useKpiChartConfig(
-  dashboardData: DashboardData | undefined,
-  activeKpi: KpiType
-) {
+export function useKpiChartConfig(dashboardData: DashboardData | undefined, activeKpi: KpiType) {
   return useMemo(() => {
     const categories = dashboardData?.kpisTrend.labels ?? [];
     const activeSeries = dashboardData?.kpisTrend[activeKpi];
@@ -47,8 +44,7 @@ export function useKpiChartConfig(
       yaxis: {
         labels: {
           style: { colors: "#9ca3af" },
-          formatter: (value) =>
-            activeKpi === "arpuTrend" ? `R$ ${value}` : `${value}%`,
+          formatter: (value) => (activeKpi === "arpuTrend" ? `R$ ${value}` : `${value}%`),
         },
       },
       grid: {
@@ -70,17 +66,15 @@ export function useKpiChartConfig(
       },
     };
 
-    const series =
-      activeSeries?.data
-        ? [
-            {
-              name: activeSeries.name,
-              data: [...activeSeries.data],
-            },
-          ]
-        : [];
+    const series = activeSeries?.data
+      ? [
+          {
+            name: activeSeries.name,
+            data: [...activeSeries.data],
+          },
+        ]
+      : [];
 
     return { options, series };
   }, [dashboardData, activeKpi]);
 }
-

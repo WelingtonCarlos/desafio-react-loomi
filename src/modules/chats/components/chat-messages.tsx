@@ -22,7 +22,7 @@ function ChatMessagesComponent({ data }: ChatMessagesProps) {
   }
 
   return (
-    <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4 bg-[#050816]">
+    <div className="flex-1 space-y-4 overflow-y-auto bg-[#050816] px-6 py-6">
       {messages.map((message) => {
         if (message.type === "assistant_message") {
           return (
@@ -32,9 +32,7 @@ function ChatMessagesComponent({ data }: ChatMessagesProps) {
                   <p className="text-sm leading-relaxed">{message.content}</p>
                 </div>
                 <div className="mt-1 flex items-center gap-1 px-2">
-                  <span className="text-xs text-slate-500">
-                    {message.timestamp}
-                  </span>
+                  <span className="text-xs text-slate-500">{message.timestamp}</span>
                 </div>
               </div>
             </div>
@@ -45,18 +43,14 @@ function ChatMessagesComponent({ data }: ChatMessagesProps) {
           return (
             <div key={message.id} className="flex justify-center">
               <div className="w-full max-w-[80%]">
-                <div className="rounded-2xl bg-[#151a23] px-5 py-4 shadow-[0_18px_40px_rgba(0,0,0,0.45)] border border-white/10">
+                <div className="rounded-2xl border border-white/10 bg-[#151a23] px-5 py-4 shadow-[0_18px_40px_rgba(0,0,0,0.45)]">
                   <div className="mb-3 flex items-start gap-3">
                     <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-linear-to-br from-purple-500 to-blue-500">
                       <span className="text-xs font-bold text-white">IA</span>
                     </div>
                     <div className="flex-1">
-                      <p className="mb-1 text-xs text-slate-400">
-                        {message.author}
-                      </p>
-                      <p className="text-sm leading-relaxed text-slate-100">
-                        {message.content}
-                      </p>
+                      <p className="mb-1 text-xs text-slate-400">{message.author}</p>
+                      <p className="text-sm leading-relaxed text-slate-100">{message.content}</p>
                     </div>
                   </div>
 
@@ -64,18 +58,16 @@ function ChatMessagesComponent({ data }: ChatMessagesProps) {
                     <Button className="flex-1 rounded-full bg-blue-500 text-xs font-medium text-white hover:bg-blue-600">
                       {t("messages.actions.sendProposal")}
                     </Button>
-                    <Button className="flex-1 rounded-full bg-blue-500/10 text-xs font-medium text-blue-300 border border-blue-500/40 hover:bg-blue-500/15">
+                    <Button className="flex-1 rounded-full border border-blue-500/40 bg-blue-500/10 text-xs font-medium text-blue-300 hover:bg-blue-500/15">
                       {t("messages.actions.call")}
                     </Button>
-                    <Button className="flex-1 rounded-full bg-slate-800/60 text-xs font-medium text-slate-100 border border-slate-700 hover:bg-slate-700/80">
+                    <Button className="flex-1 rounded-full border border-slate-700 bg-slate-800/60 text-xs font-medium text-slate-100 hover:bg-slate-700/80">
                       {t("messages.actions.viewHistory")}
                     </Button>
                   </div>
 
                   <div className="mt-2 flex items-center justify-end px-1">
-                    <span className="text-xs text-slate-500">
-                      {message.timestamp}
-                    </span>
+                    <span className="text-xs text-slate-500">{message.timestamp}</span>
                   </div>
                 </div>
               </div>

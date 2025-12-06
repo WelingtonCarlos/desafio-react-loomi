@@ -1,12 +1,6 @@
 export type MapCoordinate = [number, number];
 
-export type MapCategory =
-  | "tourism"
-  | "sports"
-  | "transport"
-  | "education"
-  | "heritage"
-  | string;
+export type MapCategory = "tourism" | "sports" | "transport" | "education" | "heritage" | string;
 
 export interface MapLocation {
   id: string;
@@ -26,4 +20,3 @@ export interface MapData {
     locations: MapLocation[];
   };
 }
-

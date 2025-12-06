@@ -19,14 +19,11 @@ const initialState = {
   location: "Todos",
 };
 
-export const useDashboardFiltersStore = create<DashboardFiltersState>(
-  (set) => ({
-    ...initialState,
-    setSearch: (value) => set({ search: value }),
-    setStatus: (value) => set({ status: value }),
-    setSecureType: (value) => set({ secureType: value }),
-    setLocation: (value) => set({ location: value }),
-    reset: () => set(initialState),
-  })
-);
-
+export const useDashboardFiltersStore = create<DashboardFiltersState>((set) => ({
+  ...initialState,
+  setSearch: (value) => set({ search: value }),
+  setStatus: (value) => set({ status: value }),
+  setSecureType: (value) => set({ secureType: value }),
+  setLocation: (value) => set({ location: value }),
+  reset: () => set(initialState),
+}));

@@ -8,12 +8,13 @@ import {
   flexRender,
   SortingState,
 } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 
 import type { ActiveClientItem } from "../types/dashboard.types";
 import { useTranslation } from "react-i18next";
 
 interface DataTableProps {
-  columns: any;
+  columns: ColumnDef<ActiveClientItem, unknown>[];
   data: ActiveClientItem[];
 }
 
@@ -21,7 +22,8 @@ export function DataTable({ columns, data }: DataTableProps) {
   const { t } = useTranslation(["dashboard", "common"]);
 
   const [sorting, setSorting] = useState<SortingState>([]);
-  
+
+  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data,
     columns,
@@ -32,15 +34,15 @@ export function DataTable({ columns, data }: DataTableProps) {
   });
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-slate-800 bg-[#23283b] shadow-xl p-6">
+    <div className="overflow-hidden rounded-2xl border border-slate-800 bg-[#23283b] p-6 shadow-xl">
       <table className="w-full text-sm text-slate-200">
-        <thead className="text-xs text-slate-400 border-b border-slate-600">
+        <thead className="border-b border-slate-600 text-xs text-slate-400">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
-                  className="py-3 text-left cursor-pointer select-none"
+                  className="cursor-pointer py-3 text-left select-none"
                   onClick={header.column.getToggleSortingHandler()}
                 >
                   {flexRender(header.column.columnDef.header, header.getContext())}
@@ -56,7 +58,7 @@ export function DataTable({ columns, data }: DataTableProps) {
           {table.getRowModel().rows.map((row) => (
             <tr
               key={row.id}
-              className="border-b border-slate-600 hover:bg-slate-900/50 transition-colors"
+              className="border-b border-slate-600 transition-colors hover:bg-slate-900/50"
             >
               {row.getVisibleCells().map((cell) => (
                 <td key={cell.id} className="py-3 pr-4">
@@ -68,10 +70,7 @@ export function DataTable({ columns, data }: DataTableProps) {
 
           {data.length === 0 && (
             <tr>
-              <td
-                colSpan={columns.length}
-                className="py-6 text-center text-slate-500"
-              >
+              <td colSpan={columns.length} className="py-6 text-center text-slate-500">
                 {t("dashboard:table.empty")}
               </td>
             </tr>

@@ -31,12 +31,12 @@ function DashboardFiltersComponent({ search, lists }: FiltersProps) {
   const { t } = useTranslation("dashboard");
 
   return (
-    <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between mb-4">
+    <div className="mb-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
       <div className="flex flex-col gap-2">
         <span className="text-sm text-slate-100">{t("filters.searchLabel")}</span>
         <Input
           placeholder={t("filters.searchPlaceholder")}
-          className="bg-slate-900 border-slate-700 text-slate-100 w-80"
+          className="w-80 border-slate-700 bg-slate-900 text-slate-100"
           value={search.value}
           onChange={(e) => search.set(e.target.value)}
         />
@@ -48,7 +48,7 @@ function DashboardFiltersComponent({ search, lists }: FiltersProps) {
         <div className="flex flex-col gap-2">
           <span className="text-sm text-slate-100">{t("filters.status")}</span>
           <Select value={lists.status.value} onValueChange={lists.status.set}>
-            <SelectTrigger className="w-[140px] bg-slate-900 border-slate-700">
+            <SelectTrigger className="w-[140px] border-slate-700 bg-slate-900">
               <SelectValue placeholder={t("filters.statusPlaceholder")} />
             </SelectTrigger>
             <SelectContent>
@@ -65,11 +65,8 @@ function DashboardFiltersComponent({ search, lists }: FiltersProps) {
         {/* Tipo */}
         <div className="flex flex-col gap-2">
           <span className="text-sm text-slate-100">{t("filters.secureType")}</span>
-          <Select
-            value={lists.secureType.value}
-            onValueChange={lists.secureType.set}
-          >
-            <SelectTrigger className="w-[200px] bg-slate-900 border-slate-700">
+          <Select value={lists.secureType.value} onValueChange={lists.secureType.set}>
+            <SelectTrigger className="w-[200px] border-slate-700 bg-slate-900">
               <SelectValue placeholder={t("filters.secureTypePlaceholder")} />
             </SelectTrigger>
             <SelectContent>
@@ -86,11 +83,8 @@ function DashboardFiltersComponent({ search, lists }: FiltersProps) {
         {/* Local */}
         <div className="flex flex-col gap-2">
           <span className="text-sm text-slate-100">{t("filters.location")}</span>
-          <Select
-            value={lists.locations.value}
-            onValueChange={lists.locations.set}
-          >
-            <SelectTrigger className="w-[160px] bg-slate-900 border-slate-700">
+          <Select value={lists.locations.value} onValueChange={lists.locations.set}>
+            <SelectTrigger className="w-[160px] border-slate-700 bg-slate-900">
               <SelectValue placeholder={t("filters.locationPlaceholder")} />
             </SelectTrigger>
             <SelectContent>

@@ -10,9 +10,8 @@ import {
 } from "@/components/ui/select";
 import { memo } from "react";
 import { useTranslation } from "react-i18next";
+import { ALL_SELECT_OPTION_VALUE } from "../constants";
 import type { TicketPriority, TicketStatus } from "../types/tickets.types";
-
-export const ALL_SELECT_OPTION_VALUE = "all" as const;
 
 interface SelectState {
   value: string;
@@ -40,9 +39,7 @@ function FiltersComponent({ search, lists }: FiltersProps) {
     <div className="mb-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
       {/* Busca */}
       <div className="flex flex-col gap-2">
-        <span className="text-sm text-slate-100">
-          {t("tickets:filters.searchLabel")}
-        </span>
+        <span className="text-sm text-slate-100">{t("tickets:filters.searchLabel")}</span>
         <Input
           placeholder={t("tickets:filters.searchPlaceholder")}
           className="w-80 border-slate-700 bg-slate-900 text-slate-100"
@@ -58,7 +55,9 @@ function FiltersComponent({ search, lists }: FiltersProps) {
           <span className="text-sm text-slate-100">{t("tickets:filters.status")}</span>
           <Select
             value={lists.status.value || ALL_SELECT_OPTION_VALUE}
-            onValueChange={lists.status.set}
+            onValueChange={(value) =>
+              lists.status.set(value === ALL_SELECT_OPTION_VALUE ? "" : value)
+            }
           >
             <SelectTrigger className="w-[160px] border-slate-700 bg-slate-900 text-slate-100">
               <SelectValue placeholder={t("tickets:filters.allStatus")} />
@@ -81,7 +80,9 @@ function FiltersComponent({ search, lists }: FiltersProps) {
           <span className="text-sm text-slate-100">{t("tickets:filters.priority")}</span>
           <Select
             value={lists.priority.value || ALL_SELECT_OPTION_VALUE}
-            onValueChange={lists.priority.set}
+            onValueChange={(value) =>
+              lists.priority.set(value === ALL_SELECT_OPTION_VALUE ? "" : value)
+            }
           >
             <SelectTrigger className="w-[160px] border-slate-700 bg-slate-900 text-slate-100">
               <SelectValue placeholder={t("tickets:filters.allPriorities")} />
@@ -104,7 +105,9 @@ function FiltersComponent({ search, lists }: FiltersProps) {
           <span className="text-sm text-slate-100">{t("tickets:filters.responsible")}</span>
           <Select
             value={lists.responsible.value || ALL_SELECT_OPTION_VALUE}
-            onValueChange={lists.responsible.set}
+            onValueChange={(value) =>
+              lists.responsible.set(value === ALL_SELECT_OPTION_VALUE ? "" : value)
+            }
           >
             <SelectTrigger className="w-[180px] border-slate-700 bg-slate-900 text-slate-100">
               <SelectValue placeholder={t("tickets:filters.allResponsible")} />

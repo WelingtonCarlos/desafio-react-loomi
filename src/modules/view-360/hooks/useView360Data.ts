@@ -1,10 +1,8 @@
 "use client";
 
 import { useQuery, useQueryClient, type UseQueryResult } from "@tanstack/react-query";
-import {
-    getView360Data,
-} from "@/modules/view-360/services/view-260-service";
-import type { View360Data } from "@/modules/view-360/types/view-360.types";
+import { getView360Data } from "../services/view-260-service";
+import type { View360Data } from "../types/view-360.types";
 
 const VIEW_360_QUERY_KEY = ["view-360", "data"] as const;
 
@@ -34,4 +32,3 @@ export function useInvalidateView360Queries() {
     queryClient.invalidateQueries({ queryKey: VIEW_360_QUERY_KEY });
   };
 }
-

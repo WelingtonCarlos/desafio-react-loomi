@@ -4,12 +4,8 @@ import * as React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
+import { Button, Input, Checkbox, Label, Eye, EyeOff } from "@/modules/auth";
 import { loginSchema, type LoginFormData } from "../schemas/login-schema";
 import { useLogin } from "../hooks/useLogin";
 import { useTranslation } from "react-i18next";
@@ -23,7 +19,6 @@ export function LoginForm() {
   const redirectTo = searchParams.get("redirectTo") || "/dashboard";
   const { t } = useTranslation("auth");
 
-  
   const {
     register,
     handleSubmit,
@@ -37,7 +32,7 @@ export function LoginForm() {
 
   const onSubmit = async (data: LoginFormData) => {
     const result = await login({ ...data, rememberMe });
-    
+
     if (result.success) {
       toast.success(result.message || t("messages.loginSuccess"));
       router.push(redirectTo);
@@ -50,9 +45,7 @@ export function LoginForm() {
     <div className="w-full max-w-md space-y-8">
       <div className="space-y-2">
         <h1 className="text-3xl font-medium text-white">{t("page.title")}</h1>
-        <p className="text-gray-400 text-sm">
-          {t("page.subtitle")}
-        </p>
+        <p className="text-sm text-gray-400">{t("page.subtitle")}</p>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -62,16 +55,12 @@ export function LoginForm() {
               id="username"
               type="email"
               placeholder={t("form.emailPlaceholder")}
-              className="bg-[#0f1623] border-gray-800 text-white placeholder:text-gray-500 h-14 rounded-lg"
+              className="h-14 rounded-lg border-gray-800 bg-[#0f1623] text-white placeholder:text-gray-500"
               {...register("username")}
             />
           </div>
-          {errors.username && (
-            <p className="text-sm text-red-500">{errors.username.message}</p>
-          )}
-          <p className="text-xs text-gray-500">
-            {t("form.emailHelper")}
-          </p>
+          {errors.username && <p className="text-sm text-red-500">{errors.username.message}</p>}
+          <p className="text-xs text-gray-500">{t("form.emailHelper")}</p>
         </div>
 
         <div className="space-y-2">
@@ -81,24 +70,18 @@ export function LoginForm() {
               type={showPassword ? "text" : "password"}
               placeholder={t("form.passwordPlaceholder")}
               maxLength={12}
-              className="bg-[#0f1623] border-gray-800 text-white placeholder:text-gray-500 h-14 pr-10 rounded-lg"
+              className="h-14 rounded-lg border-gray-800 bg-[#0f1623] pr-10 text-white placeholder:text-gray-500"
               {...register("password")}
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 transition-colors"
+              className="absolute top-1/2 right-3 -translate-y-1/2 text-gray-500 transition-colors hover:text-gray-300"
             >
-              {showPassword ? (
-                <EyeOff className="h-5 w-5" />
-              ) : (
-                <Eye className="h-5 w-5" />
-              )}
+              {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
             </button>
           </div>
-          {errors.password && (
-            <p className="text-sm text-red-500">{errors.password.message}</p>
-          )}
+          {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
         </div>
 
         <div className="flex items-center justify-between">
@@ -107,19 +90,13 @@ export function LoginForm() {
               id="remember"
               checked={rememberMe}
               onCheckedChange={(checked) => setRememberMe(checked as boolean)}
-              className="border-gray-600 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
+              className="border-gray-600 data-[state=checked]:border-blue-600 data-[state=checked]:bg-blue-600"
             />
-            <Label
-              htmlFor="remember"
-              className="text-sm text-gray-300 font-normal cursor-pointer"
-            >
+            <Label htmlFor="remember" className="cursor-pointer text-sm font-normal text-gray-300">
               {t("form.rememberMe")}
             </Label>
           </div>
-          <a
-            href="#"
-            className="text-sm text-blue-500 hover:text-blue-400 transition-colors"
-          >
+          <a href="#" className="text-sm text-blue-500 transition-colors hover:text-blue-400">
             {t("form.forgotPassword")}
           </a>
         </div>
@@ -127,7 +104,7 @@ export function LoginForm() {
         <Button
           type="submit"
           disabled={isLoading}
-          className="w-full h-12 cursor-pointer bg-blue-600 hover:bg-blue-700 text-white text-base font-medium rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          className="h-12 w-full cursor-pointer rounded-lg bg-blue-600 text-base font-medium text-white transition-all hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {isLoading ? t("form.submitting") : t("form.submit")}
         </Button>

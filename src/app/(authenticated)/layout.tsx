@@ -8,7 +8,7 @@ export default function AuthenticatedLayout({
   return (
     <div className="flex min-h-screen">
       <Sidebar />
-      <main className="pl-20 flex-1">{children}</main>
+      <main className="flex-1 pl-20">{children}</main>
     </div>
   );
 }

@@ -5,6 +5,7 @@ Dashboard administrativo desenvolvido com Next.js 16, TypeScript e Tailwind CSS,
 ## ✨ Funcionalidades Implementadas
 
 ### 🌐 Internacionalização (i18n)
+
 - **Arquivos de idioma** em `public/locales/{pt-BR,en}` organizados por namespace (`common`, `auth`, `dashboard`, `tickets`, `plans`, `view360`, etc.).
 - **Integração react-i18next** centralizada em `src/lib/i18n.ts` com `LanguageDetector` (persistindo a escolha em `localStorage`/cookies) e tipagem dos namespaces.
 - **Provider global** (`src/lib/providers/i18n-provider.tsx`) envolve o App para disponibilizar `useTranslation` em qualquer componente.
@@ -12,6 +13,7 @@ Dashboard administrativo desenvolvido com Next.js 16, TypeScript e Tailwind CSS,
 - **Módulos migrados**: Login, Dashboard, Tickets (em andamento), Planos e Visão 360 estão sendo traduzidos iterativamente com `t('namespace.chave')`.
 
 ### 🔐 Sistema de Autenticação
+
 - **Formulário de Login** com validação de e-mail e senha
 - **Integração com API** mock via endpoint `/login.json`
 - **Armazenamento seguro**: Token em cookies + dados do usuário em localStorage
@@ -22,25 +24,28 @@ Dashboard administrativo desenvolvido com Next.js 16, TypeScript e Tailwind CSS,
 - **Proxy (middleware)** protegendo rotas privadas com base no cookie `auth-token`
 - **Redirecionamento inteligente**: após login o usuário volta para a rota solicitada (`redirectTo`)
 
-
 ### KPI Dashboard
+
 - **Hooks**: `useDashboardData`, `useDashboardMapData` e `useInvalidateDashboardQueries` para buscar, manter cache e invalidar KPIs e mapa.
 - **Services**: `getDashboardData()` e `getMapData()` encapsulam chamadas aos endpoints `/dash.json` e `/map.json`.
 - **Types**: `DashboardData`, `ActiveClients`, `ActiveClientItem`, `ActiveClientFilters`, além dos tipos auxiliares das séries de KPI.
 - **Dashboard dinâmico**: gráficos, cards, mapa (clientes por região) e tabela de clientes ativos consumindo `/dash.json` e `/map.json` com cache e skeletons de carregamento
 
 ### 📊 Lista de Clientes Ativos
+
 - Filtro textual único para nome ou e-mail com atualização instantânea
 - Combinação de filtros por status, tipo de seguro e localização
 - Tabela com ordenação por coluna usando TanStack Table e feedback quando não há resultados
 
 ### Tickets
+
 - **Hooks**: `useTicketsData` e `useInvalidateTicketsQueries` gerenciam o cache de tickets via TanStack Query com delay simulado e invalidation centralizada.
 - **Services**: `getTicketsData()` encapsula a chamada ao endpoint `/tickets.json` usando o `api` compartilhado.
 - **Types**: `TicketsResponse`, `TicketItem`, `TicketsResume`, `TicketPriority` e `TicketStatus` garantem tipagem da listagem, filtros e resumo.
 - **Criação e Edição**: Implementada a funcionalidade de criação e edição dos Tickets com persistência de dados.
 
 ### Persistência de Dados em Tickets
+
 - Implementei uma camada de persistência em localStorage para manter um clone da resposta do GET e suportar operações simuladas de criação/edição:
 - Adicionei src/modules/tickets/services/tickets-storage.ts, responsável por garantir o clone (ensureTicketsClone), ler/gravar (getTicketsClone, setTicketsClone) e atualizar (updateTicketsClone) os dados persistidos. O clone é inicializado na primeira vez que o GET roda e permanece disponível após refresh.
 - Atualizei getTicketsData em tickets-service.ts para sempre retornar esse clone persistido ao invés da resposta crua da API.
@@ -49,24 +54,28 @@ Dashboard administrativo desenvolvido com Next.js 16, TypeScript e Tailwind CSS,
 - Assim, novas criações/edições permanecem mesmo após recarregar a página; para limpar basta remover a chave de storage (há resetTicketsClone caso queira limpar).
 
 ### Gestão de Planos
+
 - **Planos**: Tela de gestão de planos onde você consegue criar um plano personalizado ou apenas selecionar um plano padrão. Mostra beneícios inclusos e Indicadores de cada plano.
 - **Hooks**: `usePlansData` e `useInvalidatePlansQueries` gerenciam o cache de dados dos planos via TanStack Query com delay simulado e invalidation centralizada.
 - **Services**: `getPlansData()` encapsula a chamada ao endpoint `/plans.json` usando o `api` compartilhado.
 - **Types**: `PlansResponse`, `PlanIndicator` e `PlansData` garantem tipagem dos benefícios inclusos e indicadores de cada plano (conversão, ROI e valor).
 
 ### Visão 360º
+
 - **Planos**: Tela Visão 360º combina os componentes `ClientInfoSidebar`, `AISuggestions`, `SmartClassification` e `SuggestionCards` para exibir perfil completo, produtos contratados, frases captadas e ofertas recomendadas pela IA.
 - **Hooks**: `useView360Data` e `useInvalidateView360Queries` cuidam do fetch/cache do endpoint `/360-view.json`, com delay simulado e invalidação centralizada via TanStack Query.
 - **Services**: `getView360Data()` encapsula a chamada ao endpoint `/360-view.json` através do `api` compartilhado.
 - **Types**: `View360Data`, `Client`, `Product`, `Suggestion`, `SuggestionsIA`, `SmartClassification`, `CapturedPhrase` e `AppAction` descrevem o payload completo usado pelos componentes.
 
 ### Chat
+
 - **Chat**: Tela de atendimento com histórico, input e sidebar inteligente (dados do cliente, perfil, ações e sugestões IA).
 - **Hooks**: `useChatsData` centraliza o fetch/cache do transcript, insights e próximos passos; integra com `useView360Data` para enriquecer o sidebar.
 - **Services**: Dados mockados consumidos via TanStack Query, prontos para apontar para um endpoint real quando necessário.
 - **Types**: `ChatMessage`, `ChatTranscript`, `ChatInsight`, `ChatAction` e `ChatsData` tipam mensagens, recomendações e ações futuras.
 
 ### 🛠️ Stack Técnica
+
 - **Next.js 16** (App Router)
 - **TypeScript** para type safety
 - **Tailwind CSS 4** para estilização
@@ -79,28 +88,37 @@ Dashboard administrativo desenvolvido com Next.js 16, TypeScript e Tailwind CSS,
 ## Melhorias
 
 ### Melhores estados globais
-- Centralizei os filtros da listagem de tickets e do dashboard em stores dedicados (`src/lib/stores/ticket-filters-store.ts` e `src/lib/stores/dashboard-filters-store.ts`). Dessa forma, o mesmo estado é reaproveitado entre tabelas, resumos e futuros widgets, evitando `prop drilling` e mantendo a configuração dos filtros ao navegar entre páginas.
+
+- Centralizei os filtros da listagem de tickets e do dashboard em stores dedicados (`src/lib/stores/ticket-filters-store.ts` e `src/lib/stores/dashboard-filters-store.ts`). Dessa forma, o mesmo estado é reaproveitado entre tabelas, resumos e evitando `prop drilling` e mantendo a configuração dos filtros ao navegar entre páginas.
 - Criei também `src/lib/stores/ticket-modal-store.ts`, que controla abertura e ticket selecionado para o modal de criação/edição. Agora qualquer componente pode disparar o modal sem precisar receber callbacks em cadeia, e o estado é limpo de forma previsível quando o modal fecha.
 - Adicionei `src/lib/stores/plan-customizer-store.ts` para orquestrar toda a simulação de planos (plano escolhido, sliders e coberturas). Isso permite que `CustomizedPlans` e `PlansIndicators` compartilhem o mesmo contexto e exibam o resumo das escolhas do usuário.
 - Introduzi `src/lib/stores/dashboard-kpi-store.ts` para sincronizar o KPI ativo entre o gráfico e os cards de resumo, mantendo toda a página alinhada ao mesmo filtro.
 
 ### Memoização
+
 - Os componentes de filtros (`src/modules/tickets/components/filters.tsx` e `src/modules/dashboard/components/filters.tsx`) foram encapsulados com `React.memo`. Como eles recebem apenas valores/handlers derivados dos stores, a memoização impede renders desnecessários sempre que apenas os dados das tabelas mudam.
 - A memoização garante que o layout dos filtros permaneça estável mesmo diante de atualizações frequentes do restante da página, melhorando a responsividade da UI.
 - `src/modules/plans/components/plans-indicators.tsx` agora é memoizado e consome diretamente o estado global da customização, evitando recomputar indicadores quando apenas um slider muda.
 - `src/modules/chats/components/chat-messages.tsx` foi encapsulado com `React.memo`, impedindo que o histórico inteiro seja reprocessado quando apenas o input sofre alterações.
 - Em `src/modules/view-360/components/ai-suggestions.tsx`, o bloco da sugestão ativa foi protegido com `useMemo`, evitando recalcular a cada poll de dados quando o tab não muda.
+- No componente `src/modules/tickets/components/tickets-table.tsx`, os dados vindos da query (`tickets`, `status`, `priorities`) são memorizados logo na chegada. Isso garante que filtros e `useMemo` subsequentes (responsáveis, lista filtrada e colunas) só recalculam quando algo realmente muda, evitando re-render desnecessário ao alternar filtros ou paginar.
 
 ### useCallback
+
 - Nas páginas e modais de tickets (`src/modules/tickets/pages/tickets-page.tsx` e `src/modules/tickets/components/ticket-modal.tsx`), envolvi os handlers (`handleCreateClick`, `handleEditTicket`, `handleDialogChange`, `onSubmit`, etc.) com `useCallback`. Isso mantém as referências estáveis ao repassá-las para tabelas, colunas e componentes memoizados, evitando que eles recalculam estrutura interna toda vez.
 - Com callbacks estáveis, os efeitos colaterais como re-renderizações do TanStack Table ou reprocessamento de formulários foram reduzidos, tornando as interações mais fluídas.
 - `CustomizedPlans`, `KpiChart`, `ChatInput` e `AISuggestions` agora expõem handlers estáveis (`handleSelectPlan`, `handleSelectKpi`, `handleSend`, `handleTabChange`, etc.), garantindo que componentes filhos apenas re-renderizam quando algo realmente muda.
 
 ### Tratamento de erros e feedback visual
+
 - Adicionei `ErrorState`, um componente reutilizável com ícone, descrição e botão de “Tentar novamente” usado em todos os módulos (Dashboard, Tickets, Planos, Visão 360 e Chat). Isso evita telas silenciosamente quebradas e mantém o layout consistente.
 - Criei o hook `useErrorToast`, que dispara automaticamente um toast via Sonner sempre que `isError` é verdadeiro. Cada tela agora informa imediatamente ao usuário quando uma chamada falha, mantendo o Skeleton/Conteúdo intacto.
 - Todos os hooks de dados (`useDashboardData`, `useTicketsData`, `usePlansData`, `useView360Data`, `useChatsData`) propagam seus estados de erro e expõem `refetch`, permitindo que o botão do `ErrorState` force uma nova tentativa.
 - Para facilitar QA, o cliente HTTP respeita `NEXT_PUBLIC_SIMULATE_ERRORS` (por padrão `true`). Basta definir `false` após testar para voltar aos dados reais.
+
+### Componentização do Chat Sidebar
+
+- A sidebar do chat foi fatiada em subcomponentes específicos (`ChatClientCard`, `ChatProductList`, `ChatProfileTags`, `ChatAppActions`, `AISuggestionCard`, `ConversationInsightsCard`, `FutureStepsCard` e `RecommendedOfferCard`). Cada bloco agora vive em seu próprio arquivo dentro de `src/modules/chats/components/chat-sidebar/`, deixando o componente principal com apenas a orquestração do layout. Além de melhorar a leitura, isso facilita testes isolados, reaproveitamento das seções e manutenções futuras (por exemplo, ajustar apenas o card de sugestões da IA sem tocar no restante da sidebar).
 
 ## 📁 Estrutura do Projeto
 
@@ -132,17 +150,21 @@ src/
 ## 🚀 Como Executar
 
 ### 1. Instalar Dependências
+
 ```bash
 npm install
 ```
 
 ### 2. Configurar Variáveis de Ambiente
+
 Crie um arquivo `.env.local` na raiz do projeto:
+
 ```bash
 NEXT_PUBLIC_API_BASE_URL=https://loomi.s3.us-east-1.amazonaws.com/mock-api-json/v2
 ```
 
 ### 3. Rodar o Projeto
+
 ```bash
 npm run dev
 ```
@@ -159,12 +181,14 @@ Acesse: `http://localhost:3000/login`
 6. Após o sucesso, você volta para a rota que tentou acessar (ex.: `/dashboard`, `/tickets`, etc.)
 
 **Armazenamento:**
+
 - 🍪 Token salvo em **cookies** (`auth-token`)
 - 💾 Dados do usuário em **localStorage** (`user-data`)
 
 ## 📂 Arquitetura do Código
 
 ### Módulo de Autenticação (`src/modules/auth/`)
+
 ```
 auth/
 ├── components/
@@ -181,6 +205,7 @@ auth/
 ```
 
 ### Configurações Globais (`src/lib/`)
+
 - **API**: Cliente HTTP + endpoints organizados
 - **Stores**: Zustand para estado global
 - **Utils**: Cookies, formatadores, etc
@@ -189,11 +214,11 @@ auth/
 
 ## 📡 Endpoints Disponíveis
 
-| Endpoint | Descrição |
-|----------|-----------|
-| `/login.json` | Autenticação |
-| `/dash.json` | KPIs, Mapa de Impacto, Gráficos de Métricas e Clientes Ativos |
-| `/map.json` | Dados geográficos para o mapa 360 |
+| Endpoint      | Descrição                                                     |
+| ------------- | ------------------------------------------------------------- |
+| `/login.json` | Autenticação                                                  |
+| `/dash.json`  | KPIs, Mapa de Impacto, Gráficos de Métricas e Clientes Ativos |
+| `/map.json`   | Dados geográficos para o mapa 360                             |
 
 ## 📝 Próximos Passos
 

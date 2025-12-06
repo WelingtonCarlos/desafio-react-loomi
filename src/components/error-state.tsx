@@ -1,14 +1,14 @@
-import { AlertCircle } from "lucide-react"
+import { AlertCircle } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface ErrorStateProps {
-  title?: string
-  description?: string
-  retryLabel?: string
-  onRetry?: () => void
-  className?: string
+  title?: string;
+  description?: string;
+  retryLabel?: string;
+  onRetry?: () => void;
+  className?: string;
 }
 
 export function ErrorState({
@@ -21,16 +21,14 @@ export function ErrorState({
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center gap-3 rounded-2xl border border-destructive/30 bg-destructive/5 p-6 text-center",
-        className
+        "border-destructive/30 bg-destructive/5 flex flex-col items-center justify-center gap-3 rounded-2xl border p-6 text-center",
+        className,
       )}
     >
-      <AlertCircle className="h-10 w-10 text-destructive" aria-hidden />
+      <AlertCircle className="text-destructive h-10 w-10" aria-hidden />
       <div className="space-y-1">
-        <p className="text-base font-semibold text-foreground">{title}</p>
-        {description ? (
-          <p className="text-sm text-muted-soft">{description}</p>
-        ) : null}
+        <p className="text-foreground text-base font-semibold">{title}</p>
+        {description ? <p className="text-muted-soft text-sm">{description}</p> : null}
       </div>
       {onRetry ? (
         <Button
@@ -42,7 +40,5 @@ export function ErrorState({
         </Button>
       ) : null}
     </div>
-  )
+  );
 }
-
-

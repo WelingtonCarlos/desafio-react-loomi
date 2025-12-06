@@ -1,9 +1,7 @@
 "use client";
 
 import { useQuery, useQueryClient, type UseQueryResult } from "@tanstack/react-query";
-import {
-  getChatsData,
-} from "@/modules/chats/services/chats-service";
+import { getChatsData } from "../services/chats-service";
 import type { ChatsData } from "../types/chats.types";
 
 const CHATS_QUERY_KEY = ["chats", "data"] as const;
@@ -34,4 +32,3 @@ export function useInvalidateChatsQueries() {
     queryClient.invalidateQueries({ queryKey: CHATS_QUERY_KEY });
   };
 }
-
