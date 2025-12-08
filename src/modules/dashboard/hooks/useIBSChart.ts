@@ -19,7 +19,7 @@ export function useIBSChart(dashboardData: DashboardData | undefined) {
         },
       },
       labels: segmentNames,
-      colors: ["#006dff", "#56a8fa", "#00449e", "#75dffe", "#0682a7"],
+      colors: ["#006FFF", "#53A9FD", "#00449E", "#75DFFF", "#0882A7"],
       plotOptions: {
         pie: {
           donut: {

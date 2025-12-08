@@ -66,7 +66,7 @@ export function ActiveClientsTable() {
   }
 
   return (
-    <div className="bg-gradient-glass border-soft h-full w-full rounded-3xl border px-6 py-10">
+    <div className="bg-gradient-glass border-soft h-[686px] w-full rounded-3xl border px-6 py-10">
       <Filters
         search={{ value: search, set: setSearch }}
         lists={{
@@ -78,7 +78,7 @@ export function ActiveClientsTable() {
       />
 
       {isLoading ? (
-        <div className="h-full w-full animate-pulse rounded-2xl bg-white/5" />
+        <div className="h-[686px] w-full animate-pulse rounded-2xl bg-white/5" />
       ) : (
         <DataTable columns={getColumns(t)} data={filtered || []} />
       )}

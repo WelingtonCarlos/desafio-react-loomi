@@ -1,12 +1,13 @@
 "use client";
 
-import { Phone, Mail, Eye, Plus } from "lucide-react";
+import { Phone, Mail, Eye, Plus, SquareArrowOutUpRight } from "lucide-react";
 import { ErrorState } from "@/components/error-state";
 import { Button } from "@/components/ui/button";
 import { useErrorToast } from "@/hooks/use-error-toast";
 import { useView360Data } from "../hooks/useView360Data";
 import { SkeletonClientInfoSidebar } from "./skeleton-view-360";
 import { useTranslation } from "react-i18next";
+import { Badge } from "@/components";
 
 export function ClientInfoSidebar() {
   const { t } = useTranslation("view360");
@@ -55,54 +56,51 @@ export function ClientInfoSidebar() {
   }
 
   return (
-    <div className="bg-gradient-glass border-soft space-y-6 rounded-2xl border p-6">
+    <div className="bg-card border-soft space-y-6 rounded-2xl border py-6">
       {/* Profile Section */}
-      <div className="flex flex-col items-center space-y-3 text-center">
-        <div className="bg-brand text-brand-foreground flex h-20 w-20 items-center justify-center rounded-full text-2xl font-medium">
+      <div className="flex flex-col items-center space-y-4 px-6 text-center">
+        <div className="bg-brand text-color-muted flex h-20 w-20 items-center justify-center rounded-full text-2xl font-medium">
           {getInitials(client?.name || "")}
         </div>
-        <div className="flex flex-col items-center text-center">
-          <h2 className="text-foreground text-lg font-medium">{client?.name}</h2>
-          <p className="text-muted-soft text-sm">{client?.clientType}</p>
+
+        <div className="flex flex-col items-center space-y-2 text-center">
+          <h2 className="text-color-muted text-lg leading-4 font-bold">{client?.name}</h2>
+          <p className="text-muted-soft text-sm leading-4 font-normal">{client?.clientType}</p>
         </div>
-        <div className="flex w-full flex-col gap-2 2xl:flex-row">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="text-muted-soft hover:text-foreground flex-1"
-          >
-            <Phone className="mr-1 h-4 w-4" />
-            {t("clientSidebar.buttons.call")}
+
+        <div className="mt-4 flex w-full flex-col gap-2 2xl:flex-row">
+          <Button size="sm" className="flex flex-1 flex-col bg-transparent hover:bg-transparent">
+            <Phone className="text-brand-name mr-1 h-6 w-6" />
+            <span className="text-xs leading-4 font-normal text-[#EFF6FF]">
+              {t("clientSidebar.buttons.call")}
+            </span>
           </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="text-muted-soft hover:text-foreground flex-1"
-          >
-            <Mail className="mr-1 h-4 w-4" />
-            {t("clientSidebar.buttons.email")}
+          <Button size="sm" className="flex flex-1 flex-col bg-transparent hover:bg-transparent">
+            <Mail className="text-brand-name mr-1 h-6 w-6" />
+            <span className="text-xs leading-4 font-normal text-[#EFF6FF]">
+              {t("clientSidebar.buttons.email")}
+            </span>
           </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="text-muted-soft hover:text-foreground flex-1"
-          >
-            <Eye className="mr-1 h-4 w-4" />
-            {t("clientSidebar.buttons.viewMore")}
+          <Button size="sm" className="flex flex-1 flex-col bg-transparent hover:bg-transparent">
+            <Eye className="text-brand-name mr-1 h-6 w-6" />
+            <span className="text-xs leading-4 font-normal text-[#EFF6FF]">
+              {t("clientSidebar.buttons.viewMore")}
+            </span>
           </Button>
         </div>
       </div>
 
+      <hr />
+
       {/* Products Section */}
-      <div>
+      <div className="px-6">
         <div className="mb-3 flex items-center justify-between">
-          <h3 className="text-foreground text-sm font-medium">
+          <h3 className="text-foreground mb-3 text-base leading-4 font-medium">
             {t("clientSidebar.sections.products")}
           </h3>
           <Button
-            variant="ghost"
             size="sm"
-            className="text-muted-soft hover:text-foreground h-6 w-6 p-0"
+            className="text-text-color-muted h-6 w-6 bg-transparent p-0 hover:bg-transparent"
           >
             <Plus className="h-4 w-4" />
           </Button>
@@ -113,43 +111,50 @@ export function ClientInfoSidebar() {
               <div className="flex items-center gap-2">
                 <div
                   className={`h-2 w-2 rounded-full ${
-                    produto.status === "Ativo" ? "bg-green-500" : "bg-orange-500"
+                    produto.status === "Ativo" ? "bg-green-500" : "bg-destructive"
                   }`}
                 />
                 <span className="text-muted-soft">{produto.name}</span>
               </div>
-              <span className="text-foreground font-medium">R$ {produto.value.toFixed(2)}/mês</span>
+
+              <div className="flex items-center gap-2">
+                <span className="text-foreground font-medium">
+                  R$ {produto.value.toFixed(2)}/mês
+                </span>
+                <SquareArrowOutUpRight className="text-brand-name h-4 w-4" />
+              </div>
             </div>
           ))}
         </div>
       </div>
 
+      <hr />
+
       {/* Profile Tags */}
-      <div>
-        <h3 className="text-foreground mb-3 text-sm font-medium">
+      <div className="px-6 flex flex-col gap-6">
+        <h3 className="text-foreground mb-3 text-base leading-4 font-medium">
           {t("clientSidebar.sections.profile")}
         </h3>
         <div className="flex flex-wrap gap-2">
           {profile?.map((tag, index) => (
-            <span
-              key={index}
-              className="bg-brand-soft text-brand border-soft rounded-full border px-3 py-1 text-xs"
-            >
+            <Badge variant="highlight" key={index}>
               {tag}
-            </span>
+            </Badge>
           ))}
         </div>
       </div>
 
+      <hr />
+
       {/* Captured Phrases */}
-      <div>
-        <h3 className="text-foreground mb-3 text-sm font-medium">
+      <div className="px-6 flex flex-col gap-6">
+        <h3 className="text-foreground mb-3 text-base leading-4 font-medium">
           {t("clientSidebar.sections.phrases")}
         </h3>
         <div className="space-y-3">
           {capturedPhrases?.map((item, index) => (
-            <div key={index} className="bg-surface-panel border-soft rounded-lg border p-3">
-              <p className="text-muted-soft mb-1 text-sm italic">&quot;{item.phrase}&quot;</p>
+            <div key={index} className="bg-card-2 border-soft rounded-b-xl rounded-tr-xl border p-3">
+              <p className="text-foreground-muted mb-1 text-sm">&quot;{item.phrase}&quot;</p>
               <p className="text-muted-soft text-xs">
                 {t("clientSidebar.labels.serviceDay")}{" "}
                 {new Date(item.serviceDate).toLocaleDateString("pt-BR")}
@@ -159,16 +164,18 @@ export function ClientInfoSidebar() {
         </div>
       </div>
 
+      <hr />
+
       {/* App Actions */}
-      <div>
-        <h3 className="text-foreground mb-3 text-sm font-medium">
+      <div className="px-6 flex flex-col gap-6">
+        <h3 className="text-foreground mb-3 text-base leading-4 font-medium">
           {t("clientSidebar.sections.appActions")}
         </h3>
-        <div className="space-y-3">
+        <div className="space-y-3 ">
           {appActions?.map((action, index) => (
             <div key={index}>
               <p className="text-muted-soft mb-1 text-xs">{action.accessed}</p>
-              <p className="text-muted-soft text-sm">{action.action}</p>
+              <p className="text-foreground text-sm">{action.action}</p>
               {action.pageTime && (
                 <p className="text-muted-soft text-xs">
                   {t("clientSidebar.labels.pageTime")} {action.pageTime}

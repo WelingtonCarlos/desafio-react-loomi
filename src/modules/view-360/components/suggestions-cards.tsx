@@ -42,7 +42,7 @@ export function SuggestionCards() {
   }
 
   return (
-    <div className="flex flex-row justify-between space-y-6 2xl:flex-col 2xl:justify-start">
+    <div className="flex flex-row justify-around space-y-6 2xl:flex-col 2xl:justify-start">
       <div className="bg-gradient-brand-card flex h-64 w-[312px] flex-col justify-between rounded-2xl p-6 text-white shadow-[0_8px_20px_-4px_rgba(0,0,0,0.35)]">
         <div>
           <h3 className="mb-2 text-lg font-semibold">{t("suggestionCards.life.title")}</h3>

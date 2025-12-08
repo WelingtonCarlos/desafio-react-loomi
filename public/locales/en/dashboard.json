@@ -6,7 +6,7 @@
     "clientMap": "Clients by region"
   },
   "filters": {
-    "searchLabel": "Search by name",
+    "title": "Active clients",
     "searchPlaceholder": "Search by name...",
     "status": "Status",
     "statusPlaceholder": "Status",

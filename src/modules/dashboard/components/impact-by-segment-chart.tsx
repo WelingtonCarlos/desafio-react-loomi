@@ -42,24 +42,24 @@ export function ImpactBySegmentChart() {
   }
 
   return (
-    <div className="via-[#36446b98 ]/60 to-[#36446b98 ]/10 h-[470px] flex-1 rounded-3xl border border-gray-800/50 bg-linear-to-br from-[#36446b98] p-6 shadow-xl">
-      <h3 className="mb-6 text-lg font-medium text-white">{t("impact.title")}</h3>
+    <div className="bg-gradient-slate h-[466px] flex-1 rounded-3xl border border-gray-800/50 p-10 shadow-xl gap-8 flex flex-col">
+      <h3 className="text-xl font-bold leading-4 text-white drop-shadow-md">{t("impact.title")}</h3>
 
-      <div className="flex min-h-[280px] flex-1 flex-col items-center justify-center">
-        <div className="relative mx-auto w-full max-w-[280px]">
+      <div className="flex min-h-64 flex-1 flex-col items-center justify-center gap-8">
+        <div className="relative mx-auto w-36 h-36">
           {isLoading ? (
-            <div className="h-full w-full animate-pulse rounded-2xl bg-white/5" />
+            <div className="h-36 w-h-36 animate-pulse rounded-2xl bg-white/5" />
           ) : (
             <Chart options={options} series={series} type="donut" height={141} />
           )}
         </div>
 
         {/* Custom Legend */}
-        <div className="mx-auto mt-8 flex max-w-sm flex-wrap justify-center gap-3">
+        <div className="mx-auto flex max-w-sm flex-wrap justify-center gap-3">
           {labels.map((label, index: number) => (
             <div
               key={index}
-              className="flex items-center gap-2 rounded-full border border-white/5 bg-[#1e232d] px-3 py-1.5"
+              className="flex items-center gap-2 rounded-full border border-white/5 bg-[#23283b] p-3"
             >
               <span
                 className="h-2.5 w-2.5 rounded-full"
@@ -71,8 +71,8 @@ export function ImpactBySegmentChart() {
         </div>
       </div>
 
-      <div className="mt-8 flex justify-center">
-        <Button className="h-auto rounded-full bg-[#1d77ff] px-8 py-3 text-sm font-medium text-white shadow-[0_0_20px_rgba(29,119,255,0.3)] hover:bg-[#1d77ff]/90">
+      <div className="flex justify-center">
+        <Button className="h-auto rounded-full cursor-pointer bg-brand-name px-8 py-3 text-sm font-medium text-white shadow-md shadow-brand-name hover:bg-brand-name/90">
           {t("impact.cta")}
         </Button>
       </div>

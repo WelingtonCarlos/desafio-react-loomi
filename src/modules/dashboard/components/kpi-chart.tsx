@@ -50,20 +50,20 @@ export function KpiChart() {
   }
 
   return (
-    <div className="via-[#36446b98 ]/60 to-[#36446b98 ]/10 h-full w-full rounded-3xl border border-gray-800/50 bg-linear-to-br from-[#36446b98] p-6 shadow-xl">
+    <div className="bg-gradient-slate h-[376px] w-full rounded-3xl border border-gray-800/50 p-6 shadow-xl">
       <div className="mb-8 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
         <h2 className="text-xl font-semibold text-white">{t("kpi.title")}</h2>
-        <div className="flex gap-3 rounded-3xl bg-[#232f44] p-1 px-3 py-2">
+        <div className="flex gap-3 rounded-[100px] bg-[#232f44] px-3 py-2">
           {(["arpuTrend", "conversionTrend", "churnTrend", "retentionTrend"] as KpiType[]).map(
             (key) => (
               <Button
                 key={key}
                 onClick={() => handleSelectKpi(key)}
                 className={cn(
-                  "cursor-pointer rounded-3xl px-4 py-1.5 text-sm font-medium transition-all duration-200",
+                  "cursor-pointer rounded-[100px] px-4 py-1.5 text-sm font-medium transition-all duration-200 not-hover:bg-[#F6F8FC1A]",
                   activeKpi === key
-                    ? "text-white shadow-lg shadow-cyan-500/20"
-                    : "text-gray-400 hover:bg-white/5 hover:text-white",
+                    ? "text-white bg-[#F6F8FC1A] shadow-lg shadow-cyan-500/20"
+                    : "text-white hover:bg-white/5 hover:text-white",
                 )}
                 style={activeKpi === key ? { backgroundColor: KPI_CONFIG[key].color } : undefined}
               >
@@ -74,7 +74,7 @@ export function KpiChart() {
         </div>
       </div>
 
-      <div className="h-[300px] w-full">
+      <div className="h-52 w-full mt-16">
         {isLoading ? (
           <div className="h-full w-full animate-pulse rounded-2xl bg-white/5" />
         ) : (

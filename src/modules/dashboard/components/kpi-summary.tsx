@@ -52,8 +52,8 @@ export function KpiSummary() {
   }
 
   return (
-    <div className="grid flex-1 grid-cols-2 gap-4">
-      {METRIC_CONFIG.map(({ key, labelKey, formatValue }) => {
+    <div className="grid flex-1 grid-cols-2 gap-6">
+      {METRIC_CONFIG.map(({ key, labelKey, formatValue }, index) => {
         const metric = resume?.[key];
         const value = metric
           ? formatValue
@@ -63,6 +63,7 @@ export function KpiSummary() {
         const change = metric ? `${metric.variacao}%` : "--";
         const isPositive = metric ? metric.variacao >= 0 : true;
         const isActive = key === activeMetricKey;
+        const shouldShowArrow = index === 0 || index === METRIC_CONFIG.length - 1;
 
         return (
           <MetricCard
@@ -72,7 +73,7 @@ export function KpiSummary() {
             change={change}
             trend={isPositive ? "up" : "down"}
             trendColor={isPositive ? "text-green-500" : "text-red-500"}
-            hasArrow
+            hasArrow={shouldShowArrow}
             periodLabel={t("messages.inPeriod")}
             isActive={isActive}
           />

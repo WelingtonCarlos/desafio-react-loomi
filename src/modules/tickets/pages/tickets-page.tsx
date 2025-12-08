@@ -45,7 +45,7 @@ export function TicketsPage() {
         <TicketsSummary />
       </div>
 
-      <div className="m-auto flex w-full max-w-3xl flex-col gap-8 xl:max-w-4xl 2xl:max-w-7xl 2xl:flex-row">
+      <div className="m-auto flex w-full max-w-3xl flex-col gap-8 xl:max-w-4xl 2xl:max-w-7xl 2xl:flex-row mb-10">
         <TicketsTable onEditTicket={handleEditTicket} />
       </div>
 

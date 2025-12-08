@@ -16,7 +16,6 @@
     }
   },
   "filters": {
-    "searchLabel": "Buscar por ID, cliente ou assunto",
     "searchPlaceholder": "Buscar por ID, cliente ou assunto...",
     "status": "Status",
     "allStatus": "Todos os status",
@@ -26,6 +25,7 @@
     "allResponsible": "Todos os responsáveis"
   },
   "table": {
+    "name": "Lista de tickets",
     "empty": "Nenhum ticket encontrado.",
     "emptyState": "Nenhum registro para exibir",
     "range": "Mostrando {{from}}-{{to}} de {{total}} tickets",

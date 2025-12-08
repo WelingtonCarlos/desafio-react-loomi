@@ -6,7 +6,7 @@
     "clientMap": "Mapa de clientes por região"
   },
   "filters": {
-    "searchLabel": "Buscar por nome",
+    "title": "Clientes ativos",
     "searchPlaceholder": "Buscar por nome...",
     "status": "Status",
     "statusPlaceholder": "Status",

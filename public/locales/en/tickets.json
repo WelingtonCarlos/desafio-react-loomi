@@ -16,7 +16,6 @@
     }
   },
   "filters": {
-    "searchLabel": "Search by ID, client or subject",
     "searchPlaceholder": "Search by ID, client or subject...",
     "status": "Status",
     "allStatus": "All statuses",
@@ -26,6 +25,7 @@
     "allResponsible": "All assignees"
   },
   "table": {
+    "name": "Tickets list",
     "empty": "No tickets found.",
     "emptyState": "No records to display",
     "range": "Showing {{from}}-{{to}} of {{total}} tickets",
