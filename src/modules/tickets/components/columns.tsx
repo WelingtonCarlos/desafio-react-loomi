@@ -30,11 +30,7 @@ export function createTicketColumns(
         const p = row.original.priority;
 
         const priorityVariant =
-          p === "Urgente"
-            ? "priorityUrgent"
-            : p === "Média"
-              ? "priorityMedium"
-              : "priorityLow";
+          p === "Urgente" ? "priorityUrgent" : p === "Média" ? "priorityMedium" : "priorityLow";
 
         return (
           <Badge variant={priorityVariant} className="px-3 py-1 text-xs font-medium">

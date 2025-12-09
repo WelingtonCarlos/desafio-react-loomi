@@ -6,22 +6,19 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
-const progressVariants = cva(
-  "relative h-2 w-full overflow-hidden rounded-full bg-primary/20",
-  {
-    variants: {
-      background: {
-        default: "bg-primary/20",
-        surface: "bg-surface-panel",
-        mute: "bg-color-muted-soft",
-        card: "bg-card-2",
-      },
-    },
-    defaultVariants: {
-      background: "default",
+const progressVariants = cva("relative h-2 w-full overflow-hidden rounded-full bg-primary/20", {
+  variants: {
+    background: {
+      default: "bg-primary/20",
+      surface: "bg-surface-panel",
+      mute: "bg-color-muted-soft",
+      card: "bg-card-2",
     },
   },
-);
+  defaultVariants: {
+    background: "default",
+  },
+});
 
 const indicatorVariants = cva("h-full w-full flex-1 transition-all bg-primary", {
   variants: {

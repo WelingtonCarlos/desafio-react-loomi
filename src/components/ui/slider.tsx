@@ -13,7 +13,8 @@ const trackVariants = cva(
       variant: {
         default: "bg-muted data-[orientation=horizontal]:h-1.5 data-[orientation=vertical]:w-1.5",
         brand: "bg-[#ffffff1c] data-[orientation=horizontal]:h-2 data-[orientation=vertical]:w-2",
-        subtle: "bg-slate-700/60 data-[orientation=horizontal]:h-1.5 data-[orientation=vertical]:w-1.5",
+        subtle:
+          "bg-slate-700/60 data-[orientation=horizontal]:h-1.5 data-[orientation=vertical]:w-1.5",
       },
     },
     defaultVariants: {
@@ -22,19 +23,22 @@ const trackVariants = cva(
   },
 );
 
-const rangeVariants = cva("absolute data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full", {
-  variants: {
-    variant: {
-      default: "bg-primary",
-      brand: "bg-brand",
-      success: "bg-success-strong",
-      warning: "bg-warning-strong",
+const rangeVariants = cva(
+  "absolute data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full",
+  {
+    variants: {
+      variant: {
+        default: "bg-primary",
+        brand: "bg-brand",
+        success: "bg-success-strong",
+        warning: "bg-warning-strong",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
     },
   },
-  defaultVariants: {
-    variant: "default",
-  },
-});
+);
 
 const thumbVariants = cva(
   "block size-4 shrink-0 rounded-full border shadow-sm transition-[color,box-shadow] hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50",

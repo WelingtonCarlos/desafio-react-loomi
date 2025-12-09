@@ -84,7 +84,7 @@ export function SuggestionCards() {
           <div className="flex items-center justify-between">
             <p className="text-xl font-semibold">R$ 127,50 {t("common.perMonthSuffix")}</p>
 
-            <Button className="bg-transparent hover:bg-transparent border border-white h-10 cursor-pointer rounded-full px-6 font-medium text-white shadow-2xl">
+            <Button className="h-10 cursor-pointer rounded-full border border-white bg-transparent px-6 font-medium text-white shadow-2xl hover:bg-transparent">
               {t("suggestionCards.button")}
             </Button>
           </div>

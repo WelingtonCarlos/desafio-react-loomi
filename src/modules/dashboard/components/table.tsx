@@ -34,7 +34,7 @@ export function DataTable({ columns, data }: DataTableProps) {
   });
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-slate-800 bg-[#23283b] px-6 pt-6 shadow-xl h-[504px]">
+    <div className="h-[504px] overflow-hidden rounded-2xl border border-slate-800 bg-[#23283b] px-6 pt-6 shadow-xl">
       <table className="w-full text-sm text-slate-200">
         <thead className="border-b border-slate-600 text-xs text-slate-400">
           {table.getHeaderGroups().map((headerGroup) => (

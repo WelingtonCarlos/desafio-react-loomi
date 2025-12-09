@@ -27,7 +27,7 @@ function TicketSummaryCard({
   withTopSpacing = true,
 }: TicketSummaryCardProps) {
   return (
-    <div className="border-soft bg-surface-card flex w-72 min-w-[250px] h-32 flex-1 flex-col justify-between rounded-2xl border p-6 shadow-sm">
+    <div className="border-soft bg-surface-card flex h-32 w-72 min-w-[250px] flex-1 flex-col justify-between rounded-2xl border p-6 shadow-sm">
       <span className="text-foreground text-sm font-normal">{label}</span>
       <div className={cn("flex items-end justify-between", withTopSpacing && "mt-4")}>
         <span className="text-foreground text-3xl font-bold">{value}</span>

@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import type { Client } from "@/modules/view-360/types/view-360.types";
 import type { TFunction } from "i18next";
-import { Ellipsis, Eye, Mail, Phone } from "lucide-react";
+import { Ellipsis, Mail, Phone } from "lucide-react";
 
 interface ChatClientCardProps {
   client?: Client;
@@ -28,22 +28,22 @@ const getInitials = (name?: string) => {
 
 export function ChatClientCard({ client, t }: ChatClientCardProps) {
   return (
-    <div className="flex flex-col items-center text-center px-6">
+    <div className="flex flex-col items-center px-6 text-center">
       <div className="mt-8 mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-500 text-xl font-medium text-white">
         {getInitials(client?.name)}
       </div>
 
       <div className="space-y-2">
-        <h2 className="text-lg font-bold leading-4 text-foreground">{client?.name}</h2>
-        <p className="text-sm font-normal leading-4 text-foreground">{client?.clientType}</p>
+        <h2 className="text-foreground text-lg leading-4 font-bold">{client?.name}</h2>
+        <p className="text-foreground text-sm leading-4 font-normal">{client?.clientType}</p>
       </div>
 
-      <div className="flex w-full justify-around gap-2 mt-8">
+      <div className="mt-8 flex w-full justify-around gap-2">
         {ACTIONS.map(({ icon: Icon, labelKey }) => (
           <Button
             key={labelKey}
             size="sm"
-            className="flex h-12 flex-1 cursor-pointer bg-transparent hover:bg-transparent flex-col items-center justify-center gap-1 text-xs text-slate-300 hover:text-white"
+            className="flex h-12 flex-1 cursor-pointer flex-col items-center justify-center gap-1 bg-transparent text-xs text-slate-300 hover:bg-transparent hover:text-white"
           >
             <Icon className="h-4 w-4 text-blue-400" />
             <span>{t(labelKey)}</span>

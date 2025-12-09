@@ -53,14 +53,14 @@ export function ChatPage() {
       <PageHeader title={t("title")} />
 
       <div className="flex h-[calc(100vh-102px)] flex-col-reverse lg:flex-row">
-        <div className="flex flex-1 flex-col overflow-hidden border border-white/5 bg-chat-messages">
+        <div className="bg-chat-messages flex flex-1 flex-col overflow-hidden border border-white/5">
           {isLoading ? <SkeletonChatMessages /> : <ChatMessages data={chatsData} />}
 
           {isLoading ? <SkeletonChatInput /> : <ChatInput />}
         </div>
 
         <div className="w-full shrink-0 lg:w-[622px]">
-          <div className="h-full overflow-hidden bg-chat-sidebar">
+          <div className="bg-chat-sidebar h-full overflow-hidden">
             {isLoading ? <SkeletonChatSidebar /> : <ChatSidebar data={chatsData} />}
           </div>
         </div>

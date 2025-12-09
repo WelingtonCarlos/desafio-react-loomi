@@ -131,7 +131,7 @@ export function ClientInfoSidebar() {
       <hr />
 
       {/* Profile Tags */}
-      <div className="px-6 flex flex-col gap-6">
+      <div className="flex flex-col gap-6 px-6">
         <h3 className="text-foreground mb-3 text-base leading-4 font-medium">
           {t("clientSidebar.sections.profile")}
         </h3>
@@ -147,13 +147,16 @@ export function ClientInfoSidebar() {
       <hr />
 
       {/* Captured Phrases */}
-      <div className="px-6 flex flex-col gap-6">
+      <div className="flex flex-col gap-6 px-6">
         <h3 className="text-foreground mb-3 text-base leading-4 font-medium">
           {t("clientSidebar.sections.phrases")}
         </h3>
         <div className="space-y-3">
           {capturedPhrases?.map((item, index) => (
-            <div key={index} className="bg-card-2 border-soft rounded-b-xl rounded-tr-xl border p-3">
+            <div
+              key={index}
+              className="bg-card-2 border-soft rounded-tr-xl rounded-b-xl border p-3"
+            >
               <p className="text-foreground-muted mb-1 text-sm">&quot;{item.phrase}&quot;</p>
               <p className="text-muted-soft text-xs">
                 {t("clientSidebar.labels.serviceDay")}{" "}
@@ -167,11 +170,11 @@ export function ClientInfoSidebar() {
       <hr />
 
       {/* App Actions */}
-      <div className="px-6 flex flex-col gap-6">
+      <div className="flex flex-col gap-6 px-6">
         <h3 className="text-foreground mb-3 text-base leading-4 font-medium">
           {t("clientSidebar.sections.appActions")}
         </h3>
-        <div className="space-y-3 ">
+        <div className="space-y-3">
           {appActions?.map((action, index) => (
             <div key={index}>
               <p className="text-muted-soft mb-1 text-xs">{action.accessed}</p>

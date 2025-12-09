@@ -16,26 +16,17 @@ const badgeVariants = cva(
           "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline: "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
         highlight: "border-transparent bg-brand text-white",
-        positive:
-          "border-transparent bg-success-strong text-white shadow-success-strong",
-        warning:
-          "border-transparent bg-warning-strong text-white shadow-warning-strong",
+        positive: "border-transparent bg-success-strong text-white shadow-success-strong",
+        warning: "border-transparent bg-warning-strong text-white shadow-warning-strong",
         highlightSoft:
           "border-transparent bg-highlight-soft-bg text-highlight-soft-text shadow-highlight-soft-bg",
-        priorityUrgent:
-          "border-transparent bg-badge-priority-urgent",
-        priorityMedium:
-          "border-transparent text-black bg-badge-priority-medium",
-        priorityLow:
-          "border-transparent text-black bg-badge-priority-low",
-        statusOpen:
-          "border-transparent text-black bg-badge-status-open",
-        statusProgress:
-          "border-transparent text-black bg-badge-status-progress",
-        statusDefault:
-          "border-transparent text-black bg-badge-status-default",
-        chatTag:
-          "border-transparent bg-brand-name text-white",
+        priorityUrgent: "border-transparent bg-badge-priority-urgent",
+        priorityMedium: "border-transparent text-black bg-badge-priority-medium",
+        priorityLow: "border-transparent text-black bg-badge-priority-low",
+        statusOpen: "border-transparent text-black bg-badge-status-open",
+        statusProgress: "border-transparent text-black bg-badge-status-progress",
+        statusDefault: "border-transparent text-black bg-badge-status-default",
+        chatTag: "border-transparent bg-brand-name text-white",
       },
     },
     defaultVariants: {

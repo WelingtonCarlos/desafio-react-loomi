@@ -75,7 +75,6 @@ export function KpiSummary() {
             trendColor={isPositive ? "text-green-500" : "text-red-500"}
             hasArrow={shouldShowArrow}
             periodLabel={t("messages.inPeriod")}
-            isActive={isActive}
           />
         );
       })}

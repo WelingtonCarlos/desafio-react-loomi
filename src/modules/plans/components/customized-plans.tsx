@@ -169,7 +169,10 @@ export function CustomizedPlans() {
                   onCheckedChange={(checked) => handleCoverageToggle(coverage.id, !!checked)}
                   variant="brand"
                 />
-                <Label htmlFor={coverage.id} className="text-foreground cursor-pointer leading-6 text-sm">
+                <Label
+                  htmlFor={coverage.id}
+                  className="text-foreground cursor-pointer text-sm leading-6"
+                >
                   {t(`plans:customizer.coverages.${coverage.id}`)}
                 </Label>
               </div>

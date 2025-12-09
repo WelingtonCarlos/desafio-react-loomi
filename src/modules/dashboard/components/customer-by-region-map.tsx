@@ -73,7 +73,7 @@ export function CustomerByRegionMap() {
     <div className="bg-gradient-slate h-[466px] w-full rounded-3xl border border-white/5 shadow-lg">
       {/* Header Overlay */}
       <div className="flex flex-col items-start justify-between gap-4 p-6 sm:flex-row sm:items-center">
-        <h2 className="text-xl font-bold leading-4 text-white drop-shadow-md">{t("map.title")}</h2>
+        <h2 className="text-xl leading-4 font-bold text-white drop-shadow-md">{t("map.title")}</h2>
         <div className="pointer-events-auto flex gap-3">
           <Select defaultValue="all-loc">
             <SelectTrigger className="h-9 w-[140px] rounded-full border-white/10 bg-[#0B1125] text-xs text-[#F6F8FC]">
@@ -88,7 +88,7 @@ export function CustomerByRegionMap() {
 
           <Select defaultValue="all-types">
             <SelectTrigger className="h-9 w-[140px] rounded-full border-white/10 bg-[#0B1125] text-xs text-[#F6F8FC]">
-              <SelectValue placeholder={t("map.typesPlaceholder")} className="bg-[#0B1125]"/>
+              <SelectValue placeholder={t("map.typesPlaceholder")} className="bg-[#0B1125]" />
             </SelectTrigger>
             <SelectContent className="border-white/10 bg-[#0B1125] text-[#F6F8FC]">
               <SelectItem value="all-types">{t("map.types.all")}</SelectItem>

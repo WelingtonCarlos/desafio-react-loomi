@@ -48,12 +48,11 @@
   --color-warning-strong: var(--warning-strong);
   --highlight-soft-bg: var(--badge-highlight-soft-bg);
   --highlight-soft-text: var(--badge-highlight-soft-text);
-
 }
 
 :root {
   --radius: 0.625rem;
-  --background: #0B1125;
+  --background: #0b1125;
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
@@ -94,7 +93,7 @@
   --border-strong: rgba(31, 41, 55, 1);
   --border-panel: #1f2937;
   --brand: #1e86ff;
-  --brand-name: #1876D2;
+  --brand-name: #1876d2;
   --brand-foreground: #ffffff;
   --brand-strong: #1b77e3;
   --brand-shadow: rgba(30, 134, 255, 0.3);
@@ -106,33 +105,33 @@
   --gradient-slate: linear-gradient(135deg, #36446bf9 0%, #36446b99 60%, #36446b19 100%);
   --gradient-brand-card: linear-gradient(135deg, #4fd1ff 0%, #4fd0ffe7 50%, #4fd1ff 100%);
   --shadow-brand: 0 0 20px var(--brand-shadow);
-  --text-color-white: #E3E3E3;
-  --text-color-muted: #F6F8FC;
+  --text-color-white: #e3e3e3;
+  --text-color-muted: #f6f8fc;
   --text-color-muted-soft: #f6f8fc2f;
   --bg-card: #0f1629;
   --bg-card-2: #1c2134;
-  --text-color-success: #00DC04;
-  --text-color-warning: #B08900;
-  --success-strong: #00DC04;
-  --warning-strong: #B08900;
+  --text-color-success: #00dc04;
+  --text-color-warning: #b08900;
+  --success-strong: #00dc04;
+  --warning-strong: #b08900;
   --bg-view-360: #212639;
-  --badge-highlight-soft-bg: #2ED2CC;
-  --badge-highlight-soft-text: #0C1C30;
+  --badge-highlight-soft-bg: #2ed2cc;
+  --badge-highlight-soft-text: #0c1c30;
   --bg-smart-card: #12192c;
-  --badge-priority-urgent-bg: #C32737;
-  --badge-priority-urgent-text: #FFFFFF;
-  --badge-priority-medium-bg: #75D5F6;
+  --badge-priority-urgent-bg: #c32737;
+  --badge-priority-urgent-text: #ffffff;
+  --badge-priority-medium-bg: #75d5f6;
   --badge-priority-medium-text: #071629;
-  --badge-priority-low-bg: #E1ECFF;
-  --badge-priority-low-text: #0C1C30;
-  --badge-status-open-bg: #33E6DB;
+  --badge-priority-low-bg: #e1ecff;
+  --badge-priority-low-text: #0c1c30;
+  --badge-status-open-bg: #33e6db;
   --badge-status-open-text: #031524;
-  --badge-status-progress-bg: #E7C54C;
-  --badge-status-progress-text: #1C1501;
-  --badge-status-default-bg: #3B475E;
-  --badge-status-default-text: #E1E8F5;
+  --badge-status-progress-bg: #e7c54c;
+  --badge-status-progress-text: #1c1501;
+  --badge-status-default-bg: #3b475e;
+  --badge-status-default-text: #e1e8f5;
   --bg-chat-messages: #0a1124;
-  --bg-chat-sidebar: #EFF6FF1A;
+  --bg-chat-sidebar: #eff6ff1a;
 }
 
 @layer base {

@@ -1,7 +1,6 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 
 interface MetricCardProps {
@@ -12,7 +11,6 @@ interface MetricCardProps {
   trendColor: string;
   hasArrow?: boolean;
   periodLabel?: string;
-  isActive?: boolean;
 }
 
 export function MetricCard({
@@ -23,7 +21,6 @@ export function MetricCard({
   trendColor,
   hasArrow,
   periodLabel = "no período",
-  isActive = false,
 }: MetricCardProps) {
   return (
     <div
@@ -32,12 +29,14 @@ export function MetricCard({
       )}
     >
       <div className="space-y-8">
-        <p className="text-text-color-white leading-4 text-sm font-normal">{label}</p>
-        <h3 className="text-2xl font-bold leading-8 text-white">{value}</h3>
+        <p className="text-text-color-white text-sm leading-4 font-normal">{label}</p>
+        <h3 className="text-2xl leading-8 font-bold text-white">{value}</h3>
 
-        <span className={cn("text-sm font-normal leading-4", trendColor)}>
+        <span className={cn("text-sm leading-4 font-normal", trendColor)}>
           {change}{" "}
-          <span className={cn("font-normal leading-4 text-text-color-white", trendColor)}>{periodLabel}</span>
+          <span className={cn("text-text-color-white leading-4 font-normal", trendColor)}>
+            {periodLabel}
+          </span>
         </span>
       </div>
 

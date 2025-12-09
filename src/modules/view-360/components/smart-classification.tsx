@@ -55,7 +55,6 @@ export function SmartClassification() {
 
       <div className="flex flex-col gap-6 lg:flex-row">
         <div className="border-soft bg-view-360 flex h-[216px] w-full flex-col items-center justify-between rounded-2xl border px-8 py-4 lg:max-w-sm">
-
           <div className="flex flex-col items-center gap-4">
             <div className="relative flex h-20 w-36 items-center justify-center">
               <Image
@@ -119,8 +118,12 @@ export function SmartClassification() {
             </div>
             <Progress
               value={smartClassification.expansionScore.value}
-              className="bg-[#343a4a] h-2"
-              color={smartClassification.expansionScore.level.toLowerCase() === "alto" ? "success" : "warning"}
+              className="h-2 bg-[#343a4a]"
+              color={
+                smartClassification.expansionScore.level.toLowerCase() === "alto"
+                  ? "success"
+                  : "warning"
+              }
             />
           </div>
 
@@ -140,8 +143,12 @@ export function SmartClassification() {
             </div>
             <Progress
               value={smartClassification.retetionScore?.value || 0}
-              className="bg-[#343a4a] h-2"
-              color={(smartClassification.retetionScore?.level || "").toLowerCase() === "alto" ? "success" : "warning"}
+              className="h-2 bg-[#343a4a]"
+              color={
+                (smartClassification.retetionScore?.level || "").toLowerCase() === "alto"
+                  ? "success"
+                  : "warning"
+              }
             />
           </div>
         </div>

@@ -45,7 +45,7 @@ export function ChatSidebar({ data }: ChatSidebarProps) {
 
   if (isLoading) {
     return (
-      <div className="h-full overflow-y-auto bg-chat-sidebar p-6">
+      <div className="bg-chat-sidebar h-full overflow-y-auto p-6">
         <SkeletonChatSidebar />
       </div>
     );
@@ -53,7 +53,7 @@ export function ChatSidebar({ data }: ChatSidebarProps) {
 
   if (isError) {
     return (
-      <div className="h-full overflow-y-auto bg-chat-sidebar p-6">
+      <div className="bg-chat-sidebar h-full overflow-y-auto p-6">
         <ErrorState
           title={t("sidebar.errors.title", {
             defaultValue: "Erro ao carregar dados do cliente.",
@@ -69,7 +69,7 @@ export function ChatSidebar({ data }: ChatSidebarProps) {
   }
 
   return (
-    <div className="h-full w-[622px] space-y-6 overflow-y-auto bg-chat-sidebar p-6">
+    <div className="bg-chat-sidebar h-full w-[622px] space-y-6 overflow-y-auto p-6">
       <div className="space-y-6 rounded-2xl border border-white/5 bg-linear-to-br from-[#1a2234] via-[#151a23] to-[#101624] py-6">
         <ChatClientCard client={client} t={t} />
         <hr />

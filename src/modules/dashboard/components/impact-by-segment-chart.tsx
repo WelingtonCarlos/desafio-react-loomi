@@ -42,13 +42,13 @@ export function ImpactBySegmentChart() {
   }
 
   return (
-    <div className="bg-gradient-slate h-[466px] flex-1 rounded-3xl border border-gray-800/50 p-10 shadow-xl gap-8 flex flex-col">
-      <h3 className="text-xl font-bold leading-4 text-white drop-shadow-md">{t("impact.title")}</h3>
+    <div className="bg-gradient-slate flex h-[466px] flex-1 flex-col gap-8 rounded-3xl border border-gray-800/50 p-10 shadow-xl">
+      <h3 className="text-xl leading-4 font-bold text-white drop-shadow-md">{t("impact.title")}</h3>
 
       <div className="flex min-h-64 flex-1 flex-col items-center justify-center gap-8">
-        <div className="relative mx-auto w-36 h-36">
+        <div className="relative mx-auto h-36 w-36">
           {isLoading ? (
-            <div className="h-36 w-h-36 animate-pulse rounded-2xl bg-white/5" />
+            <div className="w-h-36 h-36 animate-pulse rounded-2xl bg-white/5" />
           ) : (
             <Chart options={options} series={series} type="donut" height={141} />
           )}
@@ -72,7 +72,7 @@ export function ImpactBySegmentChart() {
       </div>
 
       <div className="flex justify-center">
-        <Button className="h-auto rounded-full cursor-pointer bg-brand-name px-8 py-3 text-sm font-medium text-white shadow-md shadow-brand-name hover:bg-brand-name/90">
+        <Button className="bg-brand-name shadow-brand-name hover:bg-brand-name/90 h-auto cursor-pointer rounded-full px-8 py-3 text-sm font-medium text-white shadow-md">
           {t("impact.cta")}
         </Button>
       </div>

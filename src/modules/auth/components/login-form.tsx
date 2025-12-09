@@ -44,8 +44,8 @@ export function LoginForm() {
   return (
     <div className="w-full max-w-md space-y-16">
       <div className="space-y-2.5">
-        <h1 className="text-4xl font-normal text-text-color-white">{t("page.title")}</h1>
-        <p className="text-xl font-normal text-text-color-white">{t("page.subtitle")}</p>
+        <h1 className="text-text-color-white text-4xl font-normal">{t("page.title")}</h1>
+        <p className="text-text-color-white text-xl font-normal">{t("page.subtitle")}</p>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
@@ -96,7 +96,7 @@ export function LoginForm() {
               {t("form.rememberMe")}
             </Label>
           </div>
-          <a href="#" className="text-base font-medium text-brand-name cursor-pointer">
+          <a href="#" className="text-brand-name cursor-pointer text-base font-medium">
             {t("form.forgotPassword")}
           </a>
         </div>
@@ -104,7 +104,7 @@ export function LoginForm() {
         <Button
           type="submit"
           disabled={isLoading}
-          className="h-12 w-full cursor-pointer rounded-lg bg-brand-name text-base font-medium text-white transition-all hover:bg-brand-name/75 disabled:cursor-not-allowed disabled:opacity-50"
+          className="bg-brand-name hover:bg-brand-name/75 h-12 w-full cursor-pointer rounded-lg text-base font-medium text-white transition-all disabled:cursor-not-allowed disabled:opacity-50"
         >
           {isLoading ? t("form.submitting") : t("form.submit")}
         </Button>

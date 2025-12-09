@@ -36,14 +36,14 @@ function ChatMessagesComponent({ data }: ChatMessagesProps) {
 
   if (!messages.length) {
     return (
-      <div className="flex flex-1 items-center justify-center bg-chat-messages text-sm text-slate-500">
+      <div className="bg-chat-messages flex flex-1 items-center justify-center text-sm text-slate-500">
         {t("messages.empty")}
       </div>
     );
   }
 
   return (
-    <div className="flex-1 space-y-6 overflow-y-auto bg-chat-messages px-[104px] py-14">
+    <div className="bg-chat-messages flex-1 space-y-6 overflow-y-auto px-[104px] py-14">
       {messages.map((message) => {
         const style =
           message.type === "user_message"

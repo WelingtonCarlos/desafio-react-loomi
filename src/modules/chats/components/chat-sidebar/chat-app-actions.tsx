@@ -16,17 +16,19 @@ export function ChatAppActions({ actions, t }: ChatAppActionsProps) {
         {actions && actions.length > 0 ? (
           actions.map((action, index) => (
             <div key={`${action.action}-${index}`}>
-              <p className="mb-1 text-[12px] leading-4 font-normal text-muted-soft">{action.accessed}</p>
-              <p className="mb-1 text-sm font-normal leading-4 text-foreground">{action.action}</p>
+              <p className="text-muted-soft mb-1 text-[12px] leading-4 font-normal">
+                {action.accessed}
+              </p>
+              <p className="text-foreground mb-1 text-sm leading-4 font-normal">{action.action}</p>
               {action.pageTime && (
-                <p className="text-[12px] leading-4 font-normal text-muted-soft">
+                <p className="text-muted-soft text-[12px] leading-4 font-normal">
                   {t("sidebar.timeOnPage", { time: action.pageTime })}
                 </p>
               )}
             </div>
           ))
         ) : (
-          <p className="text-[12px] leading-4 font-normal text-muted-soft">{t("sidebar.noData")}</p>
+          <p className="text-muted-soft text-[12px] leading-4 font-normal">{t("sidebar.noData")}</p>
         )}
       </div>
     </div>

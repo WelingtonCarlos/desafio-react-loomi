@@ -4,7 +4,7 @@ import type React from "react";
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { SendHorizontal, SendIcon } from "lucide-react";
+import { SendIcon } from "lucide-react";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -36,14 +36,14 @@ export function ChatInput({ onSendMessage }: ChatInputProps) {
   return (
     <div className="bg-chat-messages px-6 py-4">
       <div className="flex items-center gap-3">
-        <div className="relative flex-1 mx-5">
+        <div className="relative mx-5 flex-1">
           <Textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={t("input.placeholder")}
             rows={1}
-            className="h-20 resize-none rounded-full border border-foreground bg-surface-contrast-strong px-5 py-3 pr-16 text-sm text-white placeholder:text-slate-500"
+            className="border-foreground bg-surface-contrast-strong h-20 resize-none rounded-full border px-5 py-3 pr-16 text-sm text-white placeholder:text-slate-500"
           />
           <Button
             onClick={handleSend}

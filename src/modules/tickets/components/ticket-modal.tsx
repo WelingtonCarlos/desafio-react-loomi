@@ -209,7 +209,7 @@ function NewTicketModal() {
                     })
                   }
                 >
-                  <SelectTrigger className="bg-surface-card rounded-3xl border-panel text-muted-soft h-11 w-full border px-6 py-3">
+                  <SelectTrigger className="bg-surface-card border-panel text-muted-soft h-11 w-full rounded-3xl border px-6 py-3">
                     <SelectValue placeholder={t("tickets:modal.fields.priority.placeholder")} />
                   </SelectTrigger>
                   <SelectContent className="bg-surface-card border-panel text-foreground w-full border">
@@ -248,7 +248,7 @@ function NewTicketModal() {
                 <Textarea
                   id="subject"
                   placeholder={t("tickets:modal.fields.subject.placeholder")}
-                  className="bg-surface-card rounded-3xl border-panel text-foreground min-h-[100px] resize-none border px-6 py-3"
+                  className="bg-surface-card border-panel text-foreground min-h-[100px] resize-none rounded-3xl border px-6 py-3"
                   {...register("subject")}
                 />
                 {errors.subject && <p className="text-xs text-red-400">{errors.subject.message}</p>}
@@ -287,13 +287,13 @@ function NewTicketModal() {
               variant="outline"
               type="button"
               onClick={() => handleDialogChange(false)}
-              className="border-panel text-foreground hover:bg-surface-card cursor-pointer border bg-transparent px-6 py-4 h-14 rounded-2xl font-medium leading-5"
+              className="border-panel text-foreground hover:bg-surface-card h-14 cursor-pointer rounded-2xl border bg-transparent px-6 py-4 leading-5 font-medium"
             >
               {t("tickets:modal.buttons.cancel")}
             </Button>
             <Button
               type="submit"
-              className="bg-brand text-brand-foreground hover:bg-brand-strong shadow-brand cursor-pointer px-6 py-4 h-14 rounded-2xl font-medium leading-5"
+              className="bg-brand text-brand-foreground hover:bg-brand-strong shadow-brand h-14 cursor-pointer rounded-2xl px-6 py-4 leading-5 font-medium"
               disabled={isSubmitting}
             >
               {isSubmitting

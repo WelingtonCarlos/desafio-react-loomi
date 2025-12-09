@@ -62,7 +62,7 @@ export function KpiChart() {
                 className={cn(
                   "cursor-pointer rounded-[100px] px-4 py-1.5 text-sm font-medium transition-all duration-200 not-hover:bg-[#F6F8FC1A]",
                   activeKpi === key
-                    ? "text-white bg-[#F6F8FC1A] shadow-lg shadow-cyan-500/20"
+                    ? "bg-[#F6F8FC1A] text-white shadow-lg shadow-cyan-500/20"
                     : "text-white hover:bg-white/5 hover:text-white",
                 )}
                 style={activeKpi === key ? { backgroundColor: KPI_CONFIG[key].color } : undefined}
@@ -74,7 +74,7 @@ export function KpiChart() {
         </div>
       </div>
 
-      <div className="h-52 w-full mt-16">
+      <div className="mt-16 h-52 w-full">
         {isLoading ? (
           <div className="h-full w-full animate-pulse rounded-2xl bg-white/5" />
         ) : (
