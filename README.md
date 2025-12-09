@@ -171,6 +171,22 @@ npm run dev
 
 Acesse: `http://localhost:3000/login`
 
+## 🧪 Testes (Jest + Testing Library)
+
+- **Stack**: Jest com `ts-jest` (TypeScript), ambiente `jest-environment-jsdom` e Testing Library (`@testing-library/react` + `@testing-library/user-event`).
+- **Setup**: `jest.setup.ts` registra matchers do `@testing-library/jest-dom` e mocks para `ResizeObserver`/`matchMedia`, necessários para componentes Radix e layout responsivo.
+- **Cobertura atual**:
+  - UI base em `src/components/ui/__tests__` (inputs, selects, slider, checkbox, badges, toaster etc.).
+  - Fluxo de login em `src/modules/auth/components/__tests__/login-form.test.tsx` (preenche campos, simula submit, mocka hook `useLogin` e navegação).
+  - Fluxo de tickets em `src/modules/tickets/pages/__tests__/tickets-page.test.tsx` (busca + filtros, persistência em `localStorage`, criação/edição com mocks do `api.get`, `createTicket` e `updateTicket`).
+- **Como rodar**:
+  ```bash
+  npm test
+  npm test -- caminho/do/teste
+  ```
+- **Dicas**:
+  - Tests que dependem de delays simulados usam timers fake (`jest.useFakeTimers`); avance o tempo com `jest.advanceTimersByTime` quando precisar aguardar re-fetch/re-render.
+
 ## 🧪 Testando a Autenticação
 
 1. Acesse `/login`
@@ -184,6 +200,17 @@ Acesse: `http://localhost:3000/login`
 
 - 🍪 Token salvo em **cookies** (`auth-token`)
 - 💾 Dados do usuário em **localStorage** (`user-data`)
+
+## ✨ Animações
+
+- **Lib**: [framer-motion](https://www.framer.com/motion/) aplicada para transições suaves de entrada/saída e feedback de interação.
+- **Login**: botão de submit e botão de ajuda no header com hover/tap; overlay de transição ao redirecionar após sucesso.
+- **Dashboard**:
+  - **KPIs**: cards do `kpi-summary` animam entrada e reordenação; skeleton com fade/scale.
+  - **KPI chart**: container/header com fade/slide; chips de KPI com hover/tap; skeleton/área com transição.
+  - **Impact by Segment**: donut e legendas com fade/scale; CTA com hover/tap.
+  - **Active Clients**: container, filtros e tabela com fade/slide; skeleton animado; linhas da tabela usam `AnimatePresence`.
+- **Outros**: `MotionDialogContent` criado para modais animados (base Radix), pronto para uso onde necessário.
 
 ## 📂 Arquitetura do Código
 

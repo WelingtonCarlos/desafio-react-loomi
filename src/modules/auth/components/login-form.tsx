@@ -3,6 +3,7 @@
 import * as React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { AnimatePresence, motion } from "framer-motion";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { Button, Input, Checkbox, Label, Eye, EyeOff } from "@/modules/auth";
@@ -10,8 +11,11 @@ import { loginSchema, type LoginFormData } from "../schemas/login-schema";
 import { useLogin } from "../hooks/useLogin";
 import { useTranslation } from "react-i18next";
 
+const MotionButton = motion.create(Button);
+
 export function LoginForm() {
   const [showPassword, setShowPassword] = React.useState(false);
+  const [isRedirecting, setIsRedirecting] = React.useState(false);
   const [rememberMe, setRememberMe] = React.useState(false);
   const { login, isLoading } = useLogin();
   const router = useRouter();
@@ -35,10 +39,14 @@ export function LoginForm() {
 
     if (result.success) {
       toast.success(result.message || t("messages.loginSuccess"));
-      router.push(redirectTo);
-    } else {
-      toast.error(result.message || t("messages.genericError"));
+      setIsRedirecting(true);
+      setTimeout(() => {
+        router.push(redirectTo);
+      }, 200);
+      return;
     }
+
+    toast.error(result.message || t("messages.genericError"));
   };
 
   return (
@@ -101,14 +109,29 @@ export function LoginForm() {
           </a>
         </div>
 
-        <Button
+        <MotionButton
           type="submit"
-          disabled={isLoading}
+          disabled={isLoading || isRedirecting}
           className="bg-brand-name hover:bg-brand-name/75 h-12 w-full cursor-pointer rounded-lg text-base font-medium text-white transition-all disabled:cursor-not-allowed disabled:opacity-50"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          transition={{ duration: 0.12 }}
         >
-          {isLoading ? t("form.submitting") : t("form.submit")}
-        </Button>
+          {isLoading || isRedirecting ? t("form.submitting") : t("form.submit")}
+        </MotionButton>
       </form>
+
+      <AnimatePresence>
+        {isRedirecting && (
+          <motion.div
+            className="bg-brand/40 pointer-events-none fixed inset-0 z-20 backdrop-blur-[2px]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

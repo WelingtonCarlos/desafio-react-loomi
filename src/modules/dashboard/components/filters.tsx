@@ -13,6 +13,7 @@ import { ActiveClientFilters } from "../types/dashboard.types";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import { Search } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 interface SelectState {
   value: string;
@@ -80,7 +81,13 @@ function DashboardFiltersComponent({ search, lists }: FiltersProps) {
   );
 
   return (
-    <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+    <motion.div
+      layout
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.2 }}
+      className="mb-8 flex flex-col gap-3 md:flex-row md:items-center md:justify-between"
+    >
       <div className="flex w-full flex-col gap-4">
         <span className="text-xl font-bold text-white">{t("filters.title")}</span>
         <InputGroup className="w-full">
@@ -123,7 +130,7 @@ function DashboardFiltersComponent({ search, lists }: FiltersProps) {
           allLabel={allLabel}
         />
       </div>
-    </div>
+    </motion.div>
   );
 }
 

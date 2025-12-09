@@ -36,10 +36,11 @@ const getIcon = (iconName: string) => {
 export function CustomerByRegionMap() {
   const { data: mapData, isLoading, isError, refetch } = useDashboardMapData();
   const { t } = useTranslation("dashboard");
+  const hasData = Boolean(mapData?.data?.center && mapData?.data?.center.length === 2);
   const INITIAL_VIEW_STATE = {
-    latitude: mapData?.data?.center[1],
-    longitude: mapData?.data?.center[0],
-    zoom: mapData?.data?.zoom,
+    latitude: hasData ? mapData!.data.center[1] : -23.5505,
+    longitude: hasData ? mapData!.data.center[0] : -46.6333,
+    zoom: hasData && mapData?.data?.zoom ? mapData.data.zoom : 3.5,
     bearing: 0,
     pitch: 0,
   };
@@ -102,13 +103,13 @@ export function CustomerByRegionMap() {
 
       {/* Map */}
 
-      {isLoading ? (
-        <div className="mx-auto h-[78%] w-[95%] animate-pulse rounded-2xl bg-white/5" />
+      {isLoading || !hasData ? (
+        <div className="mx-auto h-[78%] w-[95%] rounded-2xl bg-white/5" />
       ) : (
         <Map
           initialViewState={INITIAL_VIEW_STATE}
           style={{
-            width: "auto",
+            width: "100%",
             height: "78%",
             borderRadius: "16px",
             maxWidth: "95%",
@@ -122,7 +123,7 @@ export function CustomerByRegionMap() {
           {mapData?.data?.locations.map((loc) => (
             <Marker key={loc.id} latitude={loc.coordinates[1]} longitude={loc.coordinates[0]}>
               <div
-                className="transform cursor-pointer rounded-full p-2 shadow-lg transition-transform hover:scale-110"
+                className="cursor-pointer rounded-full p-2 shadow-lg transition-transform hover:scale-110"
                 style={{ backgroundColor: loc.color }}
                 title={loc.name}
               >
