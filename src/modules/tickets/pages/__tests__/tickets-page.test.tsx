@@ -15,9 +15,13 @@ jest.mock("react-i18next", () => ({
   }),
 }));
 
-jest.mock("next/image", () => (props: { src: string; alt: string }) => {
-  // eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element
-  return <img {...props} />;
+jest.mock("next/image", () => {
+  const MockNextImage = (props: { src: string; alt: string }) => {
+    // eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element
+    return <img {...props} />;
+  };
+  MockNextImage.displayName = "MockNextImage";
+  return MockNextImage;
 });
 
 jest.mock("sonner", () => ({
@@ -114,11 +118,11 @@ const resetStores = () => {
 
 beforeAll(() => {
   if (!global.crypto) {
-    // @ts-ignore
+    // @ts-expect-error jsdom fallback
     global.crypto = {};
   }
   if (!global.crypto.randomUUID) {
-    // @ts-ignore
+    // @ts-expect-error jsdom fallback
     global.crypto.randomUUID = () => "mock-uuid";
   }
 });
@@ -169,9 +173,7 @@ describe("TicketsPage", () => {
       "tickets:modal.fields.client.placeholder",
     );
     const emailInput = screen.getByPlaceholderText("tickets:modal.fields.email.placeholder");
-    const subjectInput = screen.getByPlaceholderText(
-      "tickets:modal.fields.subject.placeholder",
-    );
+    const subjectInput = screen.getByPlaceholderText("tickets:modal.fields.subject.placeholder");
     const responsibleInput = screen.getByPlaceholderText(
       "tickets:modal.fields.responsible.placeholder",
     );

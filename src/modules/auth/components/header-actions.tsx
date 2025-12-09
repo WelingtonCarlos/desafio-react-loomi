@@ -9,9 +9,12 @@ import {
   SelectTrigger,
   Button,
 } from "@/modules/auth";
+import { motion } from "framer-motion";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { AVAILABLE_LANGUAGES } from "../constants";
+
+const MotionButton = motion.create(Button);
 
 export function HeaderActions() {
   const { t, i18n } = useTranslation("common");
@@ -25,14 +28,17 @@ export function HeaderActions() {
 
   return (
     <div className="pt absolute top-8 right-8 z-20 flex items-center gap-3 rounded-3xl rounded-tl-none rounded-br-none bg-[#050a14] p-4 pb-6">
-      <Button
+      <MotionButton
         variant="ghost"
         size="sm"
         className="h-10 cursor-pointer gap-2 rounded-[100px] border border-gray-800/50 bg-[#111827] p-2.5 text-gray-300 hover:bg-[#111827] hover:text-gray-300"
+        whileHover={{ scale: 1.03 }}
+        whileTap={{ scale: 0.97 }}
+        transition={{ duration: 0.12 }}
       >
         <Headphones className="h-4 w-4" />
         {t("actions.help")}
-      </Button>
+      </MotionButton>
 
       <Select
         value={currentLanguage.code}

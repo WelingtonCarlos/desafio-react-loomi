@@ -7,6 +7,7 @@ import { useErrorToast } from "@/hooks/use-error-toast";
 import { useDashboardData } from "../hooks/useDashboardData";
 import { useIBSChart } from "../hooks/useIBSChart";
 import { useTranslation } from "react-i18next";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
@@ -42,16 +43,39 @@ export function ImpactBySegmentChart() {
   }
 
   return (
-    <div className="bg-gradient-slate flex h-[466px] flex-1 flex-col gap-8 rounded-3xl border border-gray-800/50 p-10 shadow-xl">
+    <motion.div
+      layout
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+      className="bg-gradient-slate flex h-[466px] flex-1 flex-col gap-8 rounded-3xl border border-gray-800/50 p-10 shadow-xl"
+    >
       <h3 className="text-xl leading-4 font-bold text-white drop-shadow-md">{t("impact.title")}</h3>
 
       <div className="flex min-h-64 flex-1 flex-col items-center justify-center gap-8">
         <div className="relative mx-auto h-36 w-36">
-          {isLoading ? (
-            <div className="w-h-36 h-36 animate-pulse rounded-2xl bg-white/5" />
-          ) : (
-            <Chart options={options} series={series} type="donut" height={141} />
-          )}
+          <AnimatePresence mode="wait">
+            {isLoading ? (
+              <motion.div
+                key="ibs-skeleton"
+                className="w-h-36 h-36 rounded-2xl bg-white/5"
+                initial={{ opacity: 0.4, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              />
+            ) : (
+              <motion.div
+                key="ibs-chart"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Chart options={options} series={series} type="donut" height={141} />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Custom Legend */}
@@ -72,10 +96,10 @@ export function ImpactBySegmentChart() {
       </div>
 
       <div className="flex justify-center">
-        <Button className="bg-brand-name shadow-brand-name hover:bg-brand-name/90 h-auto cursor-pointer rounded-full px-8 py-3 text-sm font-medium text-white shadow-md">
+        <Button className="bg-brand-name shadow-brand-name hover:bg-brand-name/90 h-auto cursor-pointer rounded-full px-8 py-3 text-sm font-medium text-white shadow-md transition-transform duration-150 hover:scale-105 active:scale-95">
           {t("impact.cta")}
         </Button>
       </div>
-    </div>
+    </motion.div>
   );
 }

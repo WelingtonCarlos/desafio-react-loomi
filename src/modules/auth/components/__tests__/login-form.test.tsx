@@ -54,7 +54,11 @@ describe("LoginForm", () => {
     await userEvent.click(screen.getByRole("button", { name: /form.submit/i }));
 
     await waitFor(() => {
-      expect(mockLogin).toHaveBeenCalledWith({ username: "user@test.com", password: "123456", rememberMe: false });
+      expect(mockLogin).toHaveBeenCalledWith({
+        username: "user@test.com",
+        password: "123456",
+        rememberMe: false,
+      });
       expect(toast.success).toHaveBeenCalled();
       expect(mockPush).toHaveBeenCalledWith("/dashboard");
     });

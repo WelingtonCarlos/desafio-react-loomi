@@ -9,6 +9,7 @@ import { useDashboardData } from "../hooks/useDashboardData";
 import { DataTable } from "./table";
 import { Filters } from "./filters";
 import { getColumns } from "./columns";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function ActiveClientsTable() {
   //   const { data, filters } = activeClients;
@@ -66,22 +67,53 @@ export function ActiveClientsTable() {
   }
 
   return (
-    <div className="bg-gradient-glass border-soft h-[686px] w-full rounded-3xl border px-6 py-10">
-      <Filters
-        search={{ value: search, set: setSearch }}
-        lists={{
-          status: { value: status, set: setStatus },
-          secureType: { value: secureType, set: setSecureType },
-          locations: { value: location, set: setLocation },
-          options: activeClientsFilters || { status: [], secureType: [], locations: [] },
-        }}
-      />
+    <motion.div
+      layout
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+      className="bg-gradient-glass border-soft h-[686px] w-full rounded-3xl border px-6 py-10"
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.2 }}
+      >
+        <Filters
+          search={{ value: search, set: setSearch }}
+          lists={{
+            status: { value: status, set: setStatus },
+            secureType: { value: secureType, set: setSecureType },
+            locations: { value: location, set: setLocation },
+            options: activeClientsFilters || { status: [], secureType: [], locations: [] },
+          }}
+        />
+      </motion.div>
 
-      {isLoading ? (
-        <div className="h-[686px] w-full animate-pulse rounded-2xl bg-white/5" />
-      ) : (
-        <DataTable columns={getColumns(t)} data={filtered || []} />
-      )}
-    </div>
+      <div className="mt-4">
+        <AnimatePresence mode="wait">
+          {isLoading ? (
+            <motion.div
+              key="active-clients-skeleton"
+              className="h-[520px] w-full rounded-2xl bg-white/5"
+              initial={{ opacity: 0.4, scale: 0.97 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            />
+          ) : (
+            <motion.div
+              key="active-clients-table"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <DataTable columns={getColumns(t)} data={filtered || []} />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </motion.div>
   );
 }
