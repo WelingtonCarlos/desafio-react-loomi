@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import type { Client } from "@/modules/view-360/types/view-360.types";
 import type { TFunction } from "i18next";
-import { Eye, Mail, Phone } from "lucide-react";
+import { Ellipsis, Mail, Phone } from "lucide-react";
 
 interface ChatClientCardProps {
   client?: Client;
@@ -13,7 +13,7 @@ interface ChatClientCardProps {
 const ACTIONS = [
   { icon: Phone, labelKey: "sidebar.actions.call" },
   { icon: Mail, labelKey: "sidebar.actions.email" },
-  { icon: Eye, labelKey: "sidebar.actions.viewMore" },
+  { icon: Ellipsis, labelKey: "sidebar.actions.viewMore" },
 ] as const;
 
 const getInitials = (name?: string) => {
@@ -28,22 +28,22 @@ const getInitials = (name?: string) => {
 
 export function ChatClientCard({ client, t }: ChatClientCardProps) {
   return (
-    <div className="flex flex-col items-center space-y-3 text-center">
-      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-blue-500 text-xl font-medium text-white">
+    <div className="flex flex-col items-center px-6 text-center">
+      <div className="mt-8 mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-500 text-xl font-medium text-white">
         {getInitials(client?.name)}
       </div>
-      <div>
-        <h2 className="text-base font-semibold text-white">{client?.name}</h2>
-        <p className="text-sm text-slate-400">{client?.clientType}</p>
+
+      <div className="space-y-2">
+        <h2 className="text-foreground text-lg leading-4 font-bold">{client?.name}</h2>
+        <p className="text-foreground text-sm leading-4 font-normal">{client?.clientType}</p>
       </div>
 
-      <div className="flex w-full gap-2">
+      <div className="mt-8 flex w-full justify-around gap-2">
         {ACTIONS.map(({ icon: Icon, labelKey }) => (
           <Button
             key={labelKey}
-            variant="ghost"
             size="sm"
-            className="flex h-12 flex-1 cursor-pointer flex-col items-center justify-center gap-1 text-xs text-slate-300 hover:text-white"
+            className="flex h-12 flex-1 cursor-pointer flex-col items-center justify-center gap-1 bg-transparent text-xs text-slate-300 hover:bg-transparent hover:text-white"
           >
             <Icon className="h-4 w-4 text-blue-400" />
             <span>{t(labelKey)}</span>

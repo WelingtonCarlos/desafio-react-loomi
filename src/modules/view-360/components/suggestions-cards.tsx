@@ -42,43 +42,50 @@ export function SuggestionCards() {
   }
 
   return (
-    <div className="flex flex-row justify-between space-y-6 2xl:flex-col 2xl:justify-start">
+    <div className="flex flex-row justify-around space-y-6 2xl:flex-col 2xl:justify-start">
       <div className="bg-gradient-brand-card flex h-64 w-[312px] flex-col justify-between rounded-2xl p-6 text-white shadow-[0_8px_20px_-4px_rgba(0,0,0,0.35)]">
         <div>
-          <h3 className="mb-2 text-lg font-semibold">{t("suggestionCards.life.title")}</h3>
+          <h3 className="mb-2 text-xl leading-8 font-bold whitespace-pre-line">
+            {t("suggestionCards.life.title").replace(/(.*)\s(\S+)$/, "$1\n$2")}
+          </h3>
 
-          <p className="mb-4 text-sm text-white/90">
+          <p className="text-foreground mb-4 text-sm leading-4 font-normal">
             {secureLifeOffer ?? t("suggestionCards.life.description")}
           </p>
 
-          <p className="mt-10 mb-1 text-xs text-white/80">{t("suggestionCards.priceLabel")}</p>
+          <p className="text-muted-soft mt-10 mb-1 text-xs">{t("suggestionCards.priceLabel")}</p>
 
           <div className="flex items-center justify-between">
-            <p className="text-[20px] font-semibold">
+            <p className="text-xl font-semibold">
               R$ {secureLifeValue?.toFixed(2).replace(".", ",")} {t("common.perMonthSuffix")}
             </p>
 
-            <Button className="h-10 rounded-full bg-white px-6 font-medium text-[#0050C8] shadow-[0_4px_14px_rgba(0,0,0,0.25)] hover:bg-white/90">
-              {t("common.perMonthSuffix")}
+            <Button className="bg-brand-name shadow-brand-name hover:bg-brand-name h-10 cursor-pointer rounded-full px-6 font-medium text-white shadow-2xl">
+              {t("suggestionCards.button")}
             </Button>
           </div>
         </div>
       </div>
 
-      {/* CARD 2 — Upgrade residencial (bg escuro, botão com borda branca) */}
-      <div className="bg-gradient-glass border-soft text-foreground flex h-64 w-[312px] flex-col justify-between rounded-2xl border p-6">
+      <div className="bg-smart-card border-soft text-foreground flex h-64 w-[312px] flex-col justify-between rounded-2xl border p-6">
         <div>
-          <h3 className="mb-2 text-lg font-semibold">{t("suggestionCards.home.title")}</h3>
+          <h3 className="mb-2 text-xl leading-8 font-bold whitespace-pre-line">
+            {t("suggestionCards.home.title").replace(/(.*)\s(\S+)$/, "$1\n$2")}
+          </h3>
 
-          <p className="text-muted-soft mb-4 text-sm">{t("suggestionCards.home.description")}</p>
+          <p className="text-foreground mb-4 text-sm leading-4 font-normal">
+            {t("suggestionCards.home.description")}
+          </p>
 
-          <p className="text-muted-soft mt-10 mb-1 text-xs">{t("suggestionCards.priceLabel")}</p>
+          <p className="text-muted-soft mt-10 mb-1 text-xs leading-4 font-normal">
+            {t("suggestionCards.priceLabel")}
+          </p>
 
           <div className="flex items-center justify-between">
-            <p className="text-[20px] font-semibold">R$ 127,50 {t("common.perMonthSuffix")}</p>
+            <p className="text-xl font-semibold">R$ 127,50 {t("common.perMonthSuffix")}</p>
 
-            <Button className="border-soft text-foreground h-10 rounded-full border bg-transparent px-6 font-medium hover:bg-white/10">
-              {t("aiSuggestions.cta")}
+            <Button className="h-10 cursor-pointer rounded-full border border-white bg-transparent px-6 font-medium text-white shadow-2xl hover:bg-transparent">
+              {t("suggestionCards.button")}
             </Button>
           </div>
         </div>

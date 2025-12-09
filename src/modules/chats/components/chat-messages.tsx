@@ -1,13 +1,34 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { memo } from "react";
 import { useTranslation } from "react-i18next";
 import type { ChatsData } from "../types/chats.types";
+import { cn } from "@/lib/utils";
 
 interface ChatMessagesProps {
   data?: ChatsData;
 }
+
+const bubbleStyles = {
+  user: {
+    wrapper: "justify-start",
+    bubble:
+      "bg-linear-to-r from-[#1875d2b9] to-[#1876D2] text-white rounded-t-2xl rounded-br-2xl shadow-[0_12px_32px_rgba(21,69,175,0.45)]",
+    author: "text-xs font-semibold text-white/80 mb-1",
+  },
+  assistant: {
+    wrapper: "justify-end",
+    bubble:
+      "bg-[#2C3144] text-white rounded-t-2xl rounded-bl-2xl border border-white/5 shadow-[0_10px_30px_rgba(0,0,0,0.35)]",
+    author: "text-xs font-semibold text-white/70 mb-1",
+  },
+  suggestion: {
+    wrapper: "justify-end",
+    bubble:
+      "bg-[#2C3144] text-white rounded-t-2xl rounded-bl-2xl border border-white/5 shadow-[0_10px_30px_rgba(0,0,0,0.35)]",
+    author: "text-xs font-semibold text-white/60 mb-1 flex items-center gap-2",
+  },
+};
 
 function ChatMessagesComponent({ data }: ChatMessagesProps) {
   const { t } = useTranslation("chats");
@@ -15,67 +36,33 @@ function ChatMessagesComponent({ data }: ChatMessagesProps) {
 
   if (!messages.length) {
     return (
-      <div className="flex flex-1 items-center justify-center bg-[#050816] text-sm text-slate-500">
+      <div className="bg-chat-messages flex flex-1 items-center justify-center text-sm text-slate-500">
         {t("messages.empty")}
       </div>
     );
   }
 
   return (
-    <div className="flex-1 space-y-4 overflow-y-auto bg-[#050816] px-6 py-6">
+    <div className="bg-chat-messages flex-1 space-y-6 overflow-y-auto px-[104px] py-14">
       {messages.map((message) => {
-        if (message.type === "assistant_message") {
-          return (
-            <div key={message.id} className="flex justify-start">
-              <div className="max-w-[70%]">
-                <div className="rounded-2xl rounded-tl-sm bg-[#151a23] px-4 py-3 text-white shadow-sm">
-                  <p className="text-sm leading-relaxed">{message.content}</p>
-                </div>
-                <div className="mt-1 flex items-center gap-1 px-2">
-                  <span className="text-xs text-slate-500">{message.timestamp}</span>
-                </div>
+        const style =
+          message.type === "user_message"
+            ? bubbleStyles.user
+            : message.type === "assistant_message"
+              ? bubbleStyles.assistant
+              : bubbleStyles.suggestion;
+
+        return (
+          <div key={message.id} className={cn("flex w-full", style.wrapper)}>
+            <div className={cn("max-w-[80%] px-4 py-3", style.bubble)}>
+              <p className={style.author}>{message.author}</p>
+              <p className="text-sm leading-relaxed">{message.content}</p>
+              <div className="mt-3 flex items-center justify-end text-[11px] text-white/70">
+                {message.timestamp}
               </div>
             </div>
-          );
-        }
-
-        if (message.type === "ai_suggestion") {
-          return (
-            <div key={message.id} className="flex justify-center">
-              <div className="w-full max-w-[80%]">
-                <div className="rounded-2xl border border-white/10 bg-[#151a23] px-5 py-4 shadow-[0_18px_40px_rgba(0,0,0,0.45)]">
-                  <div className="mb-3 flex items-start gap-3">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-linear-to-br from-purple-500 to-blue-500">
-                      <span className="text-xs font-bold text-white">IA</span>
-                    </div>
-                    <div className="flex-1">
-                      <p className="mb-1 text-xs text-slate-400">{message.author}</p>
-                      <p className="text-sm leading-relaxed text-slate-100">{message.content}</p>
-                    </div>
-                  </div>
-
-                  <div className="mt-3 flex gap-2">
-                    <Button className="flex-1 rounded-full bg-blue-500 text-xs font-medium text-white hover:bg-blue-600">
-                      {t("messages.actions.sendProposal")}
-                    </Button>
-                    <Button className="flex-1 rounded-full border border-blue-500/40 bg-blue-500/10 text-xs font-medium text-blue-300 hover:bg-blue-500/15">
-                      {t("messages.actions.call")}
-                    </Button>
-                    <Button className="flex-1 rounded-full border border-slate-700 bg-slate-800/60 text-xs font-medium text-slate-100 hover:bg-slate-700/80">
-                      {t("messages.actions.viewHistory")}
-                    </Button>
-                  </div>
-
-                  <div className="mt-2 flex items-center justify-end px-1">
-                    <span className="text-xs text-slate-500">{message.timestamp}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
-        }
-
-        return null;
+          </div>
+        );
       })}
     </div>
   );

@@ -10,3 +10,4 @@ export * from "./ui/badge";
 export * from "./ui/checkbox";
 export * from "./ui/progress";
 export * from "./ui/slider";
+export * from "./ui/input-group";

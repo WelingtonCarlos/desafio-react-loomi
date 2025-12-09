@@ -14,7 +14,7 @@ export function DashboardPage() {
   return (
     <div className="m-auto flex flex-col gap-8">
       <PageHeader title={t("titles.header")} />
-      <div className="m-auto flex w-full max-w-3xl flex-col gap-8 py-8 xl:max-w-4xl 2xl:max-w-7xl 2xl:flex-row">
+      <div className="m-auto flex w-full max-w-3xl flex-col gap-8 pt-8 xl:max-w-4xl 2xl:max-w-7xl 2xl:flex-row">
         <div className="min-h-[360px] 2xl:w-3/5">
           <KpiChart />
         </div>
@@ -22,7 +22,7 @@ export function DashboardPage() {
         <KpiSummary />
       </div>
 
-      <div className="m-auto flex w-full max-w-3xl flex-col gap-8 py-8 xl:max-w-4xl 2xl:max-w-7xl 2xl:flex-row">
+      <div className="m-auto flex w-full max-w-3xl flex-col gap-8 py-5 xl:max-w-4xl 2xl:max-w-7xl 2xl:flex-row">
         <div className="min-h-[360px] 2xl:w-3/5">
           <CustomerByRegionMap />
         </div>
@@ -30,7 +30,7 @@ export function DashboardPage() {
         <ImpactBySegmentChart />
       </div>
 
-      <div className="m-auto flex w-full max-w-3xl flex-col gap-8 py-8 xl:max-w-4xl 2xl:max-w-7xl 2xl:flex-row">
+      <div className="m-auto flex w-full max-w-3xl flex-col gap-8 pb-8 xl:max-w-4xl 2xl:max-w-7xl 2xl:flex-row">
         <ActiveClientsTable />
       </div>
     </div>

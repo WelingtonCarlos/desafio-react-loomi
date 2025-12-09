@@ -144,7 +144,7 @@ function NewTicketModal() {
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogChange}>
       <DialogContent
-        className="bg-surface-panel border-panel text-foreground gap-0 overflow-hidden border p-0 sm:max-w-[600px]"
+        className="bg-background border-panel text-foreground gap-0 overflow-hidden border p-0 sm:max-w-[600px]"
         showCloseButton={false}
       >
         <DialogHeader className="border-panel flex flex-row items-start justify-between space-y-0 border-b p-6 pb-4">
@@ -159,7 +159,7 @@ function NewTicketModal() {
           <Button
             variant="ghost"
             size="icon"
-            className="border-panel hover:bg-surface-contrast text-muted-soft h-8 w-8 cursor-pointer rounded-full border"
+            className="border-panel hover:bg-surface-card text-muted-soft h-8 w-8 cursor-pointer rounded-full border"
             onClick={() => handleDialogChange(false)}
           >
             <X className="h-4 w-4" />
@@ -176,8 +176,9 @@ function NewTicketModal() {
                 <Input
                   id="client-name"
                   placeholder={t("tickets:modal.fields.client.placeholder")}
-                  className="bg-surface-contrast border-panel placeholder-muted text-foreground h-11 border"
+                  variant="surface"
                   {...register("client")}
+                  className="px-6 py-3"
                 />
                 {errors.client && <p className="text-xs text-red-400">{errors.client.message}</p>}
               </div>
@@ -189,7 +190,8 @@ function NewTicketModal() {
                 <Input
                   id="email"
                   placeholder={t("tickets:modal.fields.email.placeholder")}
-                  className="bg-surface-contrast border-panel placeholder-muted text-foreground h-11 border"
+                  variant="surface"
+                  className="px-6 py-3"
                   {...register("email")}
                 />
                 {errors.email && <p className="text-xs text-red-400">{errors.email.message}</p>}
@@ -207,10 +209,10 @@ function NewTicketModal() {
                     })
                   }
                 >
-                  <SelectTrigger className="bg-surface-contrast border-panel text-muted-soft h-11 w-full border">
+                  <SelectTrigger className="bg-surface-card border-panel text-muted-soft h-11 w-full rounded-3xl border px-6 py-3">
                     <SelectValue placeholder={t("tickets:modal.fields.priority.placeholder")} />
                   </SelectTrigger>
-                  <SelectContent className="bg-surface-contrast border-panel text-foreground w-full border">
+                  <SelectContent className="bg-surface-card border-panel text-foreground w-full border">
                     {TICKET_PRIORITY_VALUES.map((option) => (
                       <SelectItem key={option} value={option}>
                         {option}
@@ -230,7 +232,8 @@ function NewTicketModal() {
                 <Input
                   id="assignee"
                   placeholder={t("tickets:modal.fields.responsible.placeholder")}
-                  className="bg-surface-contrast border-panel placeholder-muted text-foreground h-11 border"
+                  variant="surface"
+                  className="px-6 py-3"
                   {...register("responsible")}
                 />
                 {errors.responsible && (
@@ -245,7 +248,7 @@ function NewTicketModal() {
                 <Textarea
                   id="subject"
                   placeholder={t("tickets:modal.fields.subject.placeholder")}
-                  className="bg-surface-contrast border-panel placeholder-muted text-foreground min-h-[100px] resize-none border"
+                  className="bg-surface-card border-panel text-foreground min-h-[100px] resize-none rounded-3xl border px-6 py-3"
                   {...register("subject")}
                 />
                 {errors.subject && <p className="text-xs text-red-400">{errors.subject.message}</p>}
@@ -263,10 +266,10 @@ function NewTicketModal() {
                     })
                   }
                 >
-                  <SelectTrigger className="bg-surface-contrast border-panel text-muted-soft h-11 w-full border">
+                  <SelectTrigger className="bg-surface-card border-panel text-muted-soft h-11 w-full border px-6 py-3">
                     <SelectValue placeholder={t("tickets:modal.fields.status.placeholder")} />
                   </SelectTrigger>
-                  <SelectContent className="bg-surface-contrast border-panel text-foreground w-full border">
+                  <SelectContent className="bg-surface-card border-panel text-foreground w-full border">
                     {TICKET_STATUS_VALUES.map((option) => (
                       <SelectItem key={option} value={option}>
                         {option}
@@ -279,18 +282,18 @@ function NewTicketModal() {
             </div>
           </div>
 
-          <div className="flex justify-end gap-3 p-6 pt-0">
+          <div className="flex justify-center gap-3 p-6 pt-0">
             <Button
               variant="outline"
               type="button"
               onClick={() => handleDialogChange(false)}
-              className="border-panel text-foreground hover:bg-surface-contrast cursor-pointer border bg-transparent px-6"
+              className="border-panel text-foreground hover:bg-surface-card h-14 cursor-pointer rounded-2xl border bg-transparent px-6 py-4 leading-5 font-medium"
             >
               {t("tickets:modal.buttons.cancel")}
             </Button>
             <Button
               type="submit"
-              className="bg-brand text-brand-foreground hover:bg-brand-strong shadow-brand cursor-pointer px-6"
+              className="bg-brand text-brand-foreground hover:bg-brand-strong shadow-brand h-14 cursor-pointer rounded-2xl px-6 py-4 leading-5 font-medium"
               disabled={isSubmitting}
             >
               {isSubmitting

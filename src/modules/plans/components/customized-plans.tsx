@@ -7,7 +7,8 @@ import { usePlanCustomizerStore } from "@/lib/stores/plan-customizer-store";
 import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { ADDITIONAL_COVERAGES, PLANS_CONFIG } from "../constants/customizer";
-import { sliderCustomClasses } from "../constants/ui";
+// import { sliderCustomClasses } from "../constants/ui";
+import { Badge } from "@/components";
 
 const centsToReais = (cents: number) => cents / 100;
 
@@ -69,11 +70,12 @@ export function CustomizedPlans() {
   );
 
   return (
-    <div className="bg-gradient-glass border-soft rounded-3xl border p-8">
-      <h2 className="text-foreground mb-6 text-xl font-semibold">{t("plans:customizer.title")}</h2>
+    <div className="bg-surface-card border-soft rounded-3xl border p-8">
+      <h2 className="text-foreground mb-6 text-xl leading-4 font-bold">
+        {t("plans:customizer.title")}
+      </h2>
 
-      {/* Plan Cards */}
-      <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="mb-10 flex w-full space-x-6">
         {PLANS_CONFIG.map((plan) => {
           const isSelected = selectedPlanId === plan.id;
           const totalPrice = isSelected ? selectedPlanTotal : plan.price;
@@ -82,35 +84,36 @@ export function CustomizedPlans() {
             <div
               key={plan.id}
               onClick={() => handleSelectPlan(plan.id)}
-              className={`bg-surface-contrast relative cursor-pointer rounded-2xl p-6 transition-all hover:scale-105 ${
-                isSelected
-                  ? "border-brand shadow-brand border-2"
-                  : "border-soft hover:border-strong border"
-              }`}
+              className="bg-surface-contrast-strong border-soft hover:border-strong h-[174px] w-[252px] cursor-pointer rounded-2xl border p-6 transition-all hover:scale-105"
             >
-              {plan.recommended && (
-                <div className="absolute -top-3 right-6">
-                  <span className="bg-success text-success-foreground rounded-full px-3 py-1 text-xs font-semibold">
-                    {t("plans:customizer.recommended")}
-                  </span>
+              <div className="flex flex-col space-y-7">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-foreground text-sm leading-4 font-bold">
+                    {t(`plans:customizer.plans.${plan.id}`)}
+                  </h3>
+                  {plan.recommended && (
+                    <Badge variant="highlightSoft" className="w-24">
+                      {t("plans:customizer.recommended")}
+                    </Badge>
+                  )}
                 </div>
-              )}
-              <h3 className="text-foreground mb-4 font-medium">
-                {t(`plans:customizer.plans.${plan.id}`)}
-              </h3>
-              <div className="text-foreground mb-1 text-3xl font-bold">
-                {formatter.format(centsToReais(totalPrice))}
+
+                <div className="text-foreground text-2xl leading-8 font-bold">
+                  {formatter.format(centsToReais(totalPrice))}
+                </div>
+
+                <p className="text-muted-soft text-sm leading-4 font-normal">
+                  {t("common:labels.perMonth")}
+                </p>
               </div>
-              <p className="text-muted-soft text-sm">{t("common:labels.perMonth")}</p>
             </div>
           );
         })}
       </div>
 
-      {/* Vehicle Value Slider */}
-      <div className="mb-8">
+      <div className="mb-10">
         <div className="mb-3 flex items-center justify-between">
-          <Label className="text-foreground font-medium">
+          <Label className="text-foreground text-base leading-4 font-semibold">
             {t("plans:customizer.vehicleValue")}: {formatter.format(vehicleValue)}
           </Label>
         </div>
@@ -120,18 +123,19 @@ export function CustomizedPlans() {
           min={10000}
           max={500000}
           step={1000}
-          className={sliderCustomClasses}
+          trackVariant="brand"
+          thumbVariant="brand"
+          rangeVariant="brand"
         />
         <div className="text-muted-soft mt-2 flex justify-between text-xs">
-          <span>{t("plans:customizer.ranges.vehicleMin")}</span>
-          <span>{t("plans:customizer.ranges.vehicleMax")}</span>
+          <span className="text-foreground">{t("plans:customizer.ranges.vehicleMin")}</span>
+          <span className="text-foreground">{t("plans:customizer.ranges.vehicleMax")}</span>
         </div>
       </div>
 
-      {/* Client Age Slider */}
-      <div className="mb-8">
+      <div className="mb-10">
         <div className="mb-3 flex items-center justify-between">
-          <Label className="text-foreground font-medium">
+          <Label className="text-foreground text-base leading-4 font-semibold">
             {t("plans:customizer.age")}: {clientAge} {t("plans:customizer.ageSuffix")}
           </Label>
         </div>
@@ -141,17 +145,20 @@ export function CustomizedPlans() {
           min={18}
           max={90}
           step={1}
-          className={sliderCustomClasses}
+          trackVariant="brand"
+          thumbVariant="brand"
+          rangeVariant="brand"
         />
         <div className="text-muted-soft mt-2 flex justify-between text-xs">
-          <span>{t("plans:customizer.ranges.ageMin")}</span>
-          <span>{t("plans:customizer.ranges.ageMax")}</span>
+          <span className="text-foreground">{t("plans:customizer.ranges.ageMin")}</span>
+          <span className="text-foreground">{t("plans:customizer.ranges.ageMax")}</span>
         </div>
       </div>
 
-      {/* Additional Coverages */}
       <div>
-        <h3 className="text-foreground mb-4 font-medium">{t("plans:customizer.coveragesTitle")}</h3>
+        <h3 className="text-foreground mb-4 text-base leading-4 font-bold">
+          {t("plans:customizer.coveragesTitle")}
+        </h3>
         <div className="space-y-4">
           {ADDITIONAL_COVERAGES.map((coverage) => (
             <div key={coverage.id} className="flex items-center justify-between">
@@ -160,9 +167,12 @@ export function CustomizedPlans() {
                   id={coverage.id}
                   checked={coverages[coverage.id]}
                   onCheckedChange={(checked) => handleCoverageToggle(coverage.id, !!checked)}
-                  className="data-[state=checked]:border-[var(--brand)] data-[state=checked]:bg-[var(--brand)]"
+                  variant="brand"
                 />
-                <Label htmlFor={coverage.id} className="text-muted-soft cursor-pointer text-sm">
+                <Label
+                  htmlFor={coverage.id}
+                  className="text-foreground cursor-pointer text-sm leading-6"
+                >
                   {t(`plans:customizer.coverages.${coverage.id}`)}
                 </Label>
               </div>

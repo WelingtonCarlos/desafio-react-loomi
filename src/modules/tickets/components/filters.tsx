@@ -1,6 +1,5 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -12,6 +11,9 @@ import { memo } from "react";
 import { useTranslation } from "react-i18next";
 import { ALL_SELECT_OPTION_VALUE } from "../constants";
 import type { TicketPriority, TicketStatus } from "../types/tickets.types";
+import { cn } from "@/lib/utils";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
+import { Search } from "lucide-react";
 
 interface SelectState {
   value: string;
@@ -27,9 +29,50 @@ interface FiltersProps {
     options: {
       status: TicketStatus[];
       priorities: TicketPriority[];
-      responsible: string[]; // nomes dos responsáveis
+      responsible: string[];
     };
   };
+}
+
+interface FilterSelectProps {
+  placeholder: string;
+  value: string;
+  onValueChange: (value: string) => void;
+  options: string[];
+  widthClass: string;
+  allOption: {
+    label: string;
+    value: string;
+  };
+}
+
+function FilterSelect({
+  placeholder,
+  value,
+  onValueChange,
+  options,
+  widthClass,
+  allOption,
+}: FilterSelectProps) {
+  return (
+    <div className="flex flex-col gap-2">
+      <Select value={value} onValueChange={onValueChange}>
+        <SelectTrigger
+          className={cn("rounded-3xl border-slate-700 bg-slate-900 text-slate-100", widthClass)}
+        >
+          <SelectValue placeholder={placeholder} />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value={allOption.value}>{allOption.label}</SelectItem>
+          {options.map((item) => (
+            <SelectItem key={item} value={item}>
+              {item}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
+  );
 }
 
 function FiltersComponent({ search, lists }: FiltersProps) {
@@ -37,93 +80,62 @@ function FiltersComponent({ search, lists }: FiltersProps) {
 
   return (
     <div className="mb-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-      {/* Busca */}
-      <div className="flex flex-col gap-2">
-        <span className="text-sm text-slate-100">{t("tickets:filters.searchLabel")}</span>
-        <Input
-          placeholder={t("tickets:filters.searchPlaceholder")}
-          className="w-80 border-slate-700 bg-slate-900 text-slate-100"
-          value={search.value}
-          onChange={(e) => search.set(e.target.value)}
-        />
+      <div className="flex w-full flex-col gap-2">
+        <span className="text-xl font-bold text-white">{t("tickets:table.name")}</span>
+        <InputGroup className="w-full">
+          <InputGroupInput
+            value={search.value}
+            onChange={(e) => search.set(e.target.value)}
+            placeholder={t("tickets:filters.searchPlaceholder")}
+          />
+          <InputGroupAddon>
+            <Search className="text-color-muted" />
+          </InputGroupAddon>
+        </InputGroup>
       </div>
 
-      {/* Filtros à direita */}
-      <div className="flex flex-wrap gap-3">
-        {/* Status */}
-        <div className="flex flex-col gap-2">
-          <span className="text-sm text-slate-100">{t("tickets:filters.status")}</span>
-          <Select
-            value={lists.status.value || ALL_SELECT_OPTION_VALUE}
-            onValueChange={(value) =>
-              lists.status.set(value === ALL_SELECT_OPTION_VALUE ? "" : value)
-            }
-          >
-            <SelectTrigger className="w-[160px] border-slate-700 bg-slate-900 text-slate-100">
-              <SelectValue placeholder={t("tickets:filters.allStatus")} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value={ALL_SELECT_OPTION_VALUE}>
-                {t("tickets:filters.allStatus")}
-              </SelectItem>
-              {lists.options.status.map((item) => (
-                <SelectItem key={item} value={item}>
-                  {item}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+      <div className="flex gap-3 self-end">
+        <FilterSelect
+          placeholder={t("tickets:filters.allStatus")}
+          value={lists.status.value || ALL_SELECT_OPTION_VALUE}
+          onValueChange={(value) =>
+            lists.status.set(value === ALL_SELECT_OPTION_VALUE ? "" : value)
+          }
+          options={lists.options.status}
+          widthClass="w-[160px]"
+          allOption={{
+            label: t("tickets:filters.allStatus"),
+            value: ALL_SELECT_OPTION_VALUE,
+          }}
+        />
 
-        {/* Prioridade */}
-        <div className="flex flex-col gap-2">
-          <span className="text-sm text-slate-100">{t("tickets:filters.priority")}</span>
-          <Select
-            value={lists.priority.value || ALL_SELECT_OPTION_VALUE}
-            onValueChange={(value) =>
-              lists.priority.set(value === ALL_SELECT_OPTION_VALUE ? "" : value)
-            }
-          >
-            <SelectTrigger className="w-[160px] border-slate-700 bg-slate-900 text-slate-100">
-              <SelectValue placeholder={t("tickets:filters.allPriorities")} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value={ALL_SELECT_OPTION_VALUE}>
-                {t("tickets:filters.allPriorities")}
-              </SelectItem>
-              {lists.options.priorities.map((item) => (
-                <SelectItem key={item} value={item}>
-                  {item}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+        <FilterSelect
+          placeholder={t("tickets:filters.allPriorities")}
+          value={lists.priority.value || ALL_SELECT_OPTION_VALUE}
+          onValueChange={(value) =>
+            lists.priority.set(value === ALL_SELECT_OPTION_VALUE ? "" : value)
+          }
+          options={lists.options.priorities}
+          widthClass="w-[160px]"
+          allOption={{
+            label: t("tickets:filters.allPriorities"),
+            value: ALL_SELECT_OPTION_VALUE,
+          }}
+        />
 
-        {/* Responsável */}
-        <div className="flex flex-col gap-2">
-          <span className="text-sm text-slate-100">{t("tickets:filters.responsible")}</span>
-          <Select
-            value={lists.responsible.value || ALL_SELECT_OPTION_VALUE}
-            onValueChange={(value) =>
-              lists.responsible.set(value === ALL_SELECT_OPTION_VALUE ? "" : value)
-            }
-          >
-            <SelectTrigger className="w-[180px] border-slate-700 bg-slate-900 text-slate-100">
-              <SelectValue placeholder={t("tickets:filters.allResponsible")} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value={ALL_SELECT_OPTION_VALUE}>
-                {t("tickets:filters.allResponsible")}
-              </SelectItem>
-              {lists.options.responsible.map((item) => (
-                <SelectItem key={item} value={item}>
-                  {item}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+        <FilterSelect
+          placeholder={t("tickets:filters.allResponsible")}
+          value={lists.responsible.value || ALL_SELECT_OPTION_VALUE}
+          onValueChange={(value) =>
+            lists.responsible.set(value === ALL_SELECT_OPTION_VALUE ? "" : value)
+          }
+          options={lists.options.responsible}
+          widthClass="w-[180px]"
+          allOption={{
+            label: t("tickets:filters.allResponsible"),
+            value: ALL_SELECT_OPTION_VALUE,
+          }}
+        />
       </div>
     </div>
   );

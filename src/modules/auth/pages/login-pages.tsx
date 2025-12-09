@@ -14,13 +14,13 @@ export function LoginPage() {
       <HeaderActions />
 
       <div className="relative z-10 flex w-full flex-col justify-center p-8 lg:w-[45%] lg:p-16 xl:p-24">
-        <div className="absolute top-8 left-8 lg:top-12 lg:left-12">
-          <span className="bg-linear-to-r from-blue-500 to-blue-400 bg-clip-text text-3xl font-bold text-transparent">
+        <div className="absolute top-8 left-8 lg:top-20 lg:left-24">
+          <span className="text-brand-name bg-clip-text text-5xl font-semibold">
             {t("brand.name")}
           </span>
         </div>
 
-        <div className="mt-12">
+        <div className="mt-40">
           <Suspense fallback={null}>
             <LoginForm />
           </Suspense>

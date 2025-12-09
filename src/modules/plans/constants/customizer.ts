@@ -1,7 +1,7 @@
 export const PLANS_CONFIG = [
   { id: "basic", price: 8990, recommended: false },
-  { id: "intermediate", price: 14590, recommended: true },
-  { id: "premium", price: 22590, recommended: false },
+  { id: "intermediate", price: 14590, recommended: false },
+  { id: "premium", price: 22590, recommended: true },
 ] as const;
 
 export const ADDITIONAL_COVERAGES = [

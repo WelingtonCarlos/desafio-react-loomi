@@ -28,7 +28,7 @@ export function HeaderActions() {
       <Button
         variant="ghost"
         size="sm"
-        className="h-10 cursor-pointer gap-2 rounded-full border border-gray-800/50 bg-[#111827] px-4 text-gray-300 hover:bg-[#111827] hover:text-gray-300"
+        className="h-10 cursor-pointer gap-2 rounded-[100px] border border-gray-800/50 bg-[#111827] p-2.5 text-gray-300 hover:bg-[#111827] hover:text-gray-300"
       >
         <Headphones className="h-4 w-4" />
         {t("actions.help")}

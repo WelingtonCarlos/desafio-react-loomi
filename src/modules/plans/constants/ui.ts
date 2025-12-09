@@ -7,6 +7,3 @@ export const PLAN_LABEL_KEYS: Record<PlanId, `plans:customizer.plans.${PlanId}`>
   intermediate: "plans:customizer.plans.intermediate",
   premium: "plans:customizer.plans.premium",
 };
-
-export const sliderCustomClasses =
-  "**:data-[slot=slider-track]:bg-gray-700 **:data-[slot=slider-range]:bg-[var(--brand)] **:data-[slot=slider-thumb]:bg-[var(--brand)] **:data-[slot=slider-thumb]:border-[var(--brand)]";

@@ -10,23 +10,25 @@ interface ChatAppActionsProps {
 
 export function ChatAppActions({ actions, t }: ChatAppActionsProps) {
   return (
-    <div className="space-y-3">
-      <h3 className="text-sm font-medium text-white">{t("sidebar.appActions")}</h3>
+    <div className="space-y-3 px-6">
+      <h3 className="text-foreground text-base leading-4 font-medium">{t("sidebar.appActions")}</h3>
       <div className="space-y-3">
         {actions && actions.length > 0 ? (
           actions.map((action, index) => (
             <div key={`${action.action}-${index}`}>
-              <p className="mb-0.5 text-[11px] text-slate-500">{action.accessed}</p>
-              <p className="text-xs text-slate-200">{action.action}</p>
+              <p className="text-muted-soft mb-1 text-[12px] leading-4 font-normal">
+                {action.accessed}
+              </p>
+              <p className="text-foreground mb-1 text-sm leading-4 font-normal">{action.action}</p>
               {action.pageTime && (
-                <p className="text-[11px] text-slate-500">
+                <p className="text-muted-soft text-[12px] leading-4 font-normal">
                   {t("sidebar.timeOnPage", { time: action.pageTime })}
                 </p>
               )}
             </div>
           ))
         ) : (
-          <p className="text-[11px] text-slate-500">{t("sidebar.noData")}</p>
+          <p className="text-muted-soft text-[12px] leading-4 font-normal">{t("sidebar.noData")}</p>
         )}
       </div>
     </div>

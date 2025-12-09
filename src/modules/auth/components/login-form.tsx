@@ -42,20 +42,20 @@ export function LoginForm() {
   };
 
   return (
-    <div className="w-full max-w-md space-y-8">
-      <div className="space-y-2">
-        <h1 className="text-3xl font-medium text-white">{t("page.title")}</h1>
-        <p className="text-sm text-gray-400">{t("page.subtitle")}</p>
+    <div className="w-full max-w-md space-y-16">
+      <div className="space-y-2.5">
+        <h1 className="text-text-color-white text-4xl font-normal">{t("page.title")}</h1>
+        <p className="text-text-color-white text-xl font-normal">{t("page.subtitle")}</p>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
         <div className="space-y-2">
           <div className="relative">
             <Input
               id="username"
               type="email"
               placeholder={t("form.emailPlaceholder")}
-              className="h-14 rounded-lg border-gray-800 bg-[#0f1623] text-white placeholder:text-gray-500"
+              className="h-14 rounded-lg border-gray-800 bg-[#0B1125] text-white placeholder:text-gray-500"
               {...register("username")}
             />
           </div>
@@ -96,7 +96,7 @@ export function LoginForm() {
               {t("form.rememberMe")}
             </Label>
           </div>
-          <a href="#" className="text-sm text-blue-500 transition-colors hover:text-blue-400">
+          <a href="#" className="text-brand-name cursor-pointer text-base font-medium">
             {t("form.forgotPassword")}
           </a>
         </div>
@@ -104,7 +104,7 @@ export function LoginForm() {
         <Button
           type="submit"
           disabled={isLoading}
-          className="h-12 w-full cursor-pointer rounded-lg bg-blue-600 text-base font-medium text-white transition-all hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+          className="bg-brand-name hover:bg-brand-name/75 h-12 w-full cursor-pointer rounded-lg text-base font-medium text-white transition-all disabled:cursor-not-allowed disabled:opacity-50"
         >
           {isLoading ? t("form.submitting") : t("form.submit")}
         </Button>
