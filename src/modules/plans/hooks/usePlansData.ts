@@ -1,10 +1,9 @@
 "use client";
 
 import { useQuery, useQueryClient, type UseQueryResult } from "@tanstack/react-query";
+import { PLANS_QUERY_KEY } from "../constants/query-keys";
 import { getPlansData } from "../services/plans-service";
 import type { PlansData } from "../types/plans.types";
-
-const PLANS_QUERY_KEY = ["plans", "data"] as const;
 
 const queryOptions = {
   staleTime: Infinity,

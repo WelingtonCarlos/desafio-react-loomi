@@ -1,10 +1,9 @@
 "use client";
 
 import { useQuery, useQueryClient, type UseQueryResult } from "@tanstack/react-query";
+import { VIEW_360_QUERY_KEY } from "../constants/query-keys";
 import { getView360Data } from "../services/view-260-service";
 import type { View360Data } from "../types/view-360.types";
-
-const VIEW_360_QUERY_KEY = ["view-360", "data"] as const;
 
 const queryOptions = {
   staleTime: Infinity,

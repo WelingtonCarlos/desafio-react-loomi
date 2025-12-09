@@ -1,13 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { MotionDialogContent } from "@/components/ui/motion-dialog-content";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -143,7 +138,8 @@ function NewTicketModal() {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogChange}>
-      <DialogContent
+      <MotionDialogContent
+        open={isOpen}
         className="bg-background border-panel text-foreground gap-0 overflow-hidden border p-0 sm:max-w-[600px]"
         showCloseButton={false}
       >
@@ -304,7 +300,7 @@ function NewTicketModal() {
             </Button>
           </div>
         </form>
-      </DialogContent>
+      </MotionDialogContent>
     </Dialog>
   );
 }

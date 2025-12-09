@@ -255,3 +255,10 @@ auth/
 - [x] Adicionar simulador de planos
 - [x] Implementar customer 360
 - [x] Adicionar guards de rotas protegidas
+
+## 🛰️ SSR + Hidratação de Dados
+
+- **Páginas com pré-busca server + hidratação React Query**: `/dashboard`, `/tickets`, `/plans`, `/chats`, `/view-360`.
+- **Como funciona**: cada `page.tsx` cria um `QueryClient`, faz `prefetchQuery` dos endpoints mock (ex.: `dash.json`, `ticket-management.json`, `plan.json`, `chat.json`, `360-view.json`), desidrata com `dehydrate` e envolve a árvore em `<HydrationBoundary>`. Os componentes client (charts, mapa, modais, stores) consomem o cache já preenchido, reduzindo o flash de skeletons.
+- **Chaves de query server-safe**: saíram dos hooks client e foram movidas para `constants/query-keys.ts` em cada módulo (`dashboard`, `tickets`, `plans`, `chats`, `view-360`), evitando importar código `"use client"` no server.
+- **Mutações**: tickets continuam client-side porque usam `localStorage` para clonar e editar os dados mock. As demais telas apenas leem dados estáticos.
