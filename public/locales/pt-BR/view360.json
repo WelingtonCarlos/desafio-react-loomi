@@ -36,13 +36,13 @@
     "offerLabel": "Oferta recomendada",
     "valueLabel": "Valor recomendado",
     "conversionLabel": "Probabilidade de conversão",
-    "reasonWhy": "Motivos (Reason Why)",
+    "reasonWhy": "Reason Why",
     "cta": "Simular conversa com IA"
   },
   "suggestionCards": {
     "loading": "Carregando...",
     "priceLabel": "Por apenas:",
-    "priceSuffix": "/mês",
+    "button": "Simular",
     "life": {
       "title": "Seguro de vida individual",
       "description": "Proteção financeira completa com cobertura por morte e doenças graves"

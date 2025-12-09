@@ -21,34 +21,34 @@ export function RecommendedOfferCard({ t }: RecommendedOfferCardProps) {
         />
       </div>
 
-      <h3 className="mb-4 text-sm font-semibold text-white">
+      <h3 className="mb-4 font-bold text-xl leading-4 text-foreground">
         {t("sidebar.recommendedOffers.title")}
       </h3>
 
-      <div className="mb-2 rounded-xl bg-linear-to-br from-[#4aa8ff]/30 via-[#2b7bff]/40 to-[#2b7bff]/40 p-px">
+      <div className="mb-2 rounded-xl bg-linear-to-br from-[#4aa8ff]/30 to-[#2b7bff]/40 p-px">
         <div className="rounded-xl bg-linear-to-br from-[#1d78d1] via-[#2896d5] to-[#3cb9d7] p-4">
-          <h4 className="mb-1 text-base font-semibold text-white">
+          <h4 className="mb-1 font-bold text-xl leading-4 text-foreground">
             {t("sidebar.recommendedOffers.planTitle")}
           </h4>
 
-          <p className="mb-4 text-xs leading-relaxed text-blue-50/70">
+          <p className="mb-4 text-sm leading-4 text-foreground w-2/3 font-normal">
             {t("sidebar.recommendedOffers.benefits")}
           </p>
 
-          <div className="space-y-2 text-xs text-slate-200">
+          <div className="space-y-2 text-sm text-foreground">
             <div className="flex justify-between">
               <span>{t("sidebar.recommendedOffers.normalPrice")}</span>
-              <span className="font-medium">R$ 86,00/mês</span>
+              <span className="font-medium text-foreground">R$ 86,00/mês</span>
             </div>
 
-            <div className="flex justify-between font-semibold text-white">
+            <div className="flex justify-between font-semibold text-foreground">
               <span>{t("sidebar.recommendedOffers.discountPrice")}</span>
-              <span className="text-lg text-white">R$ 86,00/mês</span>
+              <span className="text-lg text-foreground">R$ 86,00/mês</span>
             </div>
 
             <div className="flex justify-between pt-1">
-              <span className="text-slate-300">{t("sidebar.recommendedOffers.yearlySaving")}</span>
-              <span className="font-medium text-blue-300">R$103,20/ano</span>
+              <span className="text-muted-soft">{t("sidebar.recommendedOffers.yearlySaving")}</span>
+              <span className="font-medium text-foreground">R$103,20/ano</span>
             </div>
           </div>
         </div>

@@ -29,14 +29,18 @@ export function createTicketColumns(
       cell: ({ row }) => {
         const p = row.original.priority;
 
-        const variant =
+        const priorityVariant =
           p === "Urgente"
-            ? "bg-red-500/15 text-red-300 border-red-500/40"
+            ? "priorityUrgent"
             : p === "Média"
-              ? "bg-sky-500/15 text-sky-300 border-sky-500/40"
-              : "bg-slate-500/15 text-slate-300 border-slate-500/40";
+              ? "priorityMedium"
+              : "priorityLow";
 
-        return <Badge className={`border px-3 py-1 text-xs font-medium ${variant}`}>{p}</Badge>;
+        return (
+          <Badge variant={priorityVariant} className="px-3 py-1 text-xs font-medium">
+            {p}
+          </Badge>
+        );
       },
     },
 
@@ -70,15 +74,17 @@ export function createTicketColumns(
       cell: ({ row }) => {
         const status = row.original.status;
 
-        const variant =
+        const statusVariant =
           status === "Aberto"
-            ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/40"
+            ? "statusOpen"
             : status === "Em andamento"
-              ? "bg-amber-500/15 text-amber-300 border-amber-500/40"
-              : "bg-slate-500/15 text-slate-300 border-slate-500/40";
+              ? "statusProgress"
+              : "statusDefault";
 
         return (
-          <Badge className={`border px-3 py-1 text-xs font-medium ${variant}`}>{status}</Badge>
+          <Badge variant={statusVariant} className="px-3 py-1 text-xs font-medium">
+            {status}
+          </Badge>
         );
       },
     },

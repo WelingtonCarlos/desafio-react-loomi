@@ -21,12 +21,12 @@ export function ConversationInsightsCard({ insights }: ConversationInsightsCardP
           className="z-50"
         />
       </div>
-      <h3 className="mb-3 text-sm font-medium text-white">{insights.title}</h3>
+      <h3 className="mb-2 font-bold text-xl leading-4 text-foreground">{insights.title}</h3>
       <div className="space-y-2">
         {insights.insights.map((insight) => (
           <div key={insight.id} className="flex items-start gap-2">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-400" />
-            <p className="text-xs text-slate-200">{insight.category}</p>
+            <p className="text-sm text-foreground w-2/3 font-normal">{insight.category}</p>
           </div>
         ))}
       </div>

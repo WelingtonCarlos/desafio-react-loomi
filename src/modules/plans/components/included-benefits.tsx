@@ -38,8 +38,8 @@ export function IncludedBenefits() {
   }
 
   return (
-    <div className="bg-gradient-glass border-soft rounded-3xl border p-8">
-      <h2 className="text-foreground mb-6 text-xl font-semibold">
+    <div className="bg-surface-card border-soft rounded-3xl border p-8">
+      <h2 className="text-foreground mb-6 text-xl font-bold leading-4">
         {t("plans:includedBenefits.title")}
       </h2>
 
@@ -47,10 +47,10 @@ export function IncludedBenefits() {
         {plansData?.includedBenefits.map((benefit, index) => (
           <div
             key={index}
-            className="bg-surface-contrast border-soft flex items-center gap-2 rounded-full border px-4 py-2"
+            className="bg-surface-contrast-strong border-soft flex items-center gap-2 rounded-full border px-4 py-2"
           >
-            <div className="bg-brand h-2 w-2 rounded-full" />
-            <span className="text-muted-soft text-sm">{benefit}</span>
+            <div className="bg-brand shadow-brand-name shadow-2xl h-2 w-2 rounded-full" />
+            <span className="text-foreground leading-4 font-medium text-sm">{benefit}</span>
           </div>
         ))}
       </div>

@@ -15,12 +15,12 @@ export function FutureStepsCard({ futureSteps }: FutureStepsCardProps) {
       <div className="absolute top-4 right-4 text-blue-400 opacity-20">
         <Image src="/pin.png" alt="Conversation Analysis" width={64} height={64} />
       </div>
-      <h3 className="mb-3 text-sm font-medium text-white">{futureSteps.title}</h3>
+      <h3 className="mb-3 font-bold text-xl leading-4 text-foreground">{futureSteps.title}</h3>
       <div className="space-y-2">
         {futureSteps.actions.map((action) => (
           <div key={action.id} className="flex items-start gap-2">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-400 shadow-2xl shadow-cyan-400/20" />
-            <p className="text-xs text-slate-200">{action.action}</p>
+            <p className="text-sm text-foreground w-2/3 font-normal">{action.action}</p>
           </div>
         ))}
       </div>

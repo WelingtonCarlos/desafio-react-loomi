@@ -4,7 +4,7 @@ import type React from "react";
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { SendHorizontal } from "lucide-react";
+import { SendHorizontal, SendIcon } from "lucide-react";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -34,23 +34,23 @@ export function ChatInput({ onSendMessage }: ChatInputProps) {
   );
 
   return (
-    <div className="border-t border-slate-800/60 bg-[#050816] px-6 py-4">
+    <div className="bg-chat-messages px-6 py-4">
       <div className="flex items-center gap-3">
-        <div className="relative flex-1">
+        <div className="relative flex-1 mx-5">
           <Textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={t("input.placeholder")}
             rows={1}
-            className="max-h-[120px] min-h-[52px] resize-none rounded-full border border-slate-800 bg-[#151a23] px-5 py-3 pr-16 text-sm text-white placeholder:text-slate-500"
+            className="h-20 resize-none rounded-full border border-foreground bg-surface-contrast-strong px-5 py-3 pr-16 text-sm text-white placeholder:text-slate-500"
           />
           <Button
             onClick={handleSend}
             size="icon"
             className="absolute top-1/2 right-2 h-10 w-10 -translate-y-1/2 rounded-full bg-blue-500 text-white shadow-[0_8px_18px_rgba(37,99,235,0.45)] hover:bg-blue-600"
           >
-            <SendHorizontal className="h-5 w-5" />
+            <SendIcon className="h-5 w-5" />
           </Button>
         </div>
       </div>

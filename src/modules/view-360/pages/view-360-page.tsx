@@ -18,7 +18,7 @@ export function View360Page() {
           <ClientInfoSidebar />
         </div>
 
-        <div className="flex w-full flex-1 flex-col gap-6">
+        <div className="flex w-full flex-1 flex-col gap-10">
           <div className="flex flex-col gap-6 2xl:flex-row 2xl:items-start">
             <div className="w-full 2xl:flex-1">
               <AISuggestions />

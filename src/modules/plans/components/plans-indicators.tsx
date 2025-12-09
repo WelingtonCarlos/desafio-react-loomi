@@ -72,47 +72,32 @@ function PlansIndicatorsComponent() {
   }
 
   return (
-    <div className="bg-gradient-glass border-soft rounded-3xl border p-8">
-      <h2 className="text-foreground mb-6 text-xl font-semibold">{t("plans:indicators.title")}</h2>
-
-      <div className="border-soft bg-surface-contrast/60 text-muted-soft mb-6 rounded-2xl border p-4 text-sm">
-        <p className="font-medium">
-          Plano selecionado: {t(PLAN_LABEL_KEYS[selectedPlanId as PlanId] ?? PLAN_LABEL_KEYS.basic)}
-        </p>
-        <p className="text-muted-soft">
-          {t("plans:customizer.vehicleValue")}: {formatter.format(vehicleValue)} •{" "}
-          {t("plans:customizer.age")}: {clientAge} {t("plans:customizer.ageSuffix")}
-        </p>
-        {selectedCoverages.length > 0 && (
-          <p className="text-muted-soft">
-            {t("plans:customizer.coveragesTitle")}: {selectedCoverages.join(", ")}
-          </p>
-        )}
-      </div>
+    <div className="bg-surface-card border-soft rounded-3xl border p-8">
+      <h2 className="text-foreground mb-6 text-xl font-bold leading-4">{t("plans:indicators.title")}</h2>
 
       <div className="space-y-4">
         {plansData?.plansIndicators.map((indicator) => (
           <div
             key={indicator.name}
-            className="bg-surface-contrast border-soft rounded-2xl border p-6"
+            className="bg-surface-contrast-strong border-soft rounded-2xl border p-6"
           >
             <div className="mb-4 flex items-center justify-between">
-              <h3 className="text-foreground text-lg font-semibold">{indicator.name}</h3>
-              <span className="text-foreground text-xl font-bold">
+              <h3 className="text-foreground text-xl font-bold leading-8">{indicator.name}</h3>
+              <span className="text-foreground text-xl font-bold leading-8">
                 {formatter.format(indicator.value)}
               </span>
             </div>
 
             <div className="flex gap-6">
               <div>
-                <span className="text-muted-soft text-sm">Conversão: </span>
-                <span className={`font-semibold ${getConversionColor(indicator.conversion)}`}>
+                <span className="text-foreground leading-4 font-normal text-sm">Conversão: </span>
+                <span className={`font-normal leading-4 text-sm text-success shadow-2xl shadow-success-strong`}>
                   {indicator.conversion}%
                 </span>
               </div>
               <div>
-                <span className="text-muted-soft text-sm">ROI: </span>
-                <span className={`font-semibold ${getRoiColor(indicator.roi)}`}>
+                <span className="text-foreground leading-4 font-normal text-sm">ROI: </span>
+                <span className={`font-normal leading-4 text-sm text-success shadow-2xl shadow-success-strong `}>
                   {indicator.roi}%
                 </span>
               </div>

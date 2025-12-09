@@ -42,7 +42,7 @@
   "suggestionCards": {
     "loading": "Loading...",
     "priceLabel": "For only:",
-    "priceSuffix": "/mo",
+    "button": "Simulate",
     "life": {
       "title": "Individual life insurance",
       "description": "Comprehensive financial protection covering death and critical illnesses"

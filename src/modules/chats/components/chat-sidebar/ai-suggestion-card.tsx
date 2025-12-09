@@ -21,9 +21,9 @@ export function AISuggestionCard({ suggestion, t }: AISuggestionCardProps) {
           className="z-50"
         />
       </div>
-      <h3 className="mb-2 text-sm font-medium text-white">{t("sidebar.aiSuggestion")}</h3>
-      <p className="mb-4 text-xs leading-relaxed text-slate-300">{suggestion}</p>
-      <Button className="h-8 w-full rounded-full bg-blue-500 text-xs font-medium text-white hover:bg-blue-600">
+      <h3 className="mb-2 font-bold text-xl leading-4 text-foreground">{t("sidebar.aiSuggestion")}</h3>
+      <p className="mb-4 text-sm leading-4 text-foreground w-2/3 font-normal">{suggestion}</p>
+      <Button className="h-8 w-full rounded-full bg-brand-name shadow-brand-name shadow-2xl text-xs font-medium text-white hover:bg-brand-name">
         {t("sidebar.useSuggestion")}
       </Button>
     </div>
