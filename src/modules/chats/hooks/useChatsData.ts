@@ -1,10 +1,9 @@
 "use client";
 
 import { useQuery, useQueryClient, type UseQueryResult } from "@tanstack/react-query";
+import { CHATS_QUERY_KEY } from "../constants/query-keys";
 import { getChatsData } from "../services/chats-service";
 import type { ChatsData } from "../types/chats.types";
-
-const CHATS_QUERY_KEY = ["chats", "data"] as const;
 
 const queryOptions = {
   staleTime: Infinity,

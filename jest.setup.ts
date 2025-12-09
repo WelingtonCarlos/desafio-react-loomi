@@ -21,5 +21,5 @@ if (!globalThis.matchMedia) {
       addEventListener: () => {},
       removeEventListener: () => {},
       dispatchEvent: () => false,
-    } satisfies ReturnType<typeof globalThis.matchMedia>)) as typeof globalThis.matchMedia;
+    }) satisfies ReturnType<typeof globalThis.matchMedia>) as typeof globalThis.matchMedia;
 }
